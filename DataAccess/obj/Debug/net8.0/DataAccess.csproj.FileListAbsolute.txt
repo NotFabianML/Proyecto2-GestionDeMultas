@@ -1,0 +1,17 @@
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DataAccess.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DTO.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DTO.pdb
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.csproj.Up2Date
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
