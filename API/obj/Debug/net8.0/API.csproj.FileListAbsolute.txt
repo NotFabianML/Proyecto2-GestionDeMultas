@@ -268,3 +268,10 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.sourcelink.json

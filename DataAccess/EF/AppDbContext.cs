@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Net.Sockets;
 
 namespace DataAccess.EF
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Tickets> Tickets { get; set; }
@@ -19,8 +22,10 @@ namespace DataAccess.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasKey(u => u.Id);
-            modelBuilder.Entity<Tickets>().HasKey(t => t.Id);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasMany(t => t.Tickets);
         }
     }
 }

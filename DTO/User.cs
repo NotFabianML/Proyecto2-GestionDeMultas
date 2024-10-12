@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace DTO
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
         public string ProfilePicture { get; set; }
+
+        public ICollection<Tickets> Tickets { get; set; }
     }
 }

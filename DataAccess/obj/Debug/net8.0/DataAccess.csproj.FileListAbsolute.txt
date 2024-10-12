@@ -15,3 +15,4 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.sourcelink.json
