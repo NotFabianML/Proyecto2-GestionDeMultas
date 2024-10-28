@@ -10,9 +10,9 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLog
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.AssemblyInfoInputs.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.AssemblyInfo.cs
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.csproj.CoreCompileInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.sourcelink.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\Business.CF5D6E35.Up2Date
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\refint\BusinessLogic.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\ref\BusinessLogic.dll
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\BusinessLogic\obj\Debug\net8.0\BusinessLogic.sourcelink.json

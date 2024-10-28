@@ -5,8 +5,8 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.AssemblyInfoInputs.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.AssemblyInfo.cs
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.csproj.CoreCompileInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.sourcelink.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\refint\DTO.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\ref\DTO.dll
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DTO\obj\Debug\net8.0\DTO.sourcelink.json

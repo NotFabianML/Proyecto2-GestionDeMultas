@@ -13,6 +13,7 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\ob
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.MvcApplicationPartsAssemblyInfo.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.RazorAssemblyInfo.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.RazorAssemblyInfo.cs
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.sourcelink.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\staticwebassets.build.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\staticwebassets.development.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\staticwebassets\msbuild.FrontEnd.Microsoft.AspNetCore.StaticWebAssets.props

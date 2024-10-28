@@ -1,15 +1,15 @@
 [
   {
-    "ContainingType": "API.Controllers.TicketsController",
-    "Method": "GetTickets",
-    "RelativePath": "api/Tickets",
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "GetDisputas",
+    "RelativePath": "api/Disputas",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Tickets, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Disputa, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -20,22 +20,22 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.TicketsController",
-    "Method": "PostTickets",
-    "RelativePath": "api/Tickets",
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "PostDisputa",
+    "RelativePath": "api/Disputas",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "tickets",
-        "Type": "DTO.Tickets",
+        "Name": "disputa",
+        "Type": "DTO.Disputa",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Tickets",
+        "Type": "DTO.Disputa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -46,22 +46,22 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.TicketsController",
-    "Method": "GetTickets",
-    "RelativePath": "api/Tickets/{id}",
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "GetDisputa",
+    "RelativePath": "api/Disputas/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Tickets",
+        "Type": "DTO.Disputa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -72,53 +72,53 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.TicketsController",
-    "Method": "PutTickets",
-    "RelativePath": "api/Tickets/{id}",
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "PutDisputa",
+    "RelativePath": "api/Disputas/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
-        "Name": "tickets",
-        "Type": "DTO.Tickets",
+        "Name": "disputa",
+        "Type": "DTO.Disputa",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "API.Controllers.TicketsController",
-    "Method": "DeleteTickets",
-    "RelativePath": "api/Tickets/{id}",
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "DeleteDisputa",
+    "RelativePath": "api/Disputas/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "API.Controllers.UsersController",
-    "Method": "GetUsers",
-    "RelativePath": "api/Users",
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "GetInfracciones",
+    "RelativePath": "api/Infracciones",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.User, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Infraccion, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -129,22 +129,22 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.UsersController",
-    "Method": "PostUser",
-    "RelativePath": "api/Users",
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "PostInfraccion",
+    "RelativePath": "api/Infracciones",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "user",
-        "Type": "DTO.User",
+        "Name": "infraccion",
+        "Type": "DTO.Infraccion",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.User",
+        "Type": "DTO.Infraccion",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -155,22 +155,22 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.UsersController",
-    "Method": "GetUser",
-    "RelativePath": "api/Users/{id}",
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "GetInfraccion",
+    "RelativePath": "api/Infracciones/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.User",
+        "Type": "DTO.Infraccion",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -181,37 +181,582 @@
     ]
   },
   {
-    "ContainingType": "API.Controllers.UsersController",
-    "Method": "PutUser",
-    "RelativePath": "api/Users/{id}",
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "PutInfraccion",
+    "RelativePath": "api/Infracciones/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
         "IsRequired": true
       },
       {
-        "Name": "user",
-        "Type": "DTO.User",
+        "Name": "infraccion",
+        "Type": "DTO.Infraccion",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "API.Controllers.UsersController",
-    "Method": "DeleteUser",
-    "RelativePath": "api/Users/{id}",
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "DeleteInfraccion",
+    "RelativePath": "api/Infracciones/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultas",
+    "RelativePath": "api/Multas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Multa, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "PostMulta",
+    "RelativePath": "api/Multas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "multa",
+        "Type": "DTO.Multa",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Multa",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMulta",
+    "RelativePath": "api/Multas/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Multa",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "PutMulta",
+    "RelativePath": "api/Multas/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "multa",
+        "Type": "DTO.Multa",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "DeleteMulta",
+    "RelativePath": "api/Multas/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "GetPermisos",
+    "RelativePath": "api/Permisos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Permiso, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "PostPermiso",
+    "RelativePath": "api/Permisos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "permiso",
+        "Type": "DTO.Permiso",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Permiso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "GetPermiso",
+    "RelativePath": "api/Permisos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Permiso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "PutPermiso",
+    "RelativePath": "api/Permisos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "permiso",
+        "Type": "DTO.Permiso",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "DeletePermiso",
+    "RelativePath": "api/Permisos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "GetRoles",
+    "RelativePath": "api/Roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Rol, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "PostRol",
+    "RelativePath": "api/Roles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "DTO.Rol",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Rol",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "GetRol",
+    "RelativePath": "api/Roles/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Rol",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "PutRol",
+    "RelativePath": "api/Roles/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rol",
+        "Type": "DTO.Rol",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "DeleteRol",
+    "RelativePath": "api/Roles/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuarios",
+    "RelativePath": "api/Usuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Usuario, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "PostUsuario",
+    "RelativePath": "api/Usuarios",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "DTO.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuario",
+    "RelativePath": "api/Usuarios/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "PutUsuario",
+    "RelativePath": "api/Usuarios/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "usuario",
+        "Type": "DTO.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "DeleteUsuario",
+    "RelativePath": "api/Usuarios/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "GetVehiculos",
+    "RelativePath": "api/Vehiculos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Vehiculo, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "PostVehiculo",
+    "RelativePath": "api/Vehiculos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vehiculo",
+        "Type": "DTO.Vehiculo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Vehiculo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "GetVehiculo",
+    "RelativePath": "api/Vehiculos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.Vehiculo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "PutVehiculo",
+    "RelativePath": "api/Vehiculos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "vehiculo",
+        "Type": "DTO.Vehiculo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "DeleteVehiculo",
+    "RelativePath": "api/Vehiculos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],

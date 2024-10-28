@@ -28,7 +28,7 @@ namespace DataAccess.EF
             // Crear un usuario de ejemplo y asignar rol
             var adminUser = new IdentityUser { 
                 UserName = "sa",
-                Email = "admin@patito.com" 
+                Email = "admin@nextek.com"
             };
             string adminPassword = "Password123!";
             var user = await userManager.FindByEmailAsync(adminUser.Email);

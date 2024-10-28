@@ -6,7 +6,7 @@ namespace DataAccess.DAO
     public class SqlDao
     {
         private static SqlDao _instance;
-        private string _connectionString = "Server=localhost;Database=Proyecto2;Trusted_Connection=True";
+        private string _connectionString = "Server=localhost;Database=SistemaMultas;Trusted_Connection=True";
 
         private SqlDao()
         {
