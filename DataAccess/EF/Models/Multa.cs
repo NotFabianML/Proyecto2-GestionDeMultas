@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DataAccess.EF.Models.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DTO.Enums;
 
-namespace DTO
+namespace DataAccess.EF.Models
 {
     public class Multa
     {
@@ -17,13 +18,14 @@ namespace DTO
 
         public DateTime FechaHora { get; set; } = DateTime.Now;
 
+        [Required]
         public string Ubicacion { get; set; }
 
+        [MaxLength(255)]
         public string FotoUrl { get; set; }
 
         public EstadoMulta Estado { get; set; } = EstadoMulta.Pendiente;
 
-        // Colección para la relación muchos a muchos con Infraccion
         public ICollection<MultaXInfraccion> MultaInfracciones { get; set; }
     }
 }

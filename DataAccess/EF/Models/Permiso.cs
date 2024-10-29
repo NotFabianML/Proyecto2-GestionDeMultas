@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTO
+namespace DataAccess.EF.Models
 {
     public class Permiso
     {
@@ -10,6 +10,7 @@ namespace DTO
         public Guid IdPermiso { get; set; } = Guid.NewGuid();
 
         [Required]
+        [MaxLength(50)]
         public string NombrePermiso { get; set; }
 
         [Required]
@@ -17,7 +18,6 @@ namespace DTO
 
         public bool Estado { get; set; } = true;
 
-        // Relación con Rol
         public ICollection<RolXPermiso> RolPermisos { get; set; }
     }
 }

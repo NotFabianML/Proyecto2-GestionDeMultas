@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using DTO;
-using DTO.Enums;
+using DataAccess.EF.Models;
 
 namespace DataAccess.EF
 {

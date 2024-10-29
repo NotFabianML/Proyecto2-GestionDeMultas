@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\disputascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\disputascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\disputascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\disputascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\vehiculoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,68 +27,8 @@
       "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\dao\\sqldao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\sqldao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241027004142_InitialMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\Migrations\\20241027004142_InitialMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\models\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\multaxinfraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\multaxinfraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\usuarioxrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\usuarioxrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\rolxpermiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\rolxpermiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\vehiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\vehiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\enums\\disputa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\enums\\disputa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\tickets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\tickets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -106,318 +38,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MultasController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\MultasController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
-              "RelativeToolTip": "API\\Controllers\\MultasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:11:27.866Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "VehiculosController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\VehiculosController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\VehiculosController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\VehiculosController.cs",
-              "RelativeToolTip": "API\\Controllers\\VehiculosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:10:09.293Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PermisosController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\PermisosController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\PermisosController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\PermisosController.cs",
-              "RelativeToolTip": "API\\Controllers\\PermisosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:09:37.149Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RolesController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\RolesController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
-              "RelativeToolTip": "API\\Controllers\\RolesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:08:57.707Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "API\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:03:05.974Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DataAccess\\EF\\AppDbContext.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\AppDbContext.cs",
-              "RelativeToolTip": "DataAccess\\EF\\AppDbContext.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAADwv3EAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T00:27:06.509Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "DisputasController.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\DisputasController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\DisputasController.cs",
               "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\DisputasController.cs",
               "RelativeToolTip": "API\\Controllers\\DisputasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAAwI0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:12:00.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "SqlDao.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\DAO\\SqlDao.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\SqlDao.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\DAO\\SqlDao.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\SqlDao.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAA0wAgAAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T00:42:23.576Z",
+              "WhenOpened": "2024-10-29T03:34:28.069Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MultasController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MultasController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "RelativeToolTip": "API\\Controllers\\MultasController.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAwHkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-29T03:32:10.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "InfraccionesController.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\InfraccionesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\InfraccionesController.cs",
               "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\InfraccionesController.cs",
               "RelativeToolTip": "API\\Controllers\\InfraccionesController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAwHMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T01:10:35.874Z",
+              "WhenOpened": "2024-10-29T03:30:14.331Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "20241027004142_InitialMigration.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241027004142_InitialMigration.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Migrations\\20241027004142_InitialMigration.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241027004142_InitialMigration.cs",
-              "RelativeToolTip": "DataAccess\\Migrations\\20241027004142_InitialMigration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "VehiculosController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\VehiculosController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\VehiculosController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\VehiculosController.cs",
+              "RelativeToolTip": "API\\Controllers\\VehiculosController.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAAwJMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T00:41:42.542Z",
+              "WhenOpened": "2024-10-29T03:28:25.449Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AppRole.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\AppRole.cs",
-              "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\AppRole.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\AppRole.cs",
-              "RelativeToolTip": "DataAccess\\EF\\Models\\AppRole.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAGAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "PermisosController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\PermisosController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\PermisosController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\PermisosController.cs",
+              "RelativeToolTip": "API\\Controllers\\PermisosController.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAwKkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T00:34:31.658Z",
+              "WhenOpened": "2024-10-29T03:27:25.461Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "MultaXInfraccion.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\MultaXInfraccion.cs",
-              "RelativeDocumentMoniker": "DTO\\MultaXInfraccion.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\MultaXInfraccion.cs",
-              "RelativeToolTip": "DTO\\MultaXInfraccion.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\RolesController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "API\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:40:10.192Z",
+              "WhenOpened": "2024-10-29T03:25:17.768Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AppUser.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\AppUser.cs",
-              "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\AppUser.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\AppUser.cs",
-              "RelativeToolTip": "DataAccess\\EF\\Models\\AppUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "API\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAAwNYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:36:56.593Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Infraccion.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Infraccion.cs",
-              "RelativeDocumentMoniker": "DTO\\Infraccion.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Infraccion.cs",
-              "RelativeToolTip": "DTO\\Infraccion.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:30:40.359Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Vehiculo.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Vehiculo.cs",
-              "RelativeDocumentMoniker": "DTO\\Vehiculo.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Vehiculo.cs",
-              "RelativeToolTip": "DTO\\Vehiculo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:30:25.077Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "RolXPermiso.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\RolXPermiso.cs",
-              "RelativeDocumentMoniker": "DTO\\RolXPermiso.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\RolXPermiso.cs",
-              "RelativeToolTip": "DTO\\RolXPermiso.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:29:54.312Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "UsuarioXRol.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\UsuarioXRol.cs",
-              "RelativeDocumentMoniker": "DTO\\UsuarioXRol.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\UsuarioXRol.cs",
-              "RelativeToolTip": "DTO\\UsuarioXRol.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:29:19.791Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Permiso.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Permiso.cs",
-              "RelativeDocumentMoniker": "DTO\\Permiso.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Permiso.cs",
-              "RelativeToolTip": "DTO\\Permiso.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:28:46.764Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Multa.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Multa.cs",
-              "RelativeDocumentMoniker": "DTO\\Multa.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Multa.cs",
-              "RelativeToolTip": "DTO\\Multa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:30:54.157Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Disputa.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Enums\\Disputa.cs",
-              "RelativeDocumentMoniker": "DTO\\Enums\\Disputa.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Enums\\Disputa.cs",
-              "RelativeToolTip": "DTO\\Enums\\Disputa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:31:11.09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Usuario.cs",
-              "RelativeDocumentMoniker": "DTO\\Usuario.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Usuario.cs",
-              "RelativeToolTip": "DTO\\Usuario.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:27:47.948Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Rol.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Rol.cs",
-              "RelativeDocumentMoniker": "DTO\\Rol.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Rol.cs",
-              "RelativeToolTip": "DTO\\Rol.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-26T22:28:28.777Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\User.cs",
-              "RelativeDocumentMoniker": "DTO\\User.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\User.cs",
-              "RelativeToolTip": "DTO\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T00:22:12.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "Tickets.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Tickets.cs",
-              "RelativeDocumentMoniker": "DTO\\Tickets.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\Tickets.cs",
-              "RelativeToolTip": "DTO\\Tickets.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T00:24:16.163Z",
+              "WhenOpened": "2024-10-29T03:15:34.039Z",
               "EditorCaption": ""
             }
           ]

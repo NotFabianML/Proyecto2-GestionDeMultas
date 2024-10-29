@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DTO
+namespace DataAccess.EF.Models
 {
     public class RolXPermiso
     {

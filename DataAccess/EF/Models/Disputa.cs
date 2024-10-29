@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DataAccess.EF.Models.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
-using DTO.Enums;
 
-namespace DTO
+namespace DataAccess.EF.Models
 {
     public class Disputa
     {

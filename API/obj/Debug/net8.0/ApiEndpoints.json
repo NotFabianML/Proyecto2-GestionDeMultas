@@ -9,7 +9,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Disputa, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Disputa, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -29,13 +29,13 @@
     "Parameters": [
       {
         "Name": "disputa",
-        "Type": "DTO.Disputa",
+        "Type": "DataAccess.EF.Models.Disputa",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Disputa",
+        "Type": "DataAccess.EF.Models.Disputa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Disputa",
+        "Type": "DataAccess.EF.Models.Disputa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -86,7 +86,7 @@
       },
       {
         "Name": "disputa",
-        "Type": "DTO.Disputa",
+        "Type": "DataAccess.EF.Models.Disputa",
         "IsRequired": true
       }
     ],
@@ -118,7 +118,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Infraccion, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Infraccion, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -138,13 +138,13 @@
     "Parameters": [
       {
         "Name": "infraccion",
-        "Type": "DTO.Infraccion",
+        "Type": "DataAccess.EF.Models.Infraccion",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Infraccion",
+        "Type": "DataAccess.EF.Models.Infraccion",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -170,7 +170,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Infraccion",
+        "Type": "DataAccess.EF.Models.Infraccion",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -195,7 +195,7 @@
       },
       {
         "Name": "infraccion",
-        "Type": "DTO.Infraccion",
+        "Type": "DataAccess.EF.Models.Infraccion",
         "IsRequired": true
       }
     ],
@@ -227,7 +227,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Multa, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Multa, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -247,13 +247,13 @@
     "Parameters": [
       {
         "Name": "multa",
-        "Type": "DTO.Multa",
+        "Type": "DataAccess.EF.Models.Multa",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Multa",
+        "Type": "DataAccess.EF.Models.Multa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -279,7 +279,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Multa",
+        "Type": "DataAccess.EF.Models.Multa",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -304,7 +304,7 @@
       },
       {
         "Name": "multa",
-        "Type": "DTO.Multa",
+        "Type": "DataAccess.EF.Models.Multa",
         "IsRequired": true
       }
     ],
@@ -336,7 +336,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Permiso, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Permiso, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -356,13 +356,13 @@
     "Parameters": [
       {
         "Name": "permiso",
-        "Type": "DTO.Permiso",
+        "Type": "DataAccess.EF.Models.Permiso",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Permiso",
+        "Type": "DataAccess.EF.Models.Permiso",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -388,7 +388,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Permiso",
+        "Type": "DataAccess.EF.Models.Permiso",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -413,7 +413,7 @@
       },
       {
         "Name": "permiso",
-        "Type": "DTO.Permiso",
+        "Type": "DataAccess.EF.Models.Permiso",
         "IsRequired": true
       }
     ],
@@ -436,6 +436,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "ActivarPermiso",
+    "RelativePath": "api/Permisos/{id}/activar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "DesactivarPermiso",
+    "RelativePath": "api/Permisos/{id}/desactivar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "GetRolesPorPermiso",
+    "RelativePath": "api/Permisos/{id}/roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "API.Controllers.RolesController",
     "Method": "GetRoles",
     "RelativePath": "api/Roles",
@@ -445,7 +503,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Rol, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -465,13 +523,13 @@
     "Parameters": [
       {
         "Name": "rol",
-        "Type": "DTO.Rol",
+        "Type": "DataAccess.EF.Models.Rol",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Rol",
+        "Type": "DataAccess.EF.Models.Rol",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -497,7 +555,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Rol",
+        "Type": "DataAccess.EF.Models.Rol",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -522,7 +580,7 @@
       },
       {
         "Name": "rol",
-        "Type": "DTO.Rol",
+        "Type": "DataAccess.EF.Models.Rol",
         "IsRequired": true
       }
     ],
@@ -545,6 +603,74 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "GetPermisosPorRol",
+    "RelativePath": "api/Roles/{id}/permisos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Permiso, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "AsignarPermiso",
+    "RelativePath": "api/Roles/{id}/permisos/{permisoId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "permisoId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "DeletePermisoDeRol",
+    "RelativePath": "api/Roles/{id}/permisos/{permisoId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "permisoId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.UsuariosController",
     "Method": "GetUsuarios",
     "RelativePath": "api/Usuarios",
@@ -554,7 +680,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Usuario, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Usuario, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -574,13 +700,13 @@
     "Parameters": [
       {
         "Name": "usuario",
-        "Type": "DTO.Usuario",
+        "Type": "DataAccess.EF.Models.Usuario",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Usuario",
+        "Type": "DataAccess.EF.Models.Usuario",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -606,7 +732,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Usuario",
+        "Type": "DataAccess.EF.Models.Usuario",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -631,7 +757,7 @@
       },
       {
         "Name": "usuario",
-        "Type": "DTO.Usuario",
+        "Type": "DataAccess.EF.Models.Usuario",
         "IsRequired": true
       }
     ],
@@ -654,6 +780,111 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "ActivarDosFactor",
+    "RelativePath": "api/Usuarios/{id}/activar-2fa",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dosFactorSecret",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "DesactivarDosFactor",
+    "RelativePath": "api/Usuarios/{id}/desactivar-2fa",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetRolesPorUsuario",
+    "RelativePath": "api/Usuarios/{id}/roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "AsignarRol",
+    "RelativePath": "api/Usuarios/{id}/roles/{rolId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "DeleteRolDeUsuario",
+    "RelativePath": "api/Usuarios/{id}/roles/{rolId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.VehiculosController",
     "Method": "GetVehiculos",
     "RelativePath": "api/Vehiculos",
@@ -663,7 +894,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.Vehiculo, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Vehiculo, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -683,13 +914,13 @@
     "Parameters": [
       {
         "Name": "vehiculo",
-        "Type": "DTO.Vehiculo",
+        "Type": "DataAccess.EF.Models.Vehiculo",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Vehiculo",
+        "Type": "DataAccess.EF.Models.Vehiculo",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -715,7 +946,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.Vehiculo",
+        "Type": "DataAccess.EF.Models.Vehiculo",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -740,7 +971,7 @@
       },
       {
         "Name": "vehiculo",
-        "Type": "DTO.Vehiculo",
+        "Type": "DataAccess.EF.Models.Vehiculo",
         "IsRequired": true
       }
     ],
@@ -761,5 +992,31 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "GetVehiculosPorUsuario",
+    "RelativePath": "api/Vehiculos/usuario/{usuarioId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Vehiculo, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

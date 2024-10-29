@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTO
+namespace DataAccess.EF.Models
 {
     public class Vehiculo
     {
@@ -12,10 +12,13 @@ namespace DTO
         public Usuario Usuario { get; set; }
 
         [Required]
+        [MaxLength(20)]
         public string NumeroPlaca { get; set; }
 
+        [MaxLength(255)]
         public string FotoVehiculo { get; set; }
 
+        [MaxLength(50)]
         public string Marca { get; set; }
 
         public int Anno { get; set; }
