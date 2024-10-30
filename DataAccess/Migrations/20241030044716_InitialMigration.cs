@@ -55,10 +55,10 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     IdInfraccion = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Articulo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    Articulo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     Monto = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,7 +71,7 @@ namespace DataAccess.Migrations
                 {
                     IdPermiso = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NombrePermiso = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -85,7 +85,7 @@ namespace DataAccess.Migrations
                 {
                     IdRol = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NombreRol = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,14 +100,14 @@ namespace DataAccess.Migrations
                     Cedula = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
                     Apellido1 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    Apellido2 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    Apellido2 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: true),
                     ContrasennaHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    FotoPerfil = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FotoPerfil = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Estado = table.Column<bool>(type: "bit", nullable: false),
                     DosFactorActivo = table.Column<bool>(type: "bit", nullable: false),
-                    DosFactorSecret = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    DosFactorSecret = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -275,9 +275,9 @@ namespace DataAccess.Migrations
                     IdVehiculo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NumeroPlaca = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    FotoVehiculo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Marca = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Anno = table.Column<int>(type: "int", nullable: false)
+                    FotoVehiculo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Marca = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Anno = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -298,8 +298,9 @@ namespace DataAccess.Migrations
                     VehiculoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioIdOficial = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Ubicacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FotoUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Latitud = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
+                    Longitud = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
+                    FotoUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -328,7 +329,7 @@ namespace DataAccess.Migrations
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Motivo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
-                    Resolucion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Resolucion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaResolucion = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>

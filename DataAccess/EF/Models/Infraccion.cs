@@ -11,18 +11,19 @@ namespace DataAccess.EF.Models
         public Guid IdInfraccion { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(10)]
         public string Articulo { get; set; }
 
         [Required]
         [MaxLength(45)]
-        public string Categoria { get; set; }
+        public string Titulo { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Monto { get; set; }
 
-        public string Descripcion { get; set; }
+        [MaxLength(255)]
+        public string? Descripcion { get; set; }
 
         public ICollection<MultaXInfraccion> MultaInfracciones { get; set; }
     }

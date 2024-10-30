@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.EF.Models
 {
@@ -19,10 +20,15 @@ namespace DataAccess.EF.Models
         public DateTime FechaHora { get; set; } = DateTime.Now;
 
         [Required]
-        public string Ubicacion { get; set; }
+        [Column(TypeName = "decimal(9, 2)")]
+        public decimal Latitud { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(9, 2)")]
+        public decimal Longitud { get; set; }
 
         [MaxLength(255)]
-        public string FotoUrl { get; set; }
+        public string? FotoUrl { get; set; }
 
         public EstadoMulta Estado { get; set; } = EstadoMulta.Pendiente;
 

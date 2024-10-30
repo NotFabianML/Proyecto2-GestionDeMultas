@@ -112,12 +112,13 @@ namespace API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthentication(); // Activar autenticación en JWT
+            app.UseAuthorization(); // Activar autorización
 
             app.MapControllers();
 
-            app.UseCors("CorsPolicy");
 
             app.Run();
         }

@@ -13,7 +13,8 @@ namespace DataAccess.EF.Models
         [MaxLength(45)]
         public string NombreRol { get; set; }
 
-        public string Descripcion { get; set; }
+        [MaxLength(255)]
+        public string? Descripcion { get; set; }
 
         public ICollection<UsuarioXRol> UsuarioRoles { get; set; }
         public ICollection<RolXPermiso> RolPermisos { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace DTO
 {
-    public class LogUpDTO
+    public class LogOutDTO
     {
         public string UserName { get; set; }
         public string Email { get; set; }

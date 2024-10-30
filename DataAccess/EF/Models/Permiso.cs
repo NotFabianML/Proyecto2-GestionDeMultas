@@ -14,6 +14,7 @@ namespace DataAccess.EF.Models
         public string NombrePermiso { get; set; }
 
         [Required]
+        [MaxLength(255)]
         public string Descripcion { get; set; }
 
         public bool Estado { get; set; } = true;

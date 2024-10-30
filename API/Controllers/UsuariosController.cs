@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using DataAccess.EF;
 using DataAccess.EF.Models;
+using DTO;
+using BusinessLogic;
 
 namespace API.Controllers
 {
@@ -14,27 +22,55 @@ namespace API.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public UsuariosController(AppDbContext context)
+        public UsuariosController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        //[Authorize]
+        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuarios()
         {
-            return await _context.Usuarios
+            var usuarios = await _context.Usuarios
                 .Where(u => u.Estado)
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    Apellido2 = u.Apellido2,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Estado = u.Estado
+                })
                 .ToListAsync();
+
+            return usuarios;
         }
 
         // GET: api/Usuarios/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(Guid id)
+        [Authorize]
+        public async Task<ActionResult<UsuarioDTO>> GetUsuario(Guid id)
         {
             var usuario = await _context.Usuarios
                 .Where(u => u.Estado && u.IdUsuario == id)
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    Apellido2 = u.Apellido2,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Estado = u.Estado
+                })
                 .FirstOrDefaultAsync();
 
             if (usuario == null)
@@ -47,9 +83,10 @@ namespace API.Controllers
 
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(Guid id, Usuario usuario)
+        [Authorize]
+        public async Task<IActionResult> PutUsuario(Guid id, UsuarioDTO usuarioDTO)
         {
-            if (id != usuario.IdUsuario)
+            if (id != usuarioDTO.IdUsuario)
             {
                 return BadRequest("El ID proporcionado no coincide con el usuario.");
             }
@@ -60,10 +97,11 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            existingUsuario.Nombre = usuario.Nombre;
-            existingUsuario.Apellido1 = usuario.Apellido1;
-            existingUsuario.Apellido2 = usuario.Apellido2;
-            existingUsuario.Email = usuario.Email;
+            existingUsuario.Nombre = usuarioDTO.Nombre;
+            existingUsuario.Apellido1 = usuarioDTO.Apellido1;
+            existingUsuario.Apellido2 = usuarioDTO.Apellido2;
+            existingUsuario.Email = usuarioDTO.Email;
+            existingUsuario.Telefono = usuarioDTO.Telefono;
 
             _context.Entry(existingUsuario).State = EntityState.Modified;
 
@@ -88,24 +126,37 @@ namespace API.Controllers
 
         // POST: api/Usuarios
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<UsuarioDTO>> PostUsuario(UsuarioDTO usuarioDTO)
         {
-            if (_context.Usuarios.Any(u => u.Email == usuario.Email))
+            if (_context.Usuarios.Any(u => u.Email == usuarioDTO.Email))
             {
                 return Conflict("El email ya está registrado.");
             }
 
-            usuario.IdUsuario = Guid.NewGuid();
-            usuario.Estado = true;
+            var usuario = new Usuario
+            {
+                IdUsuario = Guid.NewGuid(),
+                Cedula = usuarioDTO.Cedula,
+                Nombre = usuarioDTO.Nombre,
+                Apellido1 = usuarioDTO.Apellido1,
+                Apellido2 = usuarioDTO.Apellido2,
+                Email = usuarioDTO.Email,
+                Telefono = usuarioDTO.Telefono,
+                Estado = true,
+                ContrasennaHash = Encrypt.GetSHA256(usuarioDTO.ContrasennaHash)
+            };
 
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuario);
+            usuarioDTO.IdUsuario = usuario.IdUsuario;
+
+            return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDTO);
         }
 
         // DELETE: api/Usuarios/5 (Eliminación lógica)
         [HttpDelete("{id}")]
+        //[Authorize]
         public async Task<IActionResult> DeleteUsuario(Guid id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
@@ -120,8 +171,33 @@ namespace API.Controllers
             return NoContent();
         }
 
+        // POST: api/Usuarios/login
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] LoginDTO loginDTO)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
+
+            if (usuario == null || !usuario.Estado)
+            {
+                return Unauthorized("Usuario no encontrado o inactivo.");
+            }
+
+            // Verificar la contraseña hasheada usando SHA-256
+            var hashedPassword = Encrypt.GetSHA256(loginDTO.Password);
+            if (usuario.ContrasennaHash != hashedPassword)
+            {
+                return Unauthorized("Contraseña incorrecta.");
+            }
+
+            // Generar token JWT
+            var token = GenerateJwtToken(usuario);
+            return Ok(new { Token = token });
+        }
+
         // Asignar rol a usuario usando el SP
         [HttpPost("{id}/roles/{rolId}")]
+        [Authorize]
         public async Task<IActionResult> AsignarRol(Guid id, Guid rolId)
         {
             if (!UsuarioExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
@@ -138,8 +214,9 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // Obtener roles asignados a un usuario
+        // Obtener roles asignados a un usuario usando el SP
         [HttpGet("{id}/roles")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Rol>>> GetRolesPorUsuario(Guid id)
         {
             if (!UsuarioExists(id))
@@ -156,6 +233,7 @@ namespace API.Controllers
 
         // Eliminar rol de usuario usando el SP
         [HttpDelete("{id}/roles/{rolId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteRolDeUsuario(Guid id, Guid rolId)
         {
             if (!UsuarioExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
@@ -172,38 +250,27 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // Activar dosFactor
-        [HttpPost("{id}/activar-2fa")]
-        public async Task<IActionResult> ActivarDosFactor(Guid id, [FromBody] string dosFactorSecret)
+        // Método privado para generar el token JWT
+        private string GenerateJwtToken(Usuario usuario)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var claims = new[]
             {
-                return NotFound("Usuario no encontrado.");
-            }
+                new Claim(JwtRegisteredClaimNames.Sub, usuario.IdUsuario.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
-            usuario.DosFactorActivo = true;
-            usuario.DosFactorSecret = dosFactorSecret;
-            await _context.SaveChangesAsync();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            return Ok("2FA activado.");
-        }
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds);
 
-        // Desactivar dosFactor
-        [HttpPost("{id}/desactivar-2fa")]
-        public async Task<IActionResult> DesactivarDosFactor(Guid id)
-        {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound("Usuario no encontrado.");
-            }
-
-            usuario.DosFactorActivo = false;
-            usuario.DosFactorSecret = null;
-            await _context.SaveChangesAsync();
-
-            return Ok("2FA desactivado.");
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private bool UsuarioExists(Guid id)

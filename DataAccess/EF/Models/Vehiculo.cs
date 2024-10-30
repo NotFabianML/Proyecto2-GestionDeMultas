@@ -16,11 +16,11 @@ namespace DataAccess.EF.Models
         public string NumeroPlaca { get; set; }
 
         [MaxLength(255)]
-        public string FotoVehiculo { get; set; }
+        public string? FotoVehiculo { get; set; }
 
         [MaxLength(50)]
-        public string Marca { get; set; }
+        public string? Marca { get; set; }
 
-        public int Anno { get; set; }
+        public int? Anno { get; set; }
     }
 }

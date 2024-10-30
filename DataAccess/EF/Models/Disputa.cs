@@ -20,11 +20,12 @@ namespace DataAccess.EF.Models
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
 
+        [Required]
         public string Motivo { get; set; }
 
         public EstadoDisputa Estado { get; set; } = EstadoDisputa.EnDisputa;
 
-        public string Resolucion { get; set; }
+        public string? Resolucion { get; set; }
 
         public DateTime? FechaResolucion { get; set; }
     }

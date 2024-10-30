@@ -57,7 +57,7 @@ namespace API.Controllers
             try
             {
                 await _context.Database.ExecuteSqlRawAsync("EXEC sp_actualizarInfraccion @idInfraccion = {0}, @articulo = {1}, @categoria = {2}, @monto = {3}, @descripcion = {4}",
-                    id, infraccion.Articulo, infraccion.Categoria, infraccion.Monto, infraccion.Descripcion);
+                    id, infraccion.Articulo, infraccion.Titulo, infraccion.Monto, infraccion.Descripcion);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,7 +87,7 @@ namespace API.Controllers
             infraccion.IdInfraccion = Guid.NewGuid();
 
             await _context.Database.ExecuteSqlRawAsync("EXEC sp_insertarInfraccion @idInfraccion = {0}, @articulo = {1}, @categoria = {2}, @monto = {3}, @descripcion = {4}",
-                infraccion.IdInfraccion, infraccion.Articulo, infraccion.Categoria, infraccion.Monto, infraccion.Descripcion);
+                infraccion.IdInfraccion, infraccion.Articulo, infraccion.Titulo, infraccion.Monto, infraccion.Descripcion);
 
             return CreatedAtAction("GetInfraccion", new { id = infraccion.IdInfraccion }, infraccion);
         }

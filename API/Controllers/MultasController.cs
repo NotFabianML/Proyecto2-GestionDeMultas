@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
 using DataAccess.EF.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -46,6 +47,23 @@ namespace API.Controllers
             return multa;
         }
 
+        // GET: api/Multas/placa/{numeroPlaca} - Consultar multas por número de placa
+        [HttpGet("placa/{numeroPlaca}")]
+        [AllowAnonymous] // Permite acceso público
+        public async Task<ActionResult<IEnumerable<Multa>>> GetMultasPorPlaca(string numeroPlaca)
+        {
+            var multas = await _context.Multas
+                .FromSqlRaw("EXEC sp_obtenerMultasPorPlaca @NumeroPlaca = {0}", numeroPlaca)
+                .ToListAsync();
+
+            if (multas == null || !multas.Any())
+            {
+                return NotFound("No se encontraron multas para el número de placa proporcionado.");
+            }
+
+            return Ok(multas);
+        }
+
         // PUT: api/Multas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMulta(Guid id, Multa multa)
@@ -58,7 +76,7 @@ namespace API.Controllers
             try
             {
                 await _context.Database.ExecuteSqlRawAsync("EXEC sp_actualizarMulta @idMulta = {0}, @vehiculoId = {1}, @usuarioIdOficial = {2}, @fechaHora = {3}, @ubicacion = {4}, @fotoUrl = {5}, @estado = {6}",
-                    id, multa.VehiculoId, multa.UsuarioIdOficial, multa.FechaHora, multa.Ubicacion, multa.FotoUrl, (int)multa.Estado);
+                    id, multa.VehiculoId, multa.UsuarioIdOficial, multa.FechaHora, multa.Latitud, multa.Longitud, multa.FotoUrl, (int)multa.Estado);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,7 +105,7 @@ namespace API.Controllers
             multa.IdMulta = Guid.NewGuid();
 
             await _context.Database.ExecuteSqlRawAsync("EXEC sp_insertarMulta @idMulta = {0}, @vehiculoId = {1}, @usuarioIdOficial = {2}, @fechaHora = {3}, @ubicacion = {4}, @fotoUrl = {5}, @estado = {6}",
-                multa.IdMulta, multa.VehiculoId, multa.UsuarioIdOficial, multa.FechaHora, multa.Ubicacion, multa.FotoUrl, (int)multa.Estado);
+                multa.IdMulta, multa.VehiculoId, multa.UsuarioIdOficial, multa.FechaHora, multa.Latitud, multa.Longitud, multa.FotoUrl, (int)multa.Estado);
 
             return CreatedAtAction(nameof(GetMulta), new { id = multa.IdMulta }, multa);
         }
