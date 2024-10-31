@@ -25,6 +25,8 @@ namespace DataAccess.EF.Models
         [MaxLength(255)]
         public string? Descripcion { get; set; }
 
+        public bool Estado { get; set; } = true;
+
         public ICollection<MultaXInfraccion> MultaInfracciones { get; set; }
     }
 }

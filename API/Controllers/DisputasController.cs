@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
 using DataAccess.EF.Models.Enums;
+using DTO;
 
 namespace API.Controllers
 {
@@ -23,61 +24,111 @@ namespace API.Controllers
 
         // GET: api/Disputas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Disputa>>> GetDisputas()
+        public async Task<ActionResult<IEnumerable<DisputaDTO>>> GetDisputas()
         {
-            try
-            {
-                var disputas = await _context.Disputas
-                    .FromSqlRaw("EXEC sp_obtenerDisputas")
-                    .ToListAsync();
+            var disputas = await _context.Disputas
+                .Select(d => new DisputaDTO
+                {
+                    IdDisputa = d.IdDisputa,
+                    MultaId = d.MultaId,
+                    UsuarioId = d.UsuarioId,
+                    JuezId = d.UsuarioIdJuez,
+                    FechaCreacion = d.FechaCreacion,
+                    MotivoReclamo = d.MotivoReclamo,
+                    Estado = (int)d.Estado,
+                    ResolucionJuez = d.ResolucionJuez,
+                    DeclaracionOficial = d.DeclaracionOficial,
+                    FechaResolucion = d.FechaResolucion
+                })
+                .ToListAsync();
 
-                return Ok(disputas);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener disputas: {ex.Message}");
-            }
+            return Ok(disputas);
         }
 
         // GET: api/Disputas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Disputa>> GetDisputa(Guid id)
+        public async Task<ActionResult<DisputaDTO>> GetDisputa(Guid id)
         {
-            try
-            {
-                var disputa = await _context.Disputas
-                    .FromSqlRaw("EXEC sp_obtenerDisputaPorId @idDisputa = {0}", id)
-                    .FirstOrDefaultAsync();
-
-                if (disputa == null)
+            var disputa = await _context.Disputas
+                .Where(d => d.IdDisputa == id)
+                .Select(d => new DisputaDTO
                 {
-                    return NotFound("Disputa no encontrada.");
-                }
+                    IdDisputa = d.IdDisputa,
+                    MultaId = d.MultaId,
+                    UsuarioId = d.UsuarioId,
+                    JuezId = d.UsuarioIdJuez,
+                    FechaCreacion = d.FechaCreacion,
+                    MotivoReclamo = d.MotivoReclamo,
+                    Estado = (int)d.Estado,
+                    ResolucionJuez = d.ResolucionJuez,
+                    DeclaracionOficial = d.DeclaracionOficial,
+                    FechaResolucion = d.FechaResolucion
+                })
+                .FirstOrDefaultAsync();
 
-                return Ok(disputa);
-            }
-            catch (Exception ex)
+            if (disputa == null)
             {
-                return StatusCode(500, $"Error al obtener disputa: {ex.Message}");
+                return NotFound("Disputa no encontrada.");
             }
+
+            return Ok(disputa);
+        }
+
+        // GET: api/Disputas/usuario/5 - Obtener disputas por usuario
+        [HttpGet("usuario/{usuarioId}")]
+        public async Task<ActionResult<IEnumerable<DisputaDTO>>> GetDisputasPorUsuario(Guid usuarioId)
+        {
+            var disputas = await _context.Disputas
+                .FromSqlRaw("EXEC sp_obtenerDisputasPorUsuario @Usuario_idUsuario = {0}", usuarioId)
+                .Select(d => new DisputaDTO
+                {
+                    IdDisputa = d.IdDisputa,
+                    MultaId = d.MultaId,
+                    UsuarioId = d.UsuarioId,
+                    JuezId = d.UsuarioIdJuez,
+                    FechaCreacion = d.FechaCreacion,
+                    MotivoReclamo = d.MotivoReclamo,
+                    Estado = (int)d.Estado,
+                    ResolucionJuez = d.ResolucionJuez,
+                    DeclaracionOficial = d.DeclaracionOficial,
+                    FechaResolucion = d.FechaResolucion
+                })
+                .ToListAsync();
+
+            if (!disputas.Any())
+            {
+                return NotFound("No se encontraron disputas para el usuario especificado.");
+            }
+
+            return Ok(disputas);
         }
 
         // PUT: api/Disputas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDisputa(Guid id, Disputa disputa)
+        public async Task<IActionResult> PutDisputa(Guid id, DisputaDTO disputaDTO)
         {
-            if (id != disputa.IdDisputa)
+            if (id != disputaDTO.IdDisputa)
             {
                 return BadRequest("El ID de la disputa no coincide.");
             }
 
+            var existingDisputa = await _context.Disputas.FindAsync(id);
+            if (existingDisputa == null)
+            {
+                return NotFound("Disputa no encontrada para actualización.");
+            }
+
+            existingDisputa.MotivoReclamo = disputaDTO.MotivoReclamo;
+            existingDisputa.UsuarioIdJuez = disputaDTO.JuezId;
+            existingDisputa.Estado = (EstadoDisputa)disputaDTO.Estado;
+            existingDisputa.ResolucionJuez = disputaDTO.ResolucionJuez;
+            existingDisputa.DeclaracionOficial = disputaDTO.DeclaracionOficial;
+            existingDisputa.FechaResolucion = disputaDTO.FechaResolucion;
+
             try
             {
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC sp_actualizarDisputa @idDisputa = {0}, @multaId = {1}, @usuarioId = {2}, @usuarioIdJuez = {3}, @motivo = {4}, @estado = {5}, @resolucion = {6}, @fechaResolucion = {7}",
-                    id, disputa.MultaId, disputa.UsuarioId, disputa.UsuarioIdJuez, disputa.Motivo, (int)disputa.Estado, disputa.Resolucion, disputa.FechaResolucion);
-
-                return NoContent();
+                _context.Entry(existingDisputa).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,50 +138,104 @@ namespace API.Controllers
                 }
                 throw;
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al actualizar disputa: {ex.Message}");
-            }
+
+            return NoContent();
         }
 
         // POST: api/Disputas
         [HttpPost]
-        public async Task<ActionResult<Disputa>> PostDisputa(Disputa disputa)
+        public async Task<ActionResult<DisputaDTO>> PostDisputa(DisputaDTO disputaDTO)
         {
-            try
+            if (!await _context.Multas.AnyAsync(m => m.IdMulta == disputaDTO.MultaId))
             {
-                if (!await _context.Multas.AnyAsync(m => m.IdMulta == disputa.MultaId))
-                {
-                    return BadRequest("La multa especificada no existe.");
-                }
-
-                disputa.IdDisputa = Guid.NewGuid();
-
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC sp_insertarDisputa @idDisputa = {0}, @multaId = {1}, @usuarioId = {2}, @usuarioIdJuez = {3}, @fechaCreacion = {4}, @motivo = {5}, @estado = {6}, @resolucion = {7}, @fechaResolucion = {8}",
-                    disputa.IdDisputa, disputa.MultaId, disputa.UsuarioId, disputa.UsuarioIdJuez, DateTime.UtcNow, disputa.Motivo, (int)disputa.Estado, disputa.Resolucion, disputa.FechaResolucion);
-
-                return CreatedAtAction(nameof(GetDisputa), new { id = disputa.IdDisputa }, disputa);
+                return BadRequest("La multa especificada no existe.");
             }
-            catch (Exception ex)
+
+            var disputa = new Disputa
             {
-                return StatusCode(500, $"Error al crear disputa: {ex.Message}");
-            }
+                IdDisputa = Guid.NewGuid(),
+                MultaId = disputaDTO.MultaId,
+                UsuarioId = disputaDTO.UsuarioId,
+                UsuarioIdJuez = disputaDTO.JuezId,
+                FechaCreacion = DateTime.UtcNow,
+                MotivoReclamo = disputaDTO.MotivoReclamo,
+                Estado = (EstadoDisputa)disputaDTO.Estado,
+                ResolucionJuez = disputaDTO.ResolucionJuez,
+                DeclaracionOficial = disputaDTO.DeclaracionOficial,
+                FechaResolucion = disputaDTO.FechaResolucion
+            };
+
+            _context.Disputas.Add(disputa);
+            await _context.SaveChangesAsync();
+
+            disputaDTO.IdDisputa = disputa.IdDisputa;
+            return CreatedAtAction(nameof(GetDisputa), new { id = disputa.IdDisputa }, disputaDTO);
         }
 
         // DELETE: api/Disputas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDisputa(Guid id)
         {
-            try
+            var disputa = await _context.Disputas.FindAsync(id);
+            if (disputa == null)
             {
-                await _context.Database.ExecuteSqlRawAsync("EXEC sp_eliminarDisputa @idDisputa = {0}", id);
-                return NoContent();
+                return NotFound("Disputa no encontrada para eliminación.");
             }
-            catch (Exception ex)
+
+            _context.Disputas.Remove(disputa);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // Cambiar estado a "En Disputa"
+        [HttpPost("{id}/en-disputa")]
+        public async Task<IActionResult> CambiarEstadoEnDisputa(Guid id)
+        {
+            var disputa = await _context.Multas.FindAsync(id);
+            if (disputa == null)
             {
-                return StatusCode(500, $"Error al eliminar disputa: {ex.Message}");
+                return NotFound("Multa no encontrada.");
             }
+
+            disputa.Estado = EstadoMulta.EnDisputa;
+            _context.Entry(disputa).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok("Estado de la multa cambiado a En Disputa.");
+        }
+
+        // Cambiar estado a "Pagada"
+        [HttpPost("{id}/pagada")]
+        public async Task<IActionResult> CambiarEstadoAceptada(Guid id)
+        {
+            var disputa = await _context.Multas.FindAsync(id);
+            if (disputa == null)
+            {
+                return NotFound("Multa no encontrada.");
+            }
+
+            disputa.Estado = EstadoMulta.Pagada;
+            _context.Entry(disputa).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok("Estado de la multa cambiado a En Disputa.");
+        }
+
+        // Cambiar estado a "Rechazada"
+        [HttpPost("{id}/rechazada")]
+        public async Task<IActionResult> CambiarEstadoRechazada(Guid id)
+        {
+            var disputa = await _context.Multas.FindAsync(id);
+            if (disputa == null)
+            {
+                return NotFound("Multa no encontrada.");
+            }
+
+            disputa.Estado = EstadoMulta.EnDisputa;
+            _context.Entry(disputa).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok("Estado de la multa cambiado a En Disputa.");
         }
 
         private bool DisputaExists(Guid id)

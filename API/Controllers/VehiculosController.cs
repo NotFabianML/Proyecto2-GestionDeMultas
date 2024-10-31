@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -22,23 +23,68 @@ namespace API.Controllers
 
         // GET: api/Vehiculos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vehiculo>>> GetVehiculos()
+        public async Task<ActionResult<IEnumerable<VehiculoDTO>>> GetVehiculos()
         {
-            return await _context.Vehiculos
+            var vehiculos = await _context.Vehiculos
+                .Select(v => new VehiculoDTO
+                {
+                    IdVehiculo = v.IdVehiculo,
+                    UsuarioId = v.UsuarioId,
+                    NumeroPlaca = v.NumeroPlaca,
+                    FotoVehiculo = v.FotoVehiculo,
+                    Marca = v.Marca,
+                    Anno = v.Anno ?? 0
+                })
                 .ToListAsync();
+
+            return vehiculos;
         }
 
         // GET: api/Vehiculos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vehiculo>> GetVehiculo(Guid id)
+        public async Task<ActionResult<VehiculoDTO>> GetVehiculo(Guid id)
         {
             var vehiculo = await _context.Vehiculos
-                .FromSqlRaw("EXEC sp_obtenerVehiculoPorId @id = {0}", id)
+                .Where(v => v.IdVehiculo == id)
+                .Select(v => new VehiculoDTO
+                {
+                    IdVehiculo = v.IdVehiculo,
+                    UsuarioId = v.UsuarioId,
+                    NumeroPlaca = v.NumeroPlaca,
+                    FotoVehiculo = v.FotoVehiculo,
+                    Marca = v.Marca,
+                    Anno = v.Anno ?? 0
+                })
                 .FirstOrDefaultAsync();
 
             if (vehiculo == null)
             {
-                return NotFound();
+                return NotFound("Vehículo no encontrado.");
+            }
+
+            return vehiculo;
+        }
+
+        // GET: api/Vehiculos/placa/{numeroPlaca}
+        [HttpGet("placa/{numeroPlaca}")]
+        public async Task<ActionResult<VehiculoDTO>> GetVehiculoPorPlaca(string numeroPlaca)
+        {
+            var vehiculo = await _context.Vehiculos
+                .Where(v => v.NumeroPlaca == numeroPlaca)
+                .Select(v => new VehiculoDTO
+                {
+                    IdVehiculo = v.IdVehiculo,
+                    UsuarioId = v.UsuarioId,
+                    NumeroPlaca = v.NumeroPlaca,
+                    FotoVehiculo = v.FotoVehiculo,
+                    Marca = v.Marca,
+                    Anno = v.Anno ?? 0
+                })
+                .FirstOrDefaultAsync();
+
+            if (vehiculo == null)
+            {
+                return NotFound("Vehículo no encontrado.");
             }
 
             return vehiculo;
@@ -46,15 +92,24 @@ namespace API.Controllers
 
         // GET: api/Vehiculos/usuario/5
         [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<Vehiculo>>> GetVehiculosPorUsuario(Guid usuarioId)
+        public async Task<ActionResult<IEnumerable<VehiculoDTO>>> GetVehiculosPorUsuario(Guid usuarioId)
         {
             var vehiculos = await _context.Vehiculos
-                .FromSqlRaw("EXEC sp_obtenerVehiculosPorUsuario @Usuario_idUsuario = {0}", usuarioId)
+                .Where(v => v.UsuarioId == usuarioId)
+                .Select(v => new VehiculoDTO
+                {
+                    IdVehiculo = v.IdVehiculo,
+                    UsuarioId = v.UsuarioId,
+                    NumeroPlaca = v.NumeroPlaca,
+                    FotoVehiculo = v.FotoVehiculo,
+                    Marca = v.Marca,
+                    Anno = v.Anno ?? 0
+                })
                 .ToListAsync();
 
             if (vehiculos == null || vehiculos.Count == 0)
             {
-                return NotFound();
+                return NotFound("No se encontraron vehículos para el usuario.");
             }
 
             return vehiculos;
@@ -62,9 +117,9 @@ namespace API.Controllers
 
         // PUT: api/Vehiculos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVehiculo(Guid id, Vehiculo vehiculo)
+        public async Task<IActionResult> PutVehiculo(Guid id, VehiculoDTO vehiculoDTO)
         {
-            if (id != vehiculo.IdVehiculo)
+            if (id != vehiculoDTO.IdVehiculo)
             {
                 return BadRequest("El ID proporcionado no coincide con el vehículo.");
             }
@@ -72,13 +127,14 @@ namespace API.Controllers
             var existingVehiculo = await _context.Vehiculos.FindAsync(id);
             if (existingVehiculo == null)
             {
-                return NotFound();
+                return NotFound("Vehículo no encontrado.");
             }
 
-            existingVehiculo.NumeroPlaca = vehiculo.NumeroPlaca;
-            existingVehiculo.FotoVehiculo = vehiculo.FotoVehiculo;
-            existingVehiculo.Marca = vehiculo.Marca;
-            existingVehiculo.Anno = vehiculo.Anno;
+            // Actualizar campos
+            existingVehiculo.NumeroPlaca = vehiculoDTO.NumeroPlaca;
+            existingVehiculo.FotoVehiculo = vehiculoDTO.FotoVehiculo;
+            existingVehiculo.Marca = vehiculoDTO.Marca;
+            existingVehiculo.Anno = vehiculoDTO.Anno;
 
             _context.Entry(existingVehiculo).State = EntityState.Modified;
 
@@ -103,36 +159,45 @@ namespace API.Controllers
 
         // POST: api/Vehiculos
         [HttpPost]
-        public async Task<ActionResult<Vehiculo>> PostVehiculo(Vehiculo vehiculo)
+        public async Task<ActionResult<VehiculoDTO>> PostVehiculo(VehiculoDTO vehiculoDTO)
         {
-            // Verificar si la placa ya existe utilizando el stored procedure
+            // Verificar si la placa ya existe
             var placaExistente = await _context.Vehiculos
-                .FromSqlRaw("EXEC sp_obtenerVehiculoPorPlaca @numero_placa = {0}", vehiculo.NumeroPlaca)
-                .FirstOrDefaultAsync();
+                .AnyAsync(v => v.NumeroPlaca == vehiculoDTO.NumeroPlaca);
 
-            if (placaExistente != null)
+            if (placaExistente)
             {
                 return Conflict("El número de placa ya está registrado.");
             }
 
-            vehiculo.IdVehiculo = Guid.NewGuid();
+            var vehiculo = new Vehiculo
+            {
+                IdVehiculo = Guid.NewGuid(),
+                UsuarioId = vehiculoDTO.UsuarioId,
+                NumeroPlaca = vehiculoDTO.NumeroPlaca,
+                FotoVehiculo = vehiculoDTO.FotoVehiculo,
+                Marca = vehiculoDTO.Marca,
+                Anno = vehiculoDTO.Anno
+            };
+
             _context.Vehiculos.Add(vehiculo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVehiculo", new { id = vehiculo.IdVehiculo }, vehiculo);
+            vehiculoDTO.IdVehiculo = vehiculo.IdVehiculo;
+
+            return CreatedAtAction("GetVehiculo", new { id = vehiculo.IdVehiculo }, vehiculoDTO);
         }
 
-        // DELETE: api/Vehiculos/5 (Eliminación lógica)
+        // DELETE: api/Vehiculos/5 (Eliminación física)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehiculo(Guid id)
         {
             var vehiculo = await _context.Vehiculos.FindAsync(id);
             if (vehiculo == null)
             {
-                return NotFound();
+                return NotFound("Vehículo no encontrado.");
             }
 
-            // En lugar de eliminar, cambiar estado o hacer una eliminación lógica si es necesario
             _context.Vehiculos.Remove(vehiculo);
             await _context.SaveChangesAsync();
 

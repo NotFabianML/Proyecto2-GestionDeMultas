@@ -18,14 +18,19 @@ namespace DataAccess.EF.Models
         public Guid? UsuarioIdJuez { get; set; }
         public Usuario Juez { get; set; }
 
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
+        public DateTime FechaCreacion { get; set; }
 
         [Required]
-        public string Motivo { get; set; }
+        [MaxLength(255)]
+        public string MotivoReclamo { get; set; } // Motivo del usuario para disputar la multa
 
         public EstadoDisputa Estado { get; set; } = EstadoDisputa.EnDisputa;
 
-        public string? Resolucion { get; set; }
+        [MaxLength(255)]
+        public string? ResolucionJuez { get; set; } // Resolución del juez
+
+        [MaxLength(255)]
+        public string? DeclaracionOficial { get; set; } // Declaración del oficial
 
         public DateTime? FechaResolucion { get; set; }
     }

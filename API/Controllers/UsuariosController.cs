@@ -36,7 +36,6 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuarios()
         {
             var usuarios = await _context.Usuarios
-                .Where(u => u.Estado)
                 .Select(u => new UsuarioDTO
                 {
                     IdUsuario = u.IdUsuario,
@@ -45,7 +44,9 @@ namespace API.Controllers
                     Apellido1 = u.Apellido1,
                     Apellido2 = u.Apellido2,
                     Email = u.Email,
+                    FechaNacimiento = u.FechaNacimiento.ToString(),
                     Telefono = u.Telefono,
+                    FotoPerfil = u.FotoPerfil,
                     Estado = u.Estado
                 })
                 .ToListAsync();
@@ -67,8 +68,40 @@ namespace API.Controllers
                     Nombre = u.Nombre,
                     Apellido1 = u.Apellido1,
                     Apellido2 = u.Apellido2,
+                    FechaNacimiento = u.FechaNacimiento.ToString(),
                     Email = u.Email,
                     Telefono = u.Telefono,
+                    FotoPerfil = u.FotoPerfil,
+                    Estado = u.Estado
+                })
+                .FirstOrDefaultAsync();
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return usuario;
+        }
+
+        // Obtener usuario por cédula - GET: api/Usuarios/cedula/{cedula}
+        [HttpGet("{cedula}")]
+        [Authorize]
+        public async Task<ActionResult<UsuarioDTO>> GetUsuarioPorCedula(string cedula)
+        {
+            var usuario = await _context.Usuarios
+                .Where(u => u.Estado && u.Cedula == cedula)
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    Apellido2 = u.Apellido2,
+                    FechaNacimiento = u.FechaNacimiento.ToString(),
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    FotoPerfil = u.FotoPerfil,
                     Estado = u.Estado
                 })
                 .FirstOrDefaultAsync();
@@ -101,7 +134,9 @@ namespace API.Controllers
             existingUsuario.Apellido1 = usuarioDTO.Apellido1;
             existingUsuario.Apellido2 = usuarioDTO.Apellido2;
             existingUsuario.Email = usuarioDTO.Email;
+            existingUsuario.FechaNacimiento = DateOnly.Parse(usuarioDTO.FechaNacimiento);
             existingUsuario.Telefono = usuarioDTO.Telefono;
+            existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
 
             _context.Entry(existingUsuario).State = EntityState.Modified;
 
@@ -141,7 +176,9 @@ namespace API.Controllers
                 Apellido1 = usuarioDTO.Apellido1,
                 Apellido2 = usuarioDTO.Apellido2,
                 Email = usuarioDTO.Email,
+                FechaNacimiento = DateOnly.Parse(usuarioDTO.FechaNacimiento),
                 Telefono = usuarioDTO.Telefono,
+                FotoPerfil = usuarioDTO.FotoPerfil,
                 Estado = true,
                 ContrasennaHash = Encrypt.GetSHA256(usuarioDTO.ContrasennaHash)
             };
@@ -154,10 +191,9 @@ namespace API.Controllers
             return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDTO);
         }
 
-        // DELETE: api/Usuarios/5 (Eliminación lógica)
-        [HttpDelete("{id}")]
-        //[Authorize]
-        public async Task<IActionResult> DeleteUsuario(Guid id)
+        // Método para cambiar el estado de un usuario (1.Activo - 2.Inactivo)
+        [HttpPut("{id}/cambiar-estado/{estado}")]
+        public async Task<IActionResult> CambiarEstado(Guid id, int estado)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario == null)
@@ -165,35 +201,36 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            usuario.Estado = false;
+            usuario.Estado = Convert.ToBoolean(estado);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+
         // POST: api/Usuarios/login
-        [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginDTO loginDTO)
-        {
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
+        //[HttpPost("login")]
+        //public async Task<ActionResult> Login([FromBody] LogInDTO loginDTO)
+        //{
+        //    var usuario = await _context.Usuarios
+        //        .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
 
-            if (usuario == null || !usuario.Estado)
-            {
-                return Unauthorized("Usuario no encontrado o inactivo.");
-            }
+        //    if (usuario == null || !usuario.Estado)
+        //    {
+        //        return Unauthorized("Usuario no encontrado o inactivo.");
+        //    }
 
-            // Verificar la contraseña hasheada usando SHA-256
-            var hashedPassword = Encrypt.GetSHA256(loginDTO.Password);
-            if (usuario.ContrasennaHash != hashedPassword)
-            {
-                return Unauthorized("Contraseña incorrecta.");
-            }
+        //    // Verificar la contraseña hasheada usando SHA-256
+        //    var hashedPassword = Encrypt.GetSHA256(loginDTO.Password);
+        //    if (usuario.ContrasennaHash != hashedPassword)
+        //    {
+        //        return Unauthorized("Contraseña incorrecta.");
+        //    }
 
-            // Generar token JWT
-            var token = GenerateJwtToken(usuario);
-            return Ok(new { Token = token });
-        }
+        //    // Generar token JWT
+        //    var token = GenerateJwtToken(usuario);
+        //    return Ok(new { Token = token });
+        //}
 
         // Asignar rol a usuario usando el SP
         [HttpPost("{id}/roles/{rolId}")]

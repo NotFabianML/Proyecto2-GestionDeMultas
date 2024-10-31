@@ -9,9 +9,10 @@ namespace DTO
         public Guid UsuarioId { get; set; }
         public Guid? JuezId { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public string Motivo { get; set; }
+        public string MotivoReclamo { get; set; }
         public int Estado { get; set; } // Representación del enum EstadoDisputa como int
-        public string Resolucion { get; set; }
+        public string ResolucionJuez { get; set; }
+        public string DeclaracionOficial { get; set; }
         public DateTime? FechaResolucion { get; set; }
     }
 }

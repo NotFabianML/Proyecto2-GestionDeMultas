@@ -17,7 +17,7 @@ namespace DataAccess.EF.Models
         public Guid UsuarioIdOficial { get; set; }
         public Usuario Oficial { get; set; }
 
-        public DateTime FechaHora { get; set; } = DateTime.Now;
+        public DateTime FechaHora { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(9, 2)")]
@@ -28,7 +28,10 @@ namespace DataAccess.EF.Models
         public decimal Longitud { get; set; }
 
         [MaxLength(255)]
-        public string? FotoUrl { get; set; }
+        public string? Comentario { get; set; }
+
+        [MaxLength(255)]
+        public string? FotoPlaca { get; set; }
 
         public EstadoMulta Estado { get; set; } = EstadoMulta.Pendiente;
 

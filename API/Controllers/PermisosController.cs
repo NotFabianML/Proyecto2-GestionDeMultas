@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -22,20 +23,40 @@ namespace API.Controllers
 
         // GET: api/Permisos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Permiso>>> GetPermisos()
+        public async Task<ActionResult<IEnumerable<PermisoDTO>>> GetPermisos()
         {
-            return await _context.Permisos.ToListAsync();
+            var permisos = await _context.Permisos
+                .Where(p => p.Estado)
+                .Select(p => new PermisoDTO
+                {
+                    IdPermiso = p.IdPermiso,
+                    NombrePermiso = p.NombrePermiso,
+                    Descripcion = p.Descripcion,
+                    Estado = p.Estado
+                })
+                .ToListAsync();
+
+            return permisos;
         }
 
         // GET: api/Permisos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Permiso>> GetPermiso(Guid id)
+        public async Task<ActionResult<PermisoDTO>> GetPermiso(Guid id)
         {
-            var permiso = await _context.Permisos.FindAsync(id);
+            var permiso = await _context.Permisos
+                .Where(p => p.IdPermiso == id && p.Estado)
+                .Select(p => new PermisoDTO
+                {
+                    IdPermiso = p.IdPermiso,
+                    NombrePermiso = p.NombrePermiso,
+                    Descripcion = p.Descripcion,
+                    Estado = p.Estado
+                })
+                .FirstOrDefaultAsync();
 
             if (permiso == null)
             {
-                return NotFound();
+                return NotFound("Permiso no encontrado.");
             }
 
             return permiso;
@@ -43,9 +64,9 @@ namespace API.Controllers
 
         // PUT: api/Permisos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPermiso(Guid id, Permiso permiso)
+        public async Task<IActionResult> PutPermiso(Guid id, PermisoDTO permisoDTO)
         {
-            if (id != permiso.IdPermiso)
+            if (id != permisoDTO.IdPermiso)
             {
                 return BadRequest("El ID proporcionado no coincide con el permiso.");
             }
@@ -53,12 +74,12 @@ namespace API.Controllers
             var existingPermiso = await _context.Permisos.FindAsync(id);
             if (existingPermiso == null)
             {
-                return NotFound();
+                return NotFound("Permiso no encontrado.");
             }
 
-            existingPermiso.NombrePermiso = permiso.NombrePermiso;
-            existingPermiso.Descripcion = permiso.Descripcion;
-            existingPermiso.Estado = permiso.Estado;
+            existingPermiso.NombrePermiso = permisoDTO.NombrePermiso;
+            existingPermiso.Descripcion = permisoDTO.Descripcion;
+            existingPermiso.Estado = permisoDTO.Estado;
 
             _context.Entry(existingPermiso).State = EntityState.Modified;
 
@@ -83,18 +104,27 @@ namespace API.Controllers
 
         // POST: api/Permisos
         [HttpPost]
-        public async Task<ActionResult<Permiso>> PostPermiso(Permiso permiso)
+        public async Task<ActionResult<PermisoDTO>> PostPermiso(PermisoDTO permisoDTO)
         {
-            if (_context.Permisos.Any(p => p.NombrePermiso == permiso.NombrePermiso))
+            if (_context.Permisos.Any(p => p.NombrePermiso == permisoDTO.NombrePermiso))
             {
                 return Conflict("El nombre del permiso ya está registrado.");
             }
 
-            permiso.IdPermiso = Guid.NewGuid();
+            var permiso = new Permiso
+            {
+                IdPermiso = Guid.NewGuid(),
+                NombrePermiso = permisoDTO.NombrePermiso,
+                Descripcion = permisoDTO.Descripcion,
+                Estado = true
+            };
+
             _context.Permisos.Add(permiso);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPermiso", new { id = permiso.IdPermiso }, permiso);
+            permisoDTO.IdPermiso = permiso.IdPermiso;
+
+            return CreatedAtAction("GetPermiso", new { id = permiso.IdPermiso }, permisoDTO);
         }
 
         // DELETE: api/Permisos/5 (Eliminación lógica)
@@ -104,7 +134,7 @@ namespace API.Controllers
             var permiso = await _context.Permisos.FindAsync(id);
             if (permiso == null)
             {
-                return NotFound();
+                return NotFound("Permiso no encontrado.");
             }
 
             permiso.Estado = false; // Cambio a inactivo en lugar de eliminar
@@ -143,6 +173,29 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Permiso desactivado.");
+        }
+
+        // Asignar permiso a un rol
+        [HttpPost("{id}/roles/{rolId}")]
+        public async Task<IActionResult> AsignarPermisoARol(Guid id, Guid rolId)
+        {
+            if (!PermisoExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
+            {
+                return NotFound("Permiso o rol no encontrado.");
+            }
+
+            var permisoAsignado = await _context.RolPermisos
+                .AnyAsync(rp => rp.RolId == rolId && rp.PermisoId == id);
+
+            if (permisoAsignado)
+            {
+                return BadRequest("El rol ya tiene asignado este permiso.");
+            }
+
+            // Ejecutar el stored procedure para asignar el permiso al rol
+            await _context.Database.ExecuteSqlRawAsync("EXEC sp_asignarPermisoARol @Permiso_idPermiso = {0}, @Rol_idRol = {1}", id, rolId);
+
+            return Ok("Permiso asignado al rol.");
         }
 
         // Obtener roles asignados a un permiso

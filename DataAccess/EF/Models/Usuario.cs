@@ -31,9 +31,12 @@ namespace DataAccess.EF.Models
         [Required]
         [MaxLength(100)]
         public string Email { get; set; }
+        
+        [Required]
+        public DateOnly FechaNacimiento { get; set; }
 
         [MaxLength(8)]
-        public string? Telefono { get; set; }
+        public string Telefono { get; set; }
 
         [Required]
         [MaxLength(255)]
@@ -44,10 +47,10 @@ namespace DataAccess.EF.Models
 
         public bool Estado { get; set; } = true;
 
-        public bool DosFactorActivo { get; set; } = false;
+        public bool DobleFactorActivo { get; set; } = false;
 
         [MaxLength(100)]
-        public string? DosFactorSecret { get; set; }
+        public string? DobleFactorSecret { get; set; }
 
         public ICollection<UsuarioXRol> UsuarioRoles { get; set; }
         public ICollection<Vehiculo> Vehiculos { get; set; }

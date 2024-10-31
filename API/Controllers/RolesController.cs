@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
+using DTO;
 
 namespace API.Controllers
 {
@@ -22,20 +23,37 @@ namespace API.Controllers
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetRoles()
+        public async Task<ActionResult<IEnumerable<RolDTO>>> GetRoles()
         {
-            return await _context.Roles.ToListAsync();
+            var roles = await _context.Roles
+                .Select(r => new RolDTO
+                {
+                    IdRol = r.IdRol,
+                    NombreRol = r.NombreRol,
+                    Descripcion = r.Descripcion
+                })
+                .ToListAsync();
+
+            return roles;
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Rol>> GetRol(Guid id)
+        public async Task<ActionResult<RolDTO>> GetRol(Guid id)
         {
-            var rol = await _context.Roles.FindAsync(id);
+            var rol = await _context.Roles
+                .Where(r => r.IdRol == id)
+                .Select(r => new RolDTO
+                {
+                    IdRol = r.IdRol,
+                    NombreRol = r.NombreRol,
+                    Descripcion = r.Descripcion
+                })
+                .FirstOrDefaultAsync();
 
             if (rol == null)
             {
-                return NotFound();
+                return NotFound("Rol no encontrado.");
             }
 
             return rol;
@@ -43,9 +61,9 @@ namespace API.Controllers
 
         // PUT: api/Roles/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRol(Guid id, Rol rol)
+        public async Task<IActionResult> PutRol(Guid id, RolDTO rolDTO)
         {
-            if (id != rol.IdRol)
+            if (id != rolDTO.IdRol)
             {
                 return BadRequest("El ID proporcionado no coincide con el rol.");
             }
@@ -53,11 +71,11 @@ namespace API.Controllers
             var existingRol = await _context.Roles.FindAsync(id);
             if (existingRol == null)
             {
-                return NotFound();
+                return NotFound("Rol no encontrado.");
             }
 
-            existingRol.NombreRol = rol.NombreRol;
-            existingRol.Descripcion = rol.Descripcion;
+            existingRol.NombreRol = rolDTO.NombreRol;
+            existingRol.Descripcion = rolDTO.Descripcion;
 
             _context.Entry(existingRol).State = EntityState.Modified;
 
@@ -82,18 +100,26 @@ namespace API.Controllers
 
         // POST: api/Roles
         [HttpPost]
-        public async Task<ActionResult<Rol>> PostRol(Rol rol)
+        public async Task<ActionResult<RolDTO>> PostRol(RolDTO rolDTO)
         {
-            if (_context.Roles.Any(r => r.NombreRol == rol.NombreRol))
+            if (_context.Roles.Any(r => r.NombreRol == rolDTO.NombreRol))
             {
                 return Conflict("El nombre del rol ya está registrado.");
             }
 
-            rol.IdRol = Guid.NewGuid();
+            var rol = new Rol
+            {
+                IdRol = Guid.NewGuid(),
+                NombreRol = rolDTO.NombreRol,
+                Descripcion = rolDTO.Descripcion
+            };
+
             _context.Roles.Add(rol);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRol", new { id = rol.IdRol }, rol);
+            rolDTO.IdRol = rol.IdRol;
+
+            return CreatedAtAction("GetRol", new { id = rol.IdRol }, rolDTO);
         }
 
         // DELETE: api/Roles/5 (Eliminación física)
@@ -103,7 +129,7 @@ namespace API.Controllers
             var rol = await _context.Roles.FindAsync(id);
             if (rol == null)
             {
-                return NotFound();
+                return NotFound("Rol no encontrado.");
             }
 
             _context.Roles.Remove(rol);
