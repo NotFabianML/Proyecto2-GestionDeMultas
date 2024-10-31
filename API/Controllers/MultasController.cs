@@ -73,6 +73,90 @@ namespace API.Controllers
             return Ok(multa);
         }
 
+        // Obtener multa por estado - GET: api/Multas/estado/1
+        [HttpGet("{estado}")]
+        //[Authorize]
+        public async Task<ActionResult<MultaDTO>> GetMultaPorEstado(int estado)
+        {
+            var multa = await _context.Multas
+                .Where(m => (int)m.Estado == estado)
+                .Select(m => new MultaDTO
+                {
+                    IdMulta = m.IdMulta,
+                    VehiculoId = m.VehiculoId,
+                    UsuarioIdOficial = m.UsuarioIdOficial,
+                    FechaHora = m.FechaHora,
+                    Latitud = m.Latitud.ToString(),
+                    Longitud = m.Longitud.ToString(),
+                    Comentario = m.Comentario,
+                    FotoPlaca = m.FotoPlaca,
+                    Estado = (int)m.Estado
+                })
+                .FirstOrDefaultAsync();
+
+            if (multa == null)
+            {
+                return NotFound();
+            }
+
+            return multa;
+        }
+
+        // Obtener multas por número de placa - CONSULTA PUBLICA
+        [HttpGet("{numeroPlaca}")]
+        [AllowAnonymous] // Permite acceso público
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorPlaca(string numeroPlaca)
+        {
+            var multas = await _context.Multas
+                .FromSqlRaw("EXEC sp_GetMultasPorPlaca @NumeroPlaca = {0}", numeroPlaca)
+                .Select(m => new MultaDTO
+                {
+                    IdMulta = m.IdMulta,
+                    FechaHora = m.FechaHora,
+                    Latitud = m.Latitud.ToString(),
+                    Longitud = m.Longitud.ToString(),
+                    Comentario = m.Comentario,
+                    FotoPlaca = m.FotoPlaca,
+                    Estado = (int)m.Estado,
+                    VehiculoId = m.VehiculoId
+                })
+                .ToListAsync();
+
+            if (multas == null || !multas.Any())
+            {
+                return NotFound("No se encontraron multas para el número de placa proporcionado.");
+            }
+
+            return Ok(multas);
+        }
+
+        // Obtener multas por infraccion
+        [HttpGet("{infraccionid}")]
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorInfraccion(Guid infraccionid)
+        {
+            var multas = await _context.Multas
+                .FromSqlRaw("EXEC sp_GetMultasPorInfraccion @idInfraccion = {0}", infraccionid)
+                .Select(m => new MultaDTO
+                {
+                    IdMulta = m.IdMulta,
+                    FechaHora = m.FechaHora,
+                    Latitud = m.Latitud.ToString(),
+                    Longitud = m.Longitud.ToString(),
+                    Comentario = m.Comentario,
+                    FotoPlaca = m.FotoPlaca,
+                    Estado = (int)m.Estado,
+                    VehiculoId = m.VehiculoId
+                })
+                .ToListAsync();
+
+            if (multas == null || !multas.Any())
+            {
+                return NotFound("No se encontraron multas para la infraccion proporcionado.");
+            }
+
+            return Ok(multas);
+        }
+
         // PUT: api/Multas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMulta(Guid id, MultaDTO multaDTO)
@@ -148,8 +232,8 @@ namespace API.Controllers
         }
 
         // Cambiar estado a "En Disputa"
-        [HttpPost("{id}/en-disputa")]
-        public async Task<IActionResult> CambiarEstadoEnDisputa(Guid id)
+        [HttpPost("{id}/cambiar-estado/{estado}")]
+        public async Task<IActionResult> CambiarEstado(Guid id, int estado)
         {
             var multa = await _context.Multas.FindAsync(id);
             if (multa == null)
@@ -157,111 +241,35 @@ namespace API.Controllers
                 return NotFound("Multa no encontrada.");
             }
 
-            multa.Estado = EstadoMulta.EnDisputa;
+            switch (estado)
+            {
+                case 0:
+                    multa.Estado = EstadoMulta.Pagada;
+                    break;
+                case 1:
+                    multa.Estado = EstadoMulta.EnDisputa;
+                    break;
+                case 2:
+                    multa.Estado = EstadoMulta.Pagada;
+                    break;
+                default:
+                    return BadRequest("Estado no válido.");
+            }
+
             _context.Entry(multa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return Ok("Estado de la multa cambiado a En Disputa.");
-        }
-
-        // Cambiar estado a "Pagada"
-        [HttpPost("{id}/pagada")]
-        public async Task<IActionResult> CambiarEstadoPagada(Guid id)
-        {
-            var multa = await _context.Multas.FindAsync(id);
-            if (multa == null)
-            {
-                return NotFound("Multa no encontrada.");
-            }
-
-            multa.Estado = EstadoMulta.Pagada;
-            _context.Entry(multa).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return Ok("Estado de la multa cambiado a Pagada.");
-        }
-
-        // GET: api/Multas/infraccion/{idInfraccion} - Obtener multas por infracción
-        [HttpGet("infraccion/{idInfraccion}")]
-        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorInfraccion(Guid idInfraccion)
-        {
-            var multas = await _context.Multas
-                .FromSqlRaw("EXEC sp_obtenerMultasPorInfraccion @idInfraccion = {0}", idInfraccion)
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    VehiculoId = m.VehiculoId,
-                    UsuarioIdOficial = m.UsuarioIdOficial,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud.ToString(),
-                    Longitud = m.Longitud.ToString(),
-                    Comentario = m.Comentario,
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado
-                })
-                .ToListAsync();
-
-            if (multas == null || !multas.Any())
-            {
-                return NotFound("No se encontraron multas para la infracción especificada.");
-            }
-
-            return Ok(multas);
-        }
-
-        // Asignar infracción a una multa
-        [HttpPost("{id}/infracciones/{infraccionId}")]
-        public async Task<IActionResult> AsignarInfraccionAMulta(Guid id, Guid infraccionId)
-        {
-            if (!MultaExists(id) || !_context.Infracciones.Any(i => i.IdInfraccion == infraccionId))
-            {
-                return NotFound("Multa o infracción no encontrada.");
-            }
-
-            var infraccionAsignada = await _context.MultaInfracciones
-                .AnyAsync(mi => mi.MultaId == id && mi.InfraccionId == infraccionId);
-
-            if (infraccionAsignada)
-            {
-                return BadRequest("La infracción ya está asignada a esta multa.");
-            }
-
-            // Ejecutar el stored procedure para asignar la infracción a la multa
-            await _context.Database.ExecuteSqlRawAsync("EXEC sp_asignarInfraccionAMulta @Multa_idMulta = {0}, @Infraccion_idInfraccion = {1}", id, infraccionId);
-
-            return Ok("Infracción asignada a la multa.");
-        }
-
-        // Obtener multas por número de placa
-        [HttpGet("placa/{numeroPlaca}")]
-        [AllowAnonymous] // Permite acceso público
-        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorPlaca(string numeroPlaca)
-        {
-            var multas = await _context.Multas
-                .FromSqlRaw("EXEC sp_obtenerMultasPorPlaca @NumeroPlaca = {0}", numeroPlaca)
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud.ToString(),
-                    Longitud = m.Longitud.ToString(),
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado,
-                    VehiculoId = m.VehiculoId
-                })
-                .ToListAsync();
-
-            if (multas == null || !multas.Any())
-            {
-                return NotFound("No se encontraron multas para el número de placa proporcionado.");
-            }
-
-            return Ok(multas);
+            return Ok("Estado de la multa cambiado.");
         }
 
         private bool MultaExists(Guid id)
         {
             return _context.Multas.Any(e => e.IdMulta == id);
+        }
+
+        private bool InfraccionExists(Guid id)
+        {
+            return _context.Infracciones.Any(e => e.IdInfraccion == id);
         }
 
         private async Task<bool> VehiculoAndOficialExist(Guid vehiculoId, Guid oficialId)

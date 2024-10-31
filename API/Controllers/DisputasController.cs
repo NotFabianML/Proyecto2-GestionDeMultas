@@ -74,12 +74,12 @@ namespace API.Controllers
             return Ok(disputa);
         }
 
-        // GET: api/Disputas/usuario/5 - Obtener disputas por usuario
-        [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<DisputaDTO>>> GetDisputasPorUsuario(Guid usuarioId)
+        // Obtener disputas por usuario - GET: api/Disputas/usuario/5
+        [HttpGet("{usuarioId}/obtener-disputas")]
+        public async Task<ActionResult<IEnumerable<DisputaDTO>>> GetDisputasDeUsuario(Guid usuarioId)
         {
             var disputas = await _context.Disputas
-                .FromSqlRaw("EXEC sp_obtenerDisputasPorUsuario @Usuario_idUsuario = {0}", usuarioId)
+                .Where(d => d.UsuarioId == usuarioId)
                 .Select(d => new DisputaDTO
                 {
                     IdDisputa = d.IdDisputa,
@@ -187,55 +187,35 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // Cambiar estado a "En Disputa"
-        [HttpPost("{id}/en-disputa")]
-        public async Task<IActionResult> CambiarEstadoEnDisputa(Guid id)
+        // Cambiar estado a Disputa - POST: api/Disputas/5/cambiar-estado/0
+        [HttpPost("{id}/cambiar-estado/{estado}")]
+        public async Task<IActionResult> CambiarEstado(Guid id, int estado)
         {
-            var disputa = await _context.Multas.FindAsync(id);
+            var disputa = await _context.Disputas.FindAsync(id);
             if (disputa == null)
             {
-                return NotFound("Multa no encontrada.");
+                return NotFound("Disputa no encontrada.");
             }
 
-            disputa.Estado = EstadoMulta.EnDisputa;
+            switch (estado)
+            {
+                case 0:
+                    disputa.Estado = EstadoDisputa.EnDisputa;
+                    break;
+                case 1:
+                    disputa.Estado = EstadoDisputa.Aceptada;
+                    break;
+                case 2:
+                    disputa.Estado = EstadoDisputa.Rechazada;
+                    break;
+                default:
+                    return BadRequest("Estado de disputa no válido.");
+            }
+
             _context.Entry(disputa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return Ok("Estado de la multa cambiado a En Disputa.");
-        }
-
-        // Cambiar estado a "Pagada"
-        [HttpPost("{id}/pagada")]
-        public async Task<IActionResult> CambiarEstadoAceptada(Guid id)
-        {
-            var disputa = await _context.Multas.FindAsync(id);
-            if (disputa == null)
-            {
-                return NotFound("Multa no encontrada.");
-            }
-
-            disputa.Estado = EstadoMulta.Pagada;
-            _context.Entry(disputa).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return Ok("Estado de la multa cambiado a En Disputa.");
-        }
-
-        // Cambiar estado a "Rechazada"
-        [HttpPost("{id}/rechazada")]
-        public async Task<IActionResult> CambiarEstadoRechazada(Guid id)
-        {
-            var disputa = await _context.Multas.FindAsync(id);
-            if (disputa == null)
-            {
-                return NotFound("Multa no encontrada.");
-            }
-
-            disputa.Estado = EstadoMulta.EnDisputa;
-            _context.Entry(disputa).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return Ok("Estado de la multa cambiado a En Disputa.");
+            return Ok("Estado de la disputa cambio");
         }
 
         private bool DisputaExists(Guid id)

@@ -12,7 +12,7 @@ namespace DataAccess.EF.Models
         public Usuario Usuario { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(6)]
         public string NumeroPlaca { get; set; }
 
         [MaxLength(255)]

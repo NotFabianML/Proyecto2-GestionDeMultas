@@ -1,5 +1,79 @@
 [
   {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userData",
+        "Type": "DTO.LogInDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "MakeAdmin",
+    "RelativePath": "api/Auth/MakeAdmin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newUser",
+        "Type": "DTO.LogUpDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "RoleTesting",
+    "RelativePath": "api/Auth/RoleTesting",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "API.Controllers.DisputasController",
     "Method": "GetDisputas",
     "RelativePath": "api/Disputas",
@@ -110,8 +184,8 @@
   },
   {
     "ContainingType": "API.Controllers.DisputasController",
-    "Method": "CambiarEstadoEnDisputa",
-    "RelativePath": "api/Disputas/{id}/en-disputa",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Disputas/{id}/cambiar-estado/{estado}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -120,21 +194,10 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.DisputasController",
-    "Method": "CambiarEstadoAceptada",
-    "RelativePath": "api/Disputas/{id}/pagada",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+      },
       {
-        "Name": "id",
-        "Type": "System.Guid",
+        "Name": "estado",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -142,24 +205,8 @@
   },
   {
     "ContainingType": "API.Controllers.DisputasController",
-    "Method": "CambiarEstadoRechazada",
-    "RelativePath": "api/Disputas/{id}/rechazada",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.DisputasController",
-    "Method": "GetDisputasPorUsuario",
-    "RelativePath": "api/Disputas/usuario/{usuarioId}",
+    "Method": "GetDisputasDeUsuario",
+    "RelativePath": "api/Disputas/{usuarioId}/obtener-disputas",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -277,12 +324,38 @@
   },
   {
     "ContainingType": "API.Controllers.InfraccionesController",
-    "Method": "ActivarInfraccion",
-    "RelativePath": "api/Infracciones/{id}/activar",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Infracciones/{id}/estado/{estado}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "estado",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "AsignarInfraccionAMulta",
+    "RelativePath": "api/Infracciones/{multaId}/asignar-infracciones/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "multaId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
       {
         "Name": "id",
         "Type": "System.Guid",
@@ -293,18 +366,12 @@
   },
   {
     "ContainingType": "API.Controllers.InfraccionesController",
-    "Method": "DesactivarInfraccion",
-    "RelativePath": "api/Infracciones/{id}/desactivar",
+    "Method": "InicializarInfracciones",
+    "RelativePath": "api/Infracciones/Inicializar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -338,6 +405,32 @@
       {
         "Name": "multaDTO",
         "Type": "DTO.MultaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.MultaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultaPorEstado",
+    "RelativePath": "api/Multas/{estado}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "estado",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -402,24 +495,8 @@
   },
   {
     "ContainingType": "API.Controllers.MultasController",
-    "Method": "CambiarEstadoEnDisputa",
-    "RelativePath": "api/Multas/{id}/en-disputa",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.MultasController",
-    "Method": "AsignarInfraccionAMulta",
-    "RelativePath": "api/Multas/{id}/infracciones/{infraccionId}",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Multas/{id}/cambiar-estado/{estado}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -430,24 +507,8 @@
         "IsRequired": true
       },
       {
-        "Name": "infraccionId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.MultasController",
-    "Method": "CambiarEstadoPagada",
-    "RelativePath": "api/Multas/{id}/pagada",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
+        "Name": "estado",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -456,13 +517,13 @@
   {
     "ContainingType": "API.Controllers.MultasController",
     "Method": "GetMultasPorInfraccion",
-    "RelativePath": "api/Multas/infraccion/{idInfraccion}",
+    "RelativePath": "api/Multas/{infraccionid}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idInfraccion",
+        "Name": "infraccionid",
         "Type": "System.Guid",
         "IsRequired": true
       }
@@ -482,7 +543,7 @@
   {
     "ContainingType": "API.Controllers.MultasController",
     "Method": "GetMultasPorPlaca",
-    "RelativePath": "api/Multas/placa/{numeroPlaca}",
+    "RelativePath": "api/Multas/{numeroPlaca}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -616,12 +677,38 @@
   },
   {
     "ContainingType": "API.Controllers.PermisosController",
-    "Method": "ActivarPermiso",
-    "RelativePath": "api/Permisos/{id}/activar",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Permisos/{id}/cambiar-estado/{estado}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "estado",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "AsignarPermiso",
+    "RelativePath": "api/Permisos/{rolid}/asignar-permiso/{id}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "rolId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
       {
         "Name": "id",
         "Type": "System.Guid",
@@ -632,14 +719,19 @@
   },
   {
     "ContainingType": "API.Controllers.PermisosController",
-    "Method": "DesactivarPermiso",
-    "RelativePath": "api/Permisos/{id}/desactivar",
-    "HttpMethod": "POST",
+    "Method": "DeletePermisoDeRol",
+    "RelativePath": "api/Permisos/{rolid}/eliminar-permiso/{permisoId}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "rolid",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "permisoId",
         "Type": "System.Guid",
         "IsRequired": true
       }
@@ -648,21 +740,21 @@
   },
   {
     "ContainingType": "API.Controllers.PermisosController",
-    "Method": "GetRolesPorPermiso",
-    "RelativePath": "api/Permisos/{id}/roles",
+    "Method": "GetPermisosPorRol",
+    "RelativePath": "api/Permisos/{rolid}/permisos-por-rol",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "rolid",
         "Type": "System.Guid",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Permiso, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -674,23 +766,22 @@
   },
   {
     "ContainingType": "API.Controllers.PermisosController",
-    "Method": "AsignarPermisoARol",
-    "RelativePath": "api/Permisos/{id}/roles/{rolId}",
+    "Method": "InicializarPermisos",
+    "RelativePath": "api/Permisos/Inicializar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "rolId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
+    "Method": "InicializarPermisosParaRoles",
+    "RelativePath": "api/Permisos/InicializarPermisos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -804,8 +895,50 @@
   },
   {
     "ContainingType": "API.Controllers.RolesController",
-    "Method": "GetPermisosPorRol",
-    "RelativePath": "api/Roles/{id}/permisos",
+    "Method": "AsignarRol",
+    "RelativePath": "api/Roles/{id}/asignar-rol/{rolId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "DeleteRolDeUsuario",
+    "RelativePath": "api/Roles/{id}/eliminar-rol/{rolId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "GetRolesPorUsuario",
+    "RelativePath": "api/Roles/{id}/roles-por-usuario",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -818,7 +951,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Permiso, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -830,44 +963,22 @@
   },
   {
     "ContainingType": "API.Controllers.RolesController",
-    "Method": "AsignarPermiso",
-    "RelativePath": "api/Roles/{id}/permisos/{permisoId}",
+    "Method": "InicializarRoles",
+    "RelativePath": "api/Roles/Inicializar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "permisoId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.RolesController",
-    "Method": "DeletePermisoDeRol",
-    "RelativePath": "api/Roles/{id}/permisos/{permisoId}",
-    "HttpMethod": "DELETE",
+    "Method": "InicializarRolesParaUsuarios",
+    "RelativePath": "api/Roles/InicializarRoles",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "permisoId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -901,6 +1012,32 @@
       {
         "Name": "usuarioDTO",
         "Type": "DTO.UsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.UsuarioDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuarioPorCedula",
+    "RelativePath": "api/Usuarios/{cedula}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cedula",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -965,8 +1102,8 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "ActivarUsuario",
-    "RelativePath": "api/Usuarios/{id}/activar",
+    "Method": "ActivarDobleFactor",
+    "RelativePath": "api/Usuarios/{id}/activar-2fa",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -981,8 +1118,29 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "DesactivarUsuario",
-    "RelativePath": "api/Usuarios/{id}/desactivar",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Usuarios/{id}/cambiar-estado/{estado}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "estado",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "DesactivarDobleFactor",
+    "RelativePath": "api/Usuarios/{id}/desactivar-2fa",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -997,14 +1155,24 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "GetRolesPorUsuario",
-    "RelativePath": "api/Usuarios/{id}/roles",
+    "Method": "InicializarUsuarios",
+    "RelativePath": "api/Usuarios/Inicializar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuariosPorRol",
+    "RelativePath": "api/Usuarios/usuarios-por-rol/{rolid}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "rolid",
         "Type": "System.Guid",
         "IsRequired": true
       }
@@ -1020,64 +1188,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "AsignarRol",
-    "RelativePath": "api/Usuarios/{id}/roles/{rolId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "rolId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "DeleteRolDeUsuario",
-    "RelativePath": "api/Usuarios/{id}/roles/{rolId}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "rolId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "Login",
-    "RelativePath": "api/Usuarios/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "loginDTO",
-        "Type": "DTO.LoginDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.VehiculosController",
@@ -1190,8 +1300,29 @@
   },
   {
     "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "CambiarFotoVehiculo",
+    "RelativePath": "api/Vehiculos/{id}/cambiar-foto/{foto}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "foto",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
     "Method": "GetVehiculoPorPlaca",
-    "RelativePath": "api/Vehiculos/placa/{numeroPlaca}",
+    "RelativePath": "api/Vehiculos/{numeroPlaca}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1217,7 +1348,7 @@
   {
     "ContainingType": "API.Controllers.VehiculosController",
     "Method": "GetVehiculosPorUsuario",
-    "RelativePath": "api/Vehiculos/usuario/{usuarioId}",
+    "RelativePath": "api/Vehiculos/{usuarioId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1239,5 +1370,15 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "API.Controllers.VehiculosController",
+    "Method": "InicializarVehiculosParaUsuarios",
+    "RelativePath": "api/Vehiculos/Inicializar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

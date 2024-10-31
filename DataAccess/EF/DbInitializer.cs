@@ -16,7 +16,7 @@ namespace DataAccess.EF
             context.Database.EnsureCreated();
 
             // Crear roles si no existen
-            string[] roleNames = { "Admin", "User", "Manager" };
+            string[] roleNames = { "Admin", "Usuario", "Oficial", "Juez" };
             foreach (var roleName in roleNames)
             {
                 if (!await roleManager.RoleExistsAsync(roleName))

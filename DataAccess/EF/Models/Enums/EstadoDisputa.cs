@@ -10,6 +10,6 @@ namespace DataAccess.EF.Models.Enums
     {
         EnDisputa = 1,
         Aceptada = 2,
-        Denegada = 3
+        Rechazada = 3
     }
 }

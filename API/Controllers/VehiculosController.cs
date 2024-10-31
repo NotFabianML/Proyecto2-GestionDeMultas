@@ -65,8 +65,8 @@ namespace API.Controllers
             return vehiculo;
         }
 
-        // GET: api/Vehiculos/placa/{numeroPlaca}
-        [HttpGet("placa/{numeroPlaca}")]
+        // Obtener vehiculo por numero de placa - GET: api/Vehiculos/placa/{numeroPlaca}
+        [HttpGet("{numeroPlaca}")]
         public async Task<ActionResult<VehiculoDTO>> GetVehiculoPorPlaca(string numeroPlaca)
         {
             var vehiculo = await _context.Vehiculos
@@ -78,7 +78,7 @@ namespace API.Controllers
                     NumeroPlaca = v.NumeroPlaca,
                     FotoVehiculo = v.FotoVehiculo,
                     Marca = v.Marca,
-                    Anno = v.Anno ?? 0
+                    Anno = v.Anno
                 })
                 .FirstOrDefaultAsync();
 
@@ -90,8 +90,10 @@ namespace API.Controllers
             return vehiculo;
         }
 
+        // Obtener vehiculos por usuario - GET: api/Vehiculos/usuario/5
+
         // GET: api/Vehiculos/usuario/5
-        [HttpGet("usuario/{usuarioId}")]
+        [HttpGet("{usuarioId}")]
         public async Task<ActionResult<IEnumerable<VehiculoDTO>>> GetVehiculosPorUsuario(Guid usuarioId)
         {
             var vehiculos = await _context.Vehiculos
@@ -103,7 +105,7 @@ namespace API.Controllers
                     NumeroPlaca = v.NumeroPlaca,
                     FotoVehiculo = v.FotoVehiculo,
                     Marca = v.Marca,
-                    Anno = v.Anno ?? 0
+                    Anno = v.Anno
                 })
                 .ToListAsync();
 
@@ -153,6 +155,22 @@ namespace API.Controllers
                     throw;
                 }
             }
+
+            return NoContent();
+        }
+
+        // Cambiar foto de vehículo - PUT: api/Vehiculos/5/foto
+        [HttpPut("{id}/cambiar-foto/{foto}")]
+        public async Task<IActionResult> CambiarFotoVehiculo(Guid id, string foto)
+        {
+            var vehiculo = await _context.Vehiculos.FindAsync(id);
+            if (vehiculo == null)
+            {
+                return NotFound();
+            }
+
+            vehiculo.FotoVehiculo = foto;
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -208,5 +226,60 @@ namespace API.Controllers
         {
             return _context.Vehiculos.Any(e => e.IdVehiculo == id);
         }
+
+        // POST: api/Vehiculos/Inicializar
+        [HttpPost("Inicializar")]
+        public async Task<ActionResult> InicializarVehiculosParaUsuarios()
+        {
+            var vehiculosIniciales = new List<VehiculoDTO>
+            {
+                // Vehículos para Carlos Gomez
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("carlosg@gmail.com"), NumeroPlaca = "123456", Marca = "Toyota", Anno = 2018 },
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("carlosg@gmail.com"), NumeroPlaca = "234567", Marca = "Nissan", Anno = 2020 },
+
+                // Vehículos para Maria Perez
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("mariap@gmail.com"), NumeroPlaca = "345678", Marca = "Ford", Anno = 2019 },
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("mariap@gmail.com"), NumeroPlaca = "456789", Marca = "Hyundai", Anno = 2021 },
+
+                // Vehículos para Juan Rojas
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("juanr@gmail.com"), NumeroPlaca = "567890", Marca = "Toyota", Anno = 2017 },
+                new VehiculoDTO { UsuarioId = await ObtenerIdUsuario("juanr@gmail.com"), NumeroPlaca = "678901", Marca = "Kia", Anno = 2023 }
+            };
+
+            foreach (var vehiculoDTO in vehiculosIniciales)
+            {
+                // Verificar si el número de placa ya existe
+                var placaExistente = await _context.Vehiculos.AnyAsync(v => v.NumeroPlaca == vehiculoDTO.NumeroPlaca);
+                if (placaExistente)
+                {
+                    continue; // Omitir si la placa ya está registrada
+                }
+
+                // Crear la entidad Vehiculo
+                var vehiculo = new Vehiculo
+                {
+                    IdVehiculo = Guid.NewGuid(),
+                    UsuarioId = vehiculoDTO.UsuarioId,
+                    NumeroPlaca = vehiculoDTO.NumeroPlaca,
+                    Marca = vehiculoDTO.Marca,
+                    Anno = vehiculoDTO.Anno
+                };
+
+                _context.Vehiculos.Add(vehiculo);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Vehículos iniciales agregados exitosamente.");
+        }
+
+        // Método auxiliar para obtener el Id de usuario por email
+        private async Task<Guid> ObtenerIdUsuario(string email)
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+            return usuario?.IdUsuario ?? Guid.Empty;
+        }
+
+
     }
 }

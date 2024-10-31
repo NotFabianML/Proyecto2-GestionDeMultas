@@ -86,7 +86,7 @@ namespace API.Controllers
 
         // Obtener usuario por cédula - GET: api/Usuarios/cedula/{cedula}
         [HttpGet("{cedula}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<UsuarioDTO>> GetUsuarioPorCedula(string cedula)
         {
             var usuario = await _context.Usuarios
@@ -114,9 +114,24 @@ namespace API.Controllers
             return usuario;
         }
 
+        // Obtener usuarios con x rol asignado
+        [HttpGet("usuarios-por-rol/{rolid}")]
+        public async Task<ActionResult<IEnumerable<Rol>>> GetUsuariosPorRol(Guid rolid)
+        {
+            if (!RolExists(rolid))
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            var roles = await _context.Roles
+                .FromSqlRaw("EXEC sp_GetUsuariosPorRol @Rol_idRol = {0}", rolid)
+                .ToListAsync();
+
+            return roles;
+        }
+
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> PutUsuario(Guid id, UsuarioDTO usuarioDTO)
         {
             if (id != usuarioDTO.IdUsuario)
@@ -191,7 +206,7 @@ namespace API.Controllers
             return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDTO);
         }
 
-        // Método para cambiar el estado de un usuario (1.Activo - 2.Inactivo)
+        // Método para cambiar el estado de un usuario (1.Activo - 0.Inactivo)
         [HttpPut("{id}/cambiar-estado/{estado}")]
         public async Task<IActionResult> CambiarEstado(Guid id, int estado)
         {
@@ -206,6 +221,39 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        // Activar el Doble Factor de Autenticación - PUT: api/Usuarios/5/activar-2fa
+        [HttpPut("{id}/activar-2fa")]
+        public async Task<IActionResult> ActivarDobleFactor(Guid id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            usuario.DobleFactorActivo = true;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // Desactivar el Doble Factor de Autenticación - PUT: api/Usuarios/5/desactivar-2fa
+        [HttpPut("{id}/desactivar-2fa")]
+        public async Task<IActionResult> DesactivarDobleFactor(Guid id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            usuario.DobleFactorActivo = false;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
 
         // POST: api/Usuarios/login
@@ -232,87 +280,88 @@ namespace API.Controllers
         //    return Ok(new { Token = token });
         //}
 
-        // Asignar rol a usuario usando el SP
-        [HttpPost("{id}/roles/{rolId}")]
-        [Authorize]
-        public async Task<IActionResult> AsignarRol(Guid id, Guid rolId)
-        {
-            if (!UsuarioExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
-            {
-                return NotFound("Usuario o rol no encontrado.");
-            }
 
-            var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_insertarUsuarioXRol @Usuario_idUsuario = {0}, @Rol_idRol = {1}", id, rolId);
-            if (result == 0)
-            {
-                return BadRequest("Error al asignar el rol al usuario.");
-            }
-
-            return NoContent();
-        }
-
-        // Obtener roles asignados a un usuario usando el SP
-        [HttpGet("{id}/roles")]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetRolesPorUsuario(Guid id)
-        {
-            if (!UsuarioExists(id))
-            {
-                return NotFound("Usuario no encontrado.");
-            }
-
-            var roles = await _context.Roles
-                .FromSqlRaw("EXEC sp_obtenerRolesPorUsuario @Usuario_idUsuario = {0}", id)
-                .ToListAsync();
-
-            return roles;
-        }
-
-        // Eliminar rol de usuario usando el SP
-        [HttpDelete("{id}/roles/{rolId}")]
-        [Authorize]
-        public async Task<IActionResult> DeleteRolDeUsuario(Guid id, Guid rolId)
-        {
-            if (!UsuarioExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
-            {
-                return NotFound("Usuario o rol no encontrado.");
-            }
-
-            var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_eliminarUsuarioXRol @Usuario_idUsuario = {0}, @Rol_idRol = {1}", id, rolId);
-            if (result == 0)
-            {
-                return BadRequest("Error al eliminar el rol del usuario.");
-            }
-
-            return NoContent();
-        }
 
         // Método privado para generar el token JWT
-        private string GenerateJwtToken(Usuario usuario)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, usuario.IdUsuario.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+        //private string GenerateJwtToken(Usuario usuario)
+        //{
+        //    var claims = new[]
+        //    {
+        //        new Claim(JwtRegisteredClaimNames.Sub, usuario.IdUsuario.ToString()),
+        //        new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
+        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        //    };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: creds);
+        //    var token = new JwtSecurityToken(
+        //        issuer: _configuration["Jwt:Issuer"],
+        //        audience: _configuration["Jwt:Audience"],
+        //        claims: claims,
+        //        expires: DateTime.Now.AddHours(1),
+        //        signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
 
         private bool UsuarioExists(Guid id)
         {
             return _context.Usuarios.Any(e => e.IdUsuario == id);
         }
+
+        private bool RolExists(Guid id)
+        {
+            return _context.Roles.Any(e => e.IdRol == id);
+        }
+
+        // POST: api/Usuarios/Inicializar
+        [HttpPost("Inicializar")]
+        public async Task<ActionResult> InicializarUsuarios()
+        {
+            var usuariosIniciales = new List<UsuarioDTO>
+            {
+                new UsuarioDTO { Cedula = "123456789", Nombre = "Jimmy", Apellido1 = "Bogantes", Apellido2 = "Rodriguez", Email = "admin@nextek.com", Telefono = "87587272", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "218860349", Nombre = "Carlos", Apellido1 = "Gomez", Apellido2 = "Lopez", Email = "carlosg@gmail.com", Telefono = "83123456", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "318860349", Nombre = "Maria", Apellido1 = "Perez", Apellido2 = "Jimenez", Email = "mariap@gmail.com", Telefono = "83234567", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "418860349", Nombre = "Juan", Apellido1 = "Rojas", Apellido2 = "Mora", Email = "juanr@gmail.com", Telefono = "83345678", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "518860349", Nombre = "Luis", Apellido1 = "Chacon", Apellido2 = "Soto", Email = "luiss@nextek.com", Telefono = "83456789", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "618860349", Nombre = "Sofia", Apellido1 = "Castro", Apellido2 = "Vargas", Email = "sofiac@nextek.com", Telefono = "83567890", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "718860349", Nombre = "Andres", Apellido1 = "Vega", Apellido2 = "Quesada", Email = "andresv@nextek.com", Telefono = "83678901", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "118860349", Nombre = "Laura", Apellido1 = "Solis", Apellido2 = "Cruz", Email = "lauras@nextek.com", Telefono = "83789012", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "228860349", Nombre = "Diego", Apellido1 = "Morales", Apellido2 = "Ulate", Email = "diegom@nextek.com", Telefono = "83890123", ContrasennaHash = "pass123" },
+                new UsuarioDTO { Cedula = "338860349", Nombre = "Ana", Apellido1 = "Herrera", Apellido2 = "Diaz", Email = "anah@nextek.com", Telefono = "83901234", ContrasennaHash = "pass123" }
+            };
+
+            foreach (var usuarioDTO in usuariosIniciales)
+            {
+                // Verificar si el email ya existe
+                if (_context.Usuarios.Any(u => u.Email == usuarioDTO.Email))
+                {
+                    continue; // Saltar si el email ya está registrado
+                }
+
+                // Crear el usuario con los datos y hash de contraseña
+                var usuario = new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    Cedula = usuarioDTO.Cedula,
+                    Nombre = usuarioDTO.Nombre,
+                    Apellido1 = usuarioDTO.Apellido1,
+                    Apellido2 = usuarioDTO.Apellido2,
+                    Email = usuarioDTO.Email,
+                    Telefono = usuarioDTO.Telefono,
+                    Estado = true,
+                    ContrasennaHash = Encrypt.GetSHA256("pass123") // Hash de "pass123"
+                };
+
+                _context.Usuarios.Add(usuario);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Usuarios iniciales agregados exitosamente.");
+        }
+
     }
 }
