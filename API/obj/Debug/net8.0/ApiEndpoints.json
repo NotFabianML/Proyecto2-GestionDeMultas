@@ -1029,32 +1029,6 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "GetUsuarioPorCedula",
-    "RelativePath": "api/Usuarios/{cedula}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "cedula",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.UsuarioDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "API.Controllers.UsuariosController",
     "Method": "GetUsuario",
     "RelativePath": "api/Usuarios/{id}",
     "HttpMethod": "GET",
@@ -1152,6 +1126,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuarioPorCedula",
+    "RelativePath": "api/Usuarios/cedula/{cedula}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cedula",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.UsuarioDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",

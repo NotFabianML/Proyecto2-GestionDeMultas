@@ -31,12 +31,14 @@ namespace API
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "CorsPolicy",
-                    policy =>
+                options.AddPolicy(name: "CorsPolicy", policy =>
                     {
-                        policy.WithOrigins("https://localhost:7201");
+                        //policy.WithOrigins("http://localhost:3000/", "https://localhost:7185/");
+                        policy.AllowAnyOrigin();
                         policy.AllowAnyHeader(); //application/json application/xml
                         policy.AllowAnyMethod(); //GET, POST, PUT,Delete
+                        //policy.AllowCredentials();
+
                     });
             });
 
@@ -111,9 +113,7 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
             app.UseCors("CorsPolicy");
-
             app.UseAuthentication(); // Activar autenticación en JWT
             app.UseAuthorization(); // Activar autorización
 

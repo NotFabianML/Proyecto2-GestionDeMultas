@@ -56,7 +56,6 @@ namespace API.Controllers
 
         // GET: api/Usuarios/5
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<UsuarioDTO>> GetUsuario(Guid id)
         {
             var usuario = await _context.Usuarios
@@ -85,8 +84,7 @@ namespace API.Controllers
         }
 
         // Obtener usuario por cédula - GET: api/Usuarios/cedula/{cedula}
-        [HttpGet("{cedula}")]
-        //[Authorize]
+        [HttpGet("cedula/{cedula}")]
         public async Task<ActionResult<UsuarioDTO>> GetUsuarioPorCedula(string cedula)
         {
             var usuario = await _context.Usuarios

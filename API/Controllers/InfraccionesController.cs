@@ -208,7 +208,8 @@ namespace API.Controllers
                     Articulo = infraccionDTO.Articulo,
                     Titulo = infraccionDTO.Titulo,
                     Monto = infraccionDTO.Monto,
-                    Descripcion = infraccionDTO.Descripcion
+                    Descripcion = infraccionDTO.Descripcion,
+                    Estado = true
                 };
 
                 _context.Infracciones.Add(infraccion);
