@@ -33,7 +33,7 @@ namespace API.Controllers
                     NumeroPlaca = v.NumeroPlaca,
                     FotoVehiculo = v.FotoVehiculo,
                     Marca = v.Marca,
-                    Anno = v.Anno ?? 0
+                    Anno = v.Anno
                 })
                 .ToListAsync();
 
@@ -53,7 +53,7 @@ namespace API.Controllers
                     NumeroPlaca = v.NumeroPlaca,
                     FotoVehiculo = v.FotoVehiculo,
                     Marca = v.Marca,
-                    Anno = v.Anno ?? 0
+                    Anno = v.Anno
                 })
                 .FirstOrDefaultAsync();
 
@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         // Obtener vehiculo por numero de placa - GET: api/Vehiculos/placa/{numeroPlaca}
-        [HttpGet("{numeroPlaca}")]
+        [HttpGet("placa/{numeroPlaca}")]
         public async Task<ActionResult<VehiculoDTO>> GetVehiculoPorPlaca(string numeroPlaca)
         {
             var vehiculo = await _context.Vehiculos
@@ -93,7 +93,7 @@ namespace API.Controllers
         // Obtener vehiculos por usuario - GET: api/Vehiculos/usuario/5
 
         // GET: api/Vehiculos/usuario/5
-        [HttpGet("{usuarioId}")]
+        [HttpGet("usuario/{usuarioId}")]
         public async Task<ActionResult<IEnumerable<VehiculoDTO>>> GetVehiculosPorUsuario(Guid usuarioId)
         {
             var vehiculos = await _context.Vehiculos

@@ -114,18 +114,34 @@ namespace API.Controllers
 
         // Obtener usuarios con x rol asignado
         [HttpGet("usuarios-por-rol/{rolid}")]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetUsuariosPorRol(Guid rolid)
+        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuariosPorRol(Guid rolid)
         {
             if (!RolExists(rolid))
             {
-                return NotFound("Usuario no encontrado.");
+                return NotFound("Rol no encontrado.");
             }
 
-            var roles = await _context.Roles
+            var usuarios = await _context.Usuarios
                 .FromSqlRaw("EXEC sp_GetUsuariosPorRol @Rol_idRol = {0}", rolid)
                 .ToListAsync();
 
-            return roles;
+            // Mapea manualmente Usuario a UsuarioDTO
+            var usuariosDTO = usuarios.Select(u => new UsuarioDTO
+            {
+                IdUsuario = u.IdUsuario,
+                Cedula = u.Cedula,
+                Nombre = u.Nombre,
+                Apellido1 = u.Apellido1,
+                Apellido2 = u.Apellido2,
+                Email = u.Email,
+                Telefono = u.Telefono,
+                Estado = u.Estado,
+                ContrasennaHash = u.ContrasennaHash,
+                FechaNacimiento = u.FechaNacimiento.ToString("yyyy-MM-dd"),
+                FotoPerfil = u.FotoPerfil
+            }).ToList();
+
+            return usuariosDTO;
         }
 
         // PUT: api/Usuarios/5
@@ -147,7 +163,7 @@ namespace API.Controllers
             existingUsuario.Apellido1 = usuarioDTO.Apellido1;
             existingUsuario.Apellido2 = usuarioDTO.Apellido2;
             existingUsuario.Email = usuarioDTO.Email;
-            existingUsuario.FechaNacimiento = DateOnly.Parse(usuarioDTO.FechaNacimiento);
+            existingUsuario.FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy");
             existingUsuario.Telefono = usuarioDTO.Telefono;
             existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
 
@@ -189,7 +205,7 @@ namespace API.Controllers
                 Apellido1 = usuarioDTO.Apellido1,
                 Apellido2 = usuarioDTO.Apellido2,
                 Email = usuarioDTO.Email,
-                FechaNacimiento = DateOnly.Parse(usuarioDTO.FechaNacimiento),
+                FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy"),
                 Telefono = usuarioDTO.Telefono,
                 FotoPerfil = usuarioDTO.FotoPerfil,
                 Estado = true,
@@ -319,16 +335,16 @@ namespace API.Controllers
         {
             var usuariosIniciales = new List<UsuarioDTO>
             {
-                new UsuarioDTO { Cedula = "123456789", Nombre = "Jimmy", Apellido1 = "Bogantes", Apellido2 = "Rodriguez", Email = "admin@nextek.com", Telefono = "87587272", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "218860349", Nombre = "Carlos", Apellido1 = "Gomez", Apellido2 = "Lopez", Email = "carlosg@gmail.com", Telefono = "83123456", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "318860349", Nombre = "Maria", Apellido1 = "Perez", Apellido2 = "Jimenez", Email = "mariap@gmail.com", Telefono = "83234567", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "418860349", Nombre = "Juan", Apellido1 = "Rojas", Apellido2 = "Mora", Email = "juanr@gmail.com", Telefono = "83345678", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "518860349", Nombre = "Luis", Apellido1 = "Chacon", Apellido2 = "Soto", Email = "luiss@nextek.com", Telefono = "83456789", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "618860349", Nombre = "Sofia", Apellido1 = "Castro", Apellido2 = "Vargas", Email = "sofiac@nextek.com", Telefono = "83567890", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "718860349", Nombre = "Andres", Apellido1 = "Vega", Apellido2 = "Quesada", Email = "andresv@nextek.com", Telefono = "83678901", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "118860349", Nombre = "Laura", Apellido1 = "Solis", Apellido2 = "Cruz", Email = "lauras@nextek.com", Telefono = "83789012", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "228860349", Nombre = "Diego", Apellido1 = "Morales", Apellido2 = "Ulate", Email = "diegom@nextek.com", Telefono = "83890123", ContrasennaHash = "pass123" },
-                new UsuarioDTO { Cedula = "338860349", Nombre = "Ana", Apellido1 = "Herrera", Apellido2 = "Diaz", Email = "anah@nextek.com", Telefono = "83901234", ContrasennaHash = "pass123" }
+                new UsuarioDTO { Cedula = "123456789", Nombre = "Jimmy", Apellido1 = "Bogantes", Apellido2 = "Rodriguez", Email = "admin@nextek.com", Telefono = "87587272", ContrasennaHash = "pass123", FechaNacimiento = "10-05-1985" },
+        new UsuarioDTO { Cedula = "218860349", Nombre = "Carlos", Apellido1 = "Gomez", Apellido2 = "Lopez", Email = "carlosg@gmail.com", Telefono = "83123456", ContrasennaHash = "pass123", FechaNacimiento = "15-08-1990" },
+        new UsuarioDTO { Cedula = "318860349", Nombre = "Maria", Apellido1 = "Perez", Apellido2 = "Jimenez", Email = "mariap@gmail.com", Telefono = "83234567", ContrasennaHash = "pass123", FechaNacimiento = "12-03-1992" },
+        new UsuarioDTO { Cedula = "418860349", Nombre = "Juan", Apellido1 = "Rojas", Apellido2 = "Mora", Email = "juanr@gmail.com", Telefono = "83345678", ContrasennaHash = "pass123", FechaNacimiento = "20-12-1988" },
+        new UsuarioDTO { Cedula = "518860349", Nombre = "Luis", Apellido1 = "Chacon", Apellido2 = "Soto", Email = "luiss@nextek.com", Telefono = "83456789", ContrasennaHash = "pass123", FechaNacimiento = "22-04-1995" },
+        new UsuarioDTO { Cedula = "618860349", Nombre = "Sofia", Apellido1 = "Castro", Apellido2 = "Vargas", Email = "sofiac@nextek.com", Telefono = "83567890", ContrasennaHash = "pass123", FechaNacimiento = "17-09-1997" },
+        new UsuarioDTO { Cedula = "718860349", Nombre = "Andres", Apellido1 = "Vega", Apellido2 = "Quesada", Email = "andresv@nextek.com", Telefono = "83678901", ContrasennaHash = "pass123", FechaNacimiento = "05-06-1993" },
+        new UsuarioDTO { Cedula = "118860349", Nombre = "Laura", Apellido1 = "Solis", Apellido2 = "Cruz", Email = "lauras@nextek.com", Telefono = "83789012", ContrasennaHash = "pass123", FechaNacimiento = "11-01-1989" },
+        new UsuarioDTO { Cedula = "228860349", Nombre = "Diego", Apellido1 = "Morales", Apellido2 = "Ulate", Email = "diegom@nextek.com", Telefono = "83890123", ContrasennaHash = "pass123", FechaNacimiento = "30-07-1998" },
+        new UsuarioDTO { Cedula = "338860349", Nombre = "Ana", Apellido1 = "Herrera", Apellido2 = "Diaz", Email = "anah@nextek.com", Telefono = "83901234", ContrasennaHash = "pass123", FechaNacimiento = "25-11-1996" }
             };
 
             foreach (var usuarioDTO in usuariosIniciales)
@@ -350,7 +366,8 @@ namespace API.Controllers
                     Email = usuarioDTO.Email,
                     Telefono = usuarioDTO.Telefono,
                     Estado = true,
-                    ContrasennaHash = Encrypt.GetSHA256("pass123") // Hash de "pass123"
+                    ContrasennaHash = Encrypt.GetSHA256("pass123"), // Hash de "pass123"
+                    FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy")
                 };
 
                 _context.Usuarios.Add(usuario);
