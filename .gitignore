@@ -1,10 +1,26 @@
-# Visual Studio
+# Visual Studio y VS Code
 .vs/
 .vscode/
 
-# Build results
+# Archivos de Rider y otras herramientas de JetBrains
+.idea/
+.Rider/
+
+# Build results y temporales
 bin/
 obj/
+*.pidb
+*.tmp
+*.temp
+*.bak
+*.swp
+*.cache
+*.csproj.user
+*.dbmdl
+
+# Caché de paquetes .NET y dependencias
+/packages/
+/nuget/
 
 # User-specific files
 *.user
@@ -17,21 +33,22 @@ obj/
 
 # NuGet
 *.nupkg
-# Include if NuGet packages should be downloaded locally
-#packages/
 project.lock.json
 project.fragment.lock.json
 
+# Archivos de configuración de entorno de ASP.NET Core
+# appsettings.json
+# appsettings.*.json
+# secrets.json
+# global.json
+
 # Publish
-*.publishsettings
+.artifacts/
+.publish/
+.publishsettings
 *.pubxml
 *.pubxml.user
 
-# Others
+# Configuración específica del sistema operativo
+Thumbs.db
 .DS_Store
-*.cache
-*.tmp
-
-# ASP.NET Core environment settings
-appsettings.Development.json
-secrets.json
