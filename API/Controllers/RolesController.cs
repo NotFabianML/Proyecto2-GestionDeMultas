@@ -62,7 +62,7 @@ namespace API.Controllers
 
         // Obtener roles asignados a un usuario -  
         [HttpGet("{id}/roles-por-usuario")]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetRolesPorUsuario(Guid id)
+        public async Task<ActionResult<IEnumerable<RolDTO>>> GetRolesPorUsuario(Guid id)
         {
             if (!UsuarioExists(id))
             {
@@ -73,7 +73,15 @@ namespace API.Controllers
                 .FromSqlRaw("EXEC sp_GetRolesPorUsuario @Usuario_idUsuario = {0}", id)
                 .ToListAsync();
 
-            return roles;
+            // mapea manualmente rol a rolDTO
+            var rolesDTO = roles.Select(r => new RolDTO
+            {
+                IdRol = r.IdRol,
+                NombreRol = r.NombreRol,
+                Descripcion = r.Descripcion
+            }).ToList();
+
+            return rolesDTO;
         }
 
         // PUT: api/Roles/5

@@ -75,7 +75,7 @@ namespace API.Controllers
         }
 
         // Obtener disputas por usuario - GET: api/Disputas/usuario/5
-        [HttpGet("{usuarioId}/obtener-disputas")]
+        [HttpGet("{usuarioId}/disputas-por-usuario")]
         public async Task<ActionResult<IEnumerable<DisputaDTO>>> GetDisputasDeUsuario(Guid usuarioId)
         {
             var disputas = await _context.Disputas

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.EF;
 using DataAccess.EF.Models;
 using DTO;
+using System.Data;
 
 namespace API.Controllers
 {
@@ -26,7 +27,6 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<PermisoDTO>>> GetPermisos()
         {
             var permisos = await _context.Permisos
-                .Where(p => p.Estado)
                 .Select(p => new PermisoDTO
                 {
                     IdPermiso = p.IdPermiso,
@@ -64,7 +64,7 @@ namespace API.Controllers
 
         // Obtener permisos asignados a un rol
         [HttpGet("{rolid}/permisos-por-rol")]
-        public async Task<ActionResult<IEnumerable<Permiso>>> GetPermisosPorRol(Guid rolid)
+        public async Task<ActionResult<IEnumerable<PermisoDTO>>> GetPermisosPorRol(Guid rolid)
         {
             if (!RolExists(rolid))
             {
@@ -72,10 +72,19 @@ namespace API.Controllers
             }
 
             var permisos = await _context.Permisos
-                .FromSqlRaw("EXEC sp_obtenerPermisosPorRol @Rol_idRol = {0}", rolid)
+                .FromSqlRaw("EXEC sp_GetPermisosPorRol @Rol_idRol = {0}", rolid)
                 .ToListAsync();
 
-            return permisos;
+            // mapea manualmente rol a rolDTO
+            var permisosDTO = permisos.Select(p => new PermisoDTO
+            {
+                IdPermiso = p.IdPermiso,
+                NombrePermiso = p.NombrePermiso,
+                Descripcion = p.Descripcion,
+                Estado = p.Estado
+            }).ToList();
+
+            return permisosDTO;
         }
 
         // PUT: api/Permisos/5
@@ -144,7 +153,7 @@ namespace API.Controllers
         }
 
         // Asignar permiso a un rol
-        [HttpPost("{rolid}/asignar-permiso/{id}")]
+        [HttpPost("{rolId}/asignar-permiso/{id}")]
         public async Task<IActionResult> AsignarPermiso(Guid rolId, Guid id)
         {
             if (!PermisoExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
@@ -171,7 +180,7 @@ namespace API.Controllers
                 return NotFound("Permiso no encontrado.");
             }
 
-            permiso.Estado = false; // Cambio a inactivo en lugar de eliminar
+            _context.Permisos.Remove(permiso);
             await _context.SaveChangesAsync();
 
             return NoContent();

@@ -206,7 +206,7 @@
   {
     "ContainingType": "API.Controllers.DisputasController",
     "Method": "GetDisputasDeUsuario",
-    "RelativePath": "api/Disputas/{usuarioId}/obtener-disputas",
+    "RelativePath": "api/Disputas/{usuarioId}/disputas-por-usuario",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -325,7 +325,7 @@
   {
     "ContainingType": "API.Controllers.InfraccionesController",
     "Method": "CambiarEstado",
-    "RelativePath": "api/Infracciones/{id}/estado/{estado}",
+    "RelativePath": "api/Infracciones/{id}/cambiar-estado/{estado}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -699,7 +699,7 @@
   {
     "ContainingType": "API.Controllers.PermisosController",
     "Method": "AsignarPermiso",
-    "RelativePath": "api/Permisos/{rolid}/asignar-permiso/{id}",
+    "RelativePath": "api/Permisos/{rolId}/asignar-permiso/{id}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -754,7 +754,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Permiso, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.PermisoDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -951,7 +951,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataAccess.EF.Models.Rol, DataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.RolDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

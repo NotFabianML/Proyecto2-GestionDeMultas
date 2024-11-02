@@ -32,7 +32,8 @@ namespace API.Controllers
                     Articulo = i.Articulo,
                     Titulo = i.Titulo,
                     Monto = i.Monto,
-                    Descripcion = i.Descripcion
+                    Descripcion = i.Descripcion,
+                    Estado = i.Estado
                 })
                 .ToListAsync();
 
@@ -51,7 +52,8 @@ namespace API.Controllers
                     Articulo = i.Articulo,
                     Titulo = i.Titulo,
                     Monto = i.Monto,
-                    Descripcion = i.Descripcion
+                    Descripcion = i.Descripcion,
+                    Estado = i.Estado
                 })
                 .FirstOrDefaultAsync();
 
@@ -150,7 +152,7 @@ namespace API.Controllers
         }
 
         // Cambiar estado
-        [HttpPost("{id}/estado/{estado}")]
+        [HttpPost("{id}/cambiar-estado/{estado}")]
         public async Task<IActionResult> CambiarEstado(Guid id, int estado)
         {
             var infraccion = await _context.Infracciones.FindAsync(id);
@@ -162,7 +164,7 @@ namespace API.Controllers
             infraccion.Estado = Convert.ToBoolean(estado);
             await _context.SaveChangesAsync();
 
-            return Ok("Infracción desactivada.");
+            return NoContent();
         }
 
         private bool InfraccionExists(Guid id)
