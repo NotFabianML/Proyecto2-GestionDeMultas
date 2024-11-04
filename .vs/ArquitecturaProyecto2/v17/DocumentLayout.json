@@ -1,46 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\",
+  "WorkspaceRootPath": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\infraccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\infracciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\infracciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\models\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\consultapublicadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\consultapublicadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\multadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\multadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\dto\\infracciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\infracciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\dataaccess\\ef\\models\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\infraccion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\dto\\consultapublicadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\consultapublicadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\dto\\multadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\multadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\users\\jimyb\\desktop\\cenfotec\\proyecto 2\\repo backend\\dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,54 +46,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ConsultaPublicaDTO.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\ConsultaPublicaDTO.cs",
-              "RelativeDocumentMoniker": "DTO\\ConsultaPublicaDTO.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\ConsultaPublicaDTO.cs",
-              "RelativeToolTip": "DTO\\ConsultaPublicaDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T17:43:33.438Z",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAswAoAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-04T03:44:35.663Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "API\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAwwFcBAADgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:50:02.22Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Multa.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Multa.cs",
-              "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Multa.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Multa.cs",
-              "RelativeToolTip": "DataAccess\\EF\\Models\\Multa.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAADwvxoAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:02:17.537Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "MultaDTO.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\MultaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\MultaDTO.cs",
               "RelativeDocumentMoniker": "DTO\\MultaDTO.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\MultaDTO.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\MultaDTO.cs",
               "RelativeToolTip": "DTO\\MultaDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -106,11 +80,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Infraccion.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Infraccion.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DataAccess\\EF\\Models\\Infraccion.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Infraccion.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Infraccion.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DataAccess\\EF\\Models\\Infraccion.cs",
               "RelativeToolTip": "DataAccess\\EF\\Models\\Infraccion.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -119,11 +93,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "InfraccionDTO.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\InfraccionDTO.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\InfraccionDTO.cs",
               "RelativeDocumentMoniker": "DTO\\InfraccionDTO.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\InfraccionDTO.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\InfraccionDTO.cs",
               "RelativeToolTip": "DTO\\InfraccionDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -134,52 +108,65 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MultasController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\MultasController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\MultasController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\MultasController.cs",
               "RelativeToolTip": "API\\Controllers\\MultasController.cs",
-              "ViewState": "AgIAALcBAAAAAAAAAAAUwNUBAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAowIwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-01T16:54:38.633Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "API\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAYwFcBAADgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T13:50:02.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Multa.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DataAccess\\EF\\Models\\Multa.cs",
+              "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Multa.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DataAccess\\EF\\Models\\Multa.cs",
+              "RelativeToolTip": "DataAccess\\EF\\Models\\Multa.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvxoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T13:02:17.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConsultaPublicaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\ConsultaPublicaDTO.cs",
+              "RelativeDocumentMoniker": "DTO\\ConsultaPublicaDTO.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\DTO\\ConsultaPublicaDTO.cs",
+              "RelativeToolTip": "DTO\\ConsultaPublicaDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T17:43:33.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "RolesController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
+              "DocumentMoniker": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\RolesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\RolesController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
+              "ToolTip": "C:\\Users\\jimyb\\Desktop\\CENFOTEC\\PROYECTO 2\\REPO BACKEND\\API\\Controllers\\RolesController.cs",
               "RelativeToolTip": "API\\Controllers\\RolesController.cs",
               "ViewState": "AgIAAP0AAAAAAAAAAAAUwCoBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-03T14:47:29.133Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UsuarioDTO.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\UsuarioDTO.cs",
-              "RelativeDocumentMoniker": "DTO\\UsuarioDTO.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\UsuarioDTO.cs",
-              "RelativeToolTip": "DTO\\UsuarioDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:52:01.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "InfraccionesController.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\InfraccionesController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\InfraccionesController.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\InfraccionesController.cs",
-              "RelativeToolTip": "API\\Controllers\\InfraccionesController.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAIwPMAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-01T02:47:59.762Z",
               "EditorCaption": ""
             }
           ]

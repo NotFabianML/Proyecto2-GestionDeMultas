@@ -16,3 +16,21 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DataAccess.deps.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DataAccess.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DTO.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\bin\Debug\net8.0\DTO.pdb
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.AssemblyInfo.cs
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.sourcelink.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.csproj.Up2Date
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.pdb
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
