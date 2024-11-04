@@ -20,11 +20,11 @@ namespace DataAccess.EF.Models
         public DateTime FechaHora { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(9, 2)")]
+        [Column(TypeName = "decimal(9, 4)")]
         public decimal Latitud { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(9, 2)")]
+        [Column(TypeName = "decimal(9, 5)")]
         public decimal Longitud { get; set; }
 
         [MaxLength(255)]

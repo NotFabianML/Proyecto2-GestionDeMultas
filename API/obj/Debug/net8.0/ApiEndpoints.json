@@ -375,6 +375,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.InfraccionesController",
+    "Method": "InicializarInfraccionesParaMultas",
+    "RelativePath": "api/Infracciones/InicializarInfracciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.MultasController",
     "Method": "GetMultas",
     "RelativePath": "api/Multas",
@@ -405,32 +415,6 @@
       {
         "Name": "multaDTO",
         "Type": "DTO.MultaDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.MultaDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "API.Controllers.MultasController",
-    "Method": "GetMultaPorEstado",
-    "RelativePath": "api/Multas/{estado}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "estado",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -517,7 +501,7 @@
   {
     "ContainingType": "API.Controllers.MultasController",
     "Method": "GetMultasPorInfraccion",
-    "RelativePath": "api/Multas/{infraccionid}",
+    "RelativePath": "api/Multas/{infraccionid}/multas-por-infraccion",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -542,8 +526,70 @@
   },
   {
     "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultaPorEstado",
+    "RelativePath": "api/Multas/estado/{estado}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "estado",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.MultaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultasPorTituloInfraccion",
+    "RelativePath": "api/Multas/infraccion/{tituloInfraccion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tituloInfraccion",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "InicializarMultas",
+    "RelativePath": "api/Multas/Inicializar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
     "Method": "GetMultasPorPlaca",
-    "RelativePath": "api/Multas/{numeroPlaca}",
+    "RelativePath": "api/Multas/placa/{numeroPlaca}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -556,7 +602,59 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.MultaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultasPorCedulaUsuarioFinal",
+    "RelativePath": "api/Multas/usuario/cedula/{cedula}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cedula",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.MultasController",
+    "Method": "GetMultasPorIdUsuarioFinal",
+    "RelativePath": "api/Multas/usuario/id/{usuarioId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

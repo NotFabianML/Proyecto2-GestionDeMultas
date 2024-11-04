@@ -222,5 +222,38 @@ namespace API.Controllers
             return Ok("Infracciones iniciales agregadas exitosamente.");
         }
 
+        // POST: api/Multas/InicializarInfracciones
+        [HttpPost("InicializarInfracciones")]
+        public async Task<ActionResult> InicializarInfraccionesParaMultas()
+        {
+            // Lista de IDs de infracciones (en lugar de InfraccionDTOs) para asignar a las multas
+            var infraccionesIds = await _context.Infracciones.Select(i => i.IdInfraccion).ToListAsync();
+
+            // Obtener todas las multas creadas
+            var multas = await _context.Multas.ToListAsync();
+
+            foreach (var multa in multas)
+            {
+                // Seleccionar aleatoriamente tres infracciones para cada multa
+                var infraccionesSeleccionadas = infraccionesIds.OrderBy(_ => Guid.NewGuid()).Take(3).ToList();
+
+                foreach (var idInfraccion in infraccionesSeleccionadas)
+                {
+                    // Asignar cada infracción a la multa usando el stored procedure
+                    var result = await _context.Database.ExecuteSqlRawAsync(
+                        "EXEC sp_AsignarInfraccion @Multa_idMulta = {0}, @Infraccion_idInfraccion = {1}", multa.IdMulta, idInfraccion);
+
+                    // Verificar si hubo un error en la asignación
+                    if (result == 0)
+                    {
+                        return BadRequest($"Error al asignar la infracción con ID '{idInfraccion}' a la multa con ID '{multa.IdMulta}'.");
+                    }
+                }
+            }
+
+            return Ok("Infracciones asignadas a las multas exitosamente.");
+        }
+
+
     }
 }
