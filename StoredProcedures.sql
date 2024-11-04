@@ -185,16 +185,39 @@ GO
 
 ------------------------------------
 -- Obtener multas por número de placa
+--CREATE PROCEDURE sp_GetMultasPorPlaca
+--    @NumeroPlaca NVARCHAR(6)
+--AS
+--BEGIN
+--    SELECT m.IdMulta, m.VehiculoId,m.UsuarioIdOficial, m.FechaHora, m.Latitud, m.Longitud, m.Comentario, m.FotoPlaca, m.Estado
+--    FROM Multas AS m
+--    INNER JOIN Vehiculos AS v ON m.VehiculoId = v.IdVehiculo
+--    WHERE v.NumeroPlaca = @NumeroPlaca;
+--END;
+--GO
+
+-- Obtener multas por número de placa
 CREATE PROCEDURE sp_GetMultasPorPlaca
-    @NumeroPlaca NVARCHAR(6)
+    @NumeroPlaca NVARCHAR(10)
 AS
 BEGIN
-    SELECT m.IdMulta, m.FechaHora, m.Latitud, m.Longitud, m.Comentario, m.FotoPlaca, m.Estado, v.NumeroPlaca
+    SELECT 
+        m.IdMulta,
+        m.VehiculoId, -- Devuelve el IdVehiculo en lugar de NumeroPlaca
+        m.UsuarioIdOficial, -- Devuelve el IdUsuarioOficial en lugar de Cedula
+        m.FechaHora,
+        m.Latitud,
+        m.Longitud,
+        m.Comentario,
+        m.FotoPlaca,
+        m.Estado
     FROM Multas AS m
     INNER JOIN Vehiculos AS v ON m.VehiculoId = v.IdVehiculo
     WHERE v.NumeroPlaca = @NumeroPlaca;
 END;
 GO
+
+
 
 ------------------------------------
 -- Obtener multas por infraccion
@@ -211,6 +234,29 @@ BEGIN
     WHERE mxi.InfraccionId = @idInfraccion;
 END;
 GO
+
+-- Obtener multas por título de infracción
+CREATE PROCEDURE sp_GetMultasPorTituloInfraccion
+    @TituloInfraccion NVARCHAR(100)
+AS
+BEGIN
+    SELECT 
+        m.IdMulta,
+        m.VehiculoId,
+        m.UsuarioIdOficial,
+        m.FechaHora,
+        m.Latitud,
+        m.Longitud,
+        m.Comentario,
+        m.FotoPlaca,
+        m.Estado
+    FROM Multas AS m
+    INNER JOIN MultaInfracciones AS mi ON m.IdMulta = mi.MultaId
+    INNER JOIN Infracciones AS i ON mi.InfraccionId = i.IdInfraccion
+    WHERE i.Titulo = @TituloInfraccion;
+END;
+GO
+
 
 ----------------------------------------------------
 ------------------- DISPUTA ------------------------
