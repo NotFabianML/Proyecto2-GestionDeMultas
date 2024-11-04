@@ -163,39 +163,38 @@ GO
 
 ------------------------------------
 -- Asignar las infracciones a Multa
+--CREATE PROCEDURE sp_AsignarInfraccion
+--    @Multa_idMulta UNIQUEIDENTIFIER,
+--    @Infraccion_idInfraccion UNIQUEIDENTIFIER
+--AS
+--BEGIN
+--    IF NOT EXISTS (
+--        SELECT 1 FROM MultaInfracciones 
+--        WHERE MultaId = @Multa_idMulta AND InfraccionId = @Infraccion_idInfraccion
+--    )
+--    BEGIN
+--        INSERT INTO MultaInfracciones (MultaId, InfraccionId)
+--        VALUES (@Multa_idMulta, @Infraccion_idInfraccion);
+--    END
+--END;
+--GO
+
+-- Asignar Infracción a Multa
 CREATE PROCEDURE sp_AsignarInfraccion
     @Multa_idMulta UNIQUEIDENTIFIER,
     @Infraccion_idInfraccion UNIQUEIDENTIFIER
 AS
 BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM MultaInfracciones 
-        WHERE MultaId = @Multa_idMulta AND InfraccionId = @Infraccion_idInfraccion
-    )
-    BEGIN
-        INSERT INTO MultaInfracciones (MultaId, InfraccionId)
-        VALUES (@Multa_idMulta, @Infraccion_idInfraccion);
-    END
+    INSERT INTO MultaInfracciones (MultaId, InfraccionId)
+    VALUES (@Multa_idMulta, @Infraccion_idInfraccion);
 END;
 GO
+
 
 ----------------------------------------------------
 ------------------- MULTA --------------------------
 ----------------------------------------------------
-
-------------------------------------
--- Obtener multas por número de placa
---CREATE PROCEDURE sp_GetMultasPorPlaca
---    @NumeroPlaca NVARCHAR(6)
---AS
---BEGIN
---    SELECT m.IdMulta, m.VehiculoId,m.UsuarioIdOficial, m.FechaHora, m.Latitud, m.Longitud, m.Comentario, m.FotoPlaca, m.Estado
---    FROM Multas AS m
---    INNER JOIN Vehiculos AS v ON m.VehiculoId = v.IdVehiculo
---    WHERE v.NumeroPlaca = @NumeroPlaca;
---END;
---GO
-
+-------------------------------------
 -- Obtener multas por número de placa
 CREATE PROCEDURE sp_GetMultasPorPlaca
     @NumeroPlaca NVARCHAR(10)
@@ -235,6 +234,7 @@ BEGIN
 END;
 GO
 
+------------------------------------------
 -- Obtener multas por título de infracción
 CREATE PROCEDURE sp_GetMultasPorTituloInfraccion
     @TituloInfraccion NVARCHAR(100)
@@ -254,6 +254,29 @@ BEGIN
     INNER JOIN MultaInfracciones AS mi ON m.IdMulta = mi.MultaId
     INNER JOIN Infracciones AS i ON mi.InfraccionId = i.IdInfraccion
     WHERE i.Titulo = @TituloInfraccion;
+END;
+GO
+
+-- Obtener multas por Cédula o ID de Usuario
+CREATE PROCEDURE sp_GetMultasPorUsuario
+    @Cedula NVARCHAR(50) = NULL,
+    @UsuarioId UNIQUEIDENTIFIER = NULL
+AS
+BEGIN
+    SELECT 
+        m.IdMulta,
+        m.VehiculoId,
+        m.UsuarioIdOficial,
+        m.FechaHora,
+        m.Latitud,
+        m.Longitud,
+        m.Comentario,
+        m.FotoPlaca,
+        m.Estado
+    FROM Multas AS m
+    INNER JOIN Usuarios AS u ON m.UsuarioIdOficial = u.IdUsuario
+    WHERE (@Cedula IS NOT NULL AND u.Cedula = @Cedula)
+       OR (@UsuarioId IS NOT NULL AND u.IdUsuario = @UsuarioId);
 END;
 GO
 
