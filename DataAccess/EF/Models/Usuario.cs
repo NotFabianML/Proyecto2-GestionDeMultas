@@ -1,7 +1,9 @@
 ﻿using DTO;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,10 @@ namespace DataAccess.EF.Models
     {
         [Key]
         public Guid IdUsuario { get; set; } = Guid.NewGuid();
+        public string? UserId { get; set; } // Enlaza con AspNetUsers
+
+        [ForeignKey("UserId")]
+        public IdentityUser IdentityUser { get; set; }  // Navegación hacia IdentityUser
 
         [Required]
         [MaxLength(10)]

@@ -14,6 +14,7 @@ using DataAccess.EF;
 using DataAccess.EF.Models;
 using DTO;
 using BusinessLogic;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers
 {
@@ -21,11 +22,13 @@ namespace API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
 
-        public UsuariosController(AppDbContext context, IConfiguration configuration)
+        public UsuariosController(UserManager<IdentityUser> userManager, AppDbContext context, IConfiguration configuration)
         {
+            _userManager = userManager;
             _context = context;
             _configuration = configuration;
         }
@@ -268,57 +271,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-
-
-        // POST: api/Usuarios/login
-        //[HttpPost("login")]
-        //public async Task<ActionResult> Login([FromBody] LogInDTO loginDTO)
-        //{
-        //    var usuario = await _context.Usuarios
-        //        .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
-
-        //    if (usuario == null || !usuario.Estado)
-        //    {
-        //        return Unauthorized("Usuario no encontrado o inactivo.");
-        //    }
-
-        //    // Verificar la contraseña hasheada usando SHA-256
-        //    var hashedPassword = Encrypt.GetSHA256(loginDTO.Password);
-        //    if (usuario.ContrasennaHash != hashedPassword)
-        //    {
-        //        return Unauthorized("Contraseña incorrecta.");
-        //    }
-
-        //    // Generar token JWT
-        //    var token = GenerateJwtToken(usuario);
-        //    return Ok(new { Token = token });
-        //}
-
-
-
-        // Método privado para generar el token JWT
-        //private string GenerateJwtToken(Usuario usuario)
-        //{
-        //    var claims = new[]
-        //    {
-        //        new Claim(JwtRegisteredClaimNames.Sub, usuario.IdUsuario.ToString()),
-        //        new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
-        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        //    };
-
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //    var token = new JwtSecurityToken(
-        //        issuer: _configuration["Jwt:Issuer"],
-        //        audience: _configuration["Jwt:Audience"],
-        //        claims: claims,
-        //        expires: DateTime.Now.AddHours(1),
-        //        signingCredentials: creds);
-
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
-        //}
-
         private bool UsuarioExists(Guid id)
         {
             return _context.Usuarios.Any(e => e.IdUsuario == id);
@@ -335,30 +287,50 @@ namespace API.Controllers
         {
             var usuariosIniciales = new List<UsuarioDTO>
             {
-                new UsuarioDTO { Cedula = "123456789", Nombre = "Jimmy", Apellido1 = "Bogantes", Apellido2 = "Rodriguez", Email = "admin@nextek.com", Telefono = "87587272", ContrasennaHash = "pass123", FechaNacimiento = "10-05-1985" },
-        new UsuarioDTO { Cedula = "218860349", Nombre = "Carlos", Apellido1 = "Gomez", Apellido2 = "Lopez", Email = "carlosg@gmail.com", Telefono = "83123456", ContrasennaHash = "pass123", FechaNacimiento = "15-08-1990" },
-        new UsuarioDTO { Cedula = "318860349", Nombre = "Maria", Apellido1 = "Perez", Apellido2 = "Jimenez", Email = "mariap@gmail.com", Telefono = "83234567", ContrasennaHash = "pass123", FechaNacimiento = "12-03-1992" },
-        new UsuarioDTO { Cedula = "418860349", Nombre = "Juan", Apellido1 = "Rojas", Apellido2 = "Mora", Email = "juanr@gmail.com", Telefono = "83345678", ContrasennaHash = "pass123", FechaNacimiento = "20-12-1988" },
-        new UsuarioDTO { Cedula = "518860349", Nombre = "Luis", Apellido1 = "Chacon", Apellido2 = "Soto", Email = "luiss@nextek.com", Telefono = "83456789", ContrasennaHash = "pass123", FechaNacimiento = "22-04-1995" },
-        new UsuarioDTO { Cedula = "618860349", Nombre = "Sofia", Apellido1 = "Castro", Apellido2 = "Vargas", Email = "sofiac@nextek.com", Telefono = "83567890", ContrasennaHash = "pass123", FechaNacimiento = "17-09-1997" },
-        new UsuarioDTO { Cedula = "718860349", Nombre = "Andres", Apellido1 = "Vega", Apellido2 = "Quesada", Email = "andresv@nextek.com", Telefono = "83678901", ContrasennaHash = "pass123", FechaNacimiento = "05-06-1993" },
-        new UsuarioDTO { Cedula = "118860349", Nombre = "Laura", Apellido1 = "Solis", Apellido2 = "Cruz", Email = "lauras@nextek.com", Telefono = "83789012", ContrasennaHash = "pass123", FechaNacimiento = "11-01-1989" },
-        new UsuarioDTO { Cedula = "228860349", Nombre = "Diego", Apellido1 = "Morales", Apellido2 = "Ulate", Email = "diegom@nextek.com", Telefono = "83890123", ContrasennaHash = "pass123", FechaNacimiento = "30-07-1998" },
-        new UsuarioDTO { Cedula = "338860349", Nombre = "Ana", Apellido1 = "Herrera", Apellido2 = "Diaz", Email = "anah@nextek.com", Telefono = "83901234", ContrasennaHash = "pass123", FechaNacimiento = "25-11-1996" }
+                new UsuarioDTO { Cedula = "123456789", Nombre = "Jimmy", Apellido1 = "Bogantes", Apellido2 = "Rodriguez", Email = "admin@nextek.com", Telefono = "87587272", ContrasennaHash = "Password123!", FechaNacimiento = "10-05-1985" },
+                new UsuarioDTO { Cedula = "218860349", Nombre = "Carlos", Apellido1 = "Gomez", Apellido2 = "Lopez", Email = "carlosg@gmail.com", Telefono = "83123456", ContrasennaHash = "Password123!", FechaNacimiento = "15-08-1990" },
+                new UsuarioDTO { Cedula = "318860349", Nombre = "Maria", Apellido1 = "Perez", Apellido2 = "Jimenez", Email = "mariap@gmail.com", Telefono = "83234567", ContrasennaHash = "Password123!", FechaNacimiento = "12-03-1992" },
+                new UsuarioDTO { Cedula = "418860349", Nombre = "Juan", Apellido1 = "Rojas", Apellido2 = "Mora", Email = "juanr@gmail.com", Telefono = "83345678", ContrasennaHash = "Password123!", FechaNacimiento = "20-12-1988" },
+                new UsuarioDTO { Cedula = "518860349", Nombre = "Luis", Apellido1 = "Chacon", Apellido2 = "Soto", Email = "luiss@nextek.com", Telefono = "83456789", ContrasennaHash = "Password123!", FechaNacimiento = "22-04-1995" },
+                new UsuarioDTO { Cedula = "618860349", Nombre = "Sofia", Apellido1 = "Castro", Apellido2 = "Vargas", Email = "sofiac@nextek.com", Telefono = "83567890", ContrasennaHash = "Password123!", FechaNacimiento = "17-09-1997" },
+                new UsuarioDTO { Cedula = "718860349", Nombre = "Andres", Apellido1 = "Vega", Apellido2 = "Quesada", Email = "andresv@nextek.com", Telefono = "83678901", ContrasennaHash = "Password123!", FechaNacimiento = "05-06-1993" },
+                new UsuarioDTO { Cedula = "118860349", Nombre = "Laura", Apellido1 = "Solis", Apellido2 = "Cruz", Email = "lauras@nextek.com", Telefono = "83789012", ContrasennaHash = "Password123!", FechaNacimiento = "11-01-1989" },
+                new UsuarioDTO { Cedula = "228860349", Nombre = "Diego", Apellido1 = "Morales", Apellido2 = "Ulate", Email = "diegom@nextek.com", Telefono = "83890123", ContrasennaHash = "Password123!", FechaNacimiento = "30-07-1998" },
+                new UsuarioDTO { Cedula = "338860349", Nombre = "Ana", Apellido1 = "Herrera", Apellido2 = "Diaz", Email = "anah@nextek.com", Telefono = "83901234", ContrasennaHash = "Password123!", FechaNacimiento = "25-11-1996" }
             };
 
             foreach (var usuarioDTO in usuariosIniciales)
             {
-                // Verificar si el email ya existe
-                if (_context.Usuarios.Any(u => u.Email == usuarioDTO.Email))
+                // Verificar si el email ya existe en AspNetUsers
+                var usuarioIdentity = await _userManager.FindByEmailAsync(usuarioDTO.Email);
+                if (usuarioIdentity == null)
                 {
-                    continue; // Saltar si el email ya está registrado
+                    // Crear el usuario en AspNetUsers
+                    usuarioIdentity = new IdentityUser { Email = usuarioDTO.Email, UserName = usuarioDTO.Email };
+                    var createResult = await _userManager.CreateAsync(usuarioIdentity, usuarioDTO.ContrasennaHash);
+
+                    // Manejar errores específicos de creación en AspNetUsers
+                    if (!createResult.Succeeded)
+                    {
+                        foreach (var error in createResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, $"Error al crear usuario en AspNetUsers: {error.Description}");
+                        }
+                        continue; // Saltar la creación en Usuarios si falla en AspNetUsers
+                    }
                 }
 
-                // Crear el usuario con los datos y hash de contraseña
-                var usuario = new Usuario
+                // Verificar si el usuario ya existe en la tabla Usuarios
+                if (_context.Usuarios.Any(u => u.Email == usuarioDTO.Email))
+                {
+                    continue; // Saltar si el usuario ya está en la tabla Usuarios
+                }
+
+                // Crear el usuario en la tabla Usuarios
+                var usuarioDatos = new Usuario
                 {
                     IdUsuario = Guid.NewGuid(),
+                    UserId = usuarioIdentity.Id, // Relacionar con AspNetUsers
                     Cedula = usuarioDTO.Cedula,
                     Nombre = usuarioDTO.Nombre,
                     Apellido1 = usuarioDTO.Apellido1,
@@ -366,14 +338,19 @@ namespace API.Controllers
                     Email = usuarioDTO.Email,
                     Telefono = usuarioDTO.Telefono,
                     Estado = true,
-                    ContrasennaHash = Encrypt.GetSHA256("pass123"), // Hash de "pass123"
+                    ContrasennaHash = Encrypt.GetSHA256(usuarioDTO.ContrasennaHash),
                     FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy")
                 };
 
-                _context.Usuarios.Add(usuario);
+                _context.Usuarios.Add(usuarioDatos);
             }
 
             await _context.SaveChangesAsync();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Retornar errores si existen
+            }
 
             return Ok("Usuarios iniciales agregados exitosamente.");
         }

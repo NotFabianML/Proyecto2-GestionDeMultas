@@ -43,6 +43,11 @@
         "Name": "newUser",
         "Type": "DTO.LogUpDTO",
         "IsRequired": true
+      },
+      {
+        "Name": "roleName",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1058,6 +1063,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
+    "Method": "CrearRol",
+    "RelativePath": "api/Roles/CrearRol",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nuevoRol",
+        "Type": "DTO.RolDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.RolesController",

@@ -8,6 +8,7 @@ using DataAccess.EF;
 using DataAccess.EF.Models;
 using DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers
 {
@@ -16,10 +17,13 @@ namespace API.Controllers
     public class RolesController : ControllerBase
     {
         private readonly AppDbContext _context;
-
-        public RolesController(AppDbContext context)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, AppDbContext context)
         {
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         // GET: api/Roles
@@ -123,6 +127,34 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpPost("CrearRol")]
+        public async Task<IActionResult> CrearRol([FromBody] RolDTO nuevoRol)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Crear el rol en la tabla Rol
+            var rol = new Rol
+            {
+                NombreRol = nuevoRol.NombreRol,
+                Descripcion = nuevoRol.Descripcion
+            };
+
+            _context.Roles.Add(rol);
+            await _context.SaveChangesAsync();
+
+            // También crear el rol en Identity si no existe
+            if (!await _roleManager.RoleExistsAsync(nuevoRol.NombreRol))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(nuevoRol.NombreRol));
+            }
+
+            return Ok("Rol creado exitosamente.");
+        }
+
+
         // POST: api/Roles
         [HttpPost]
         public async Task<ActionResult<RolDTO>> PostRol(RolDTO rolDTO)
@@ -225,13 +257,29 @@ namespace API.Controllers
 
             foreach (var rolDTO in rolesIniciales)
             {
-                // Verificar si el rol ya existe
-                if (_context.Roles.Any(r => r.NombreRol == rolDTO.NombreRol))
+                // Crear el rol en AspNetRoles si no existe
+                if (!await _roleManager.RoleExistsAsync(rolDTO.NombreRol))
                 {
-                    continue; // Saltar este rol si ya existe
+                    var createResult = await _roleManager.CreateAsync(new IdentityRole(rolDTO.NombreRol));
+
+                    // Manejo de errores específicos en la creación de AspNetRoles
+                    if (!createResult.Succeeded)
+                    {
+                        foreach (var error in createResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, $"Error al crear rol en AspNetRoles: {error.Description}");
+                        }
+                        continue; // Saltar la creación en Roles si falla en AspNetRoles
+                    }
                 }
 
-                // Crear la entidad Rol
+                // Verificar si el rol ya existe en la tabla personalizada Roles
+                if (_context.Roles.Any(r => r.NombreRol == rolDTO.NombreRol))
+                {
+                    continue; // Saltar si el rol ya está en la tabla Roles personalizada
+                }
+
+                // Crear el rol en la tabla Roles personalizada
                 var rol = new Rol
                 {
                     IdRol = Guid.NewGuid(),
@@ -244,59 +292,128 @@ namespace API.Controllers
 
             await _context.SaveChangesAsync();
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // Retornar errores si existen
+            }
+
             return Ok("Roles iniciales agregados exitosamente.");
         }
+
+
+        // POST: api/Usuarios/InicializarRoles
+        //[HttpPost("InicializarRoles")]
+        //public async Task<ActionResult> InicializarRolesParaUsuarios()
+        //{
+        //    var usuariosRoles = new List<(string emailUsuario, string nombreRol)>
+        //    {
+        //        // Asignación de rol para 'Administrador'
+        //        ("admin@nextek.com", "Administrador"),
+
+        //        // Asignación de roles para 'Usuarios Normales'
+        //        ("carlosg@gmail.com", "Usuario Final"),
+        //        ("mariap@gmail.com", "Usuario Final"),
+        //        ("juanr@gmail.com", "Usuario Final"),
+
+        //        // Asignación de roles para 'Oficiales de Tránsito'
+        //        ("luiss@nextek.com", "Oficial de Tránsito"),
+        //        ("sofiac@nextek.com", "Oficial de Tránsito"),
+        //        ("andresv@nextek.com", "Oficial de Tránsito"),
+
+        //        // Asignación de roles para 'Jueces de Tránsito'
+        //        ("lauras@nextek.com", "Juez de Tránsito"),
+        //        ("diegom@nextek.com", "Juez de Tránsito"),
+        //        ("anah@nextek.com", "Juez de Tránsito")
+        //    };
+
+        //    foreach (var (emailUsuario, nombreRol) in usuariosRoles)
+        //    {
+        //        // Obtener IDs de Usuario y Rol
+        //        var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == emailUsuario);
+        //        var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == nombreRol);
+
+        //        // Verificar si el usuario y el rol existen
+        //        if (usuario == null || rol == null)
+        //        {
+        //            continue; // Si no existen, saltar esta asignación
+        //        }
+
+        //        // Ejecutar el stored procedure para asignar el rol al usuario
+        //        var result = await _context.Database.ExecuteSqlRawAsync(
+        //            "EXEC sp_AsignarRol @Usuario_idUsuario = {0}, @Rol_idRol = {1}", usuario.IdUsuario, rol.IdRol);
+
+        //        // Verificar si hubo un error en la asignación
+        //        if (result == 0)
+        //        {
+        //            return BadRequest($"Error al asignar el rol '{nombreRol}' al usuario con email '{emailUsuario}'.");
+        //        }
+        //    }
+
+        //    return Ok("Roles asignados a los usuarios exitosamente.");
+        //}
 
         // POST: api/Usuarios/InicializarRoles
         [HttpPost("InicializarRoles")]
         public async Task<ActionResult> InicializarRolesParaUsuarios()
         {
             var usuariosRoles = new List<(string emailUsuario, string nombreRol)>
-            {
-                // Asignación de rol para 'Administrador'
-                ("admin@nextek.com", "Administrador"),
-        
-                // Asignación de roles para 'Usuarios Normales'
-                ("carlosg@gmail.com", "Usuario Final"),
-                ("mariap@gmail.com", "Usuario Final"),
-                ("juanr@gmail.com", "Usuario Final"),
-        
-                // Asignación de roles para 'Oficiales de Tránsito'
-                ("luiss@nextek.com", "Oficial de Tránsito"),
-                ("sofiac@nextek.com", "Oficial de Tránsito"),
-                ("andresv@nextek.com", "Oficial de Tránsito"),
-        
-                // Asignación de roles para 'Jueces de Tránsito'
-                ("lauras@nextek.com", "Juez de Tránsito"),
-                ("diegom@nextek.com", "Juez de Tránsito"),
-                ("anah@nextek.com", "Juez de Tránsito")
-            };
+    {
+        // Asignación de rol para 'Administrador'
+        ("admin@nextek.com", "Administrador"),
+
+        // Asignación de roles para 'Usuarios Normales'
+        ("carlosg@gmail.com", "Usuario Final"),
+        ("mariap@gmail.com", "Usuario Final"),
+        ("juanr@gmail.com", "Usuario Final"),
+
+        // Asignación de roles para 'Oficiales de Tránsito'
+        ("luiss@nextek.com", "Oficial de Tránsito"),
+        ("sofiac@nextek.com", "Oficial de Tránsito"),
+        ("andresv@nextek.com", "Oficial de Tránsito"),
+
+        // Asignación de roles para 'Jueces de Tránsito'
+        ("lauras@nextek.com", "Juez de Tránsito"),
+        ("diegom@nextek.com", "Juez de Tránsito"),
+        ("anah@nextek.com", "Juez de Tránsito")
+    };
 
             foreach (var (emailUsuario, nombreRol) in usuariosRoles)
             {
-                // Obtener IDs de Usuario y Rol
-                var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == emailUsuario);
-                var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == nombreRol);
-
-                // Verificar si el usuario y el rol existen
-                if (usuario == null || rol == null)
+                // Obtener el usuario en Identity por correo electrónico
+                var usuarioIdentity = await _userManager.FindByEmailAsync(emailUsuario);
+                if (usuarioIdentity == null)
                 {
-                    continue; // Si no existen, saltar esta asignación
+                    ModelState.AddModelError(string.Empty, $"Usuario con email '{emailUsuario}' no encontrado en AspNetUsers.");
+                    continue;
                 }
 
-                // Ejecutar el stored procedure para asignar el rol al usuario
-                var result = await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC sp_AsignarRol @Usuario_idUsuario = {0}, @Rol_idRol = {1}", usuario.IdUsuario, rol.IdRol);
-
-                // Verificar si hubo un error en la asignación
-                if (result == 0)
+                // Verificar si el rol existe en Identity
+                if (!await _roleManager.RoleExistsAsync(nombreRol))
                 {
-                    return BadRequest($"Error al asignar el rol '{nombreRol}' al usuario con email '{emailUsuario}'.");
+                    ModelState.AddModelError(string.Empty, $"Rol '{nombreRol}' no encontrado en AspNetRoles.");
+                    continue;
+                }
+
+                // Asignar el rol al usuario en Identity
+                var addToRoleResult = await _userManager.AddToRoleAsync(usuarioIdentity, nombreRol);
+                if (!addToRoleResult.Succeeded)
+                {
+                    foreach (var error in addToRoleResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, $"Error al asignar rol '{nombreRol}' al usuario '{emailUsuario}': {error.Description}");
+                    }
+                    continue;
                 }
             }
 
-            return Ok("Roles asignados a los usuarios exitosamente.");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok("Roles asignados a los usuarios exitosamente en Identity.");
         }
+
 
 
     }

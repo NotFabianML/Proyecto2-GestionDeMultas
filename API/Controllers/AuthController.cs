@@ -1,7 +1,10 @@
-﻿using DataAccess.EF.Models;
+﻿using BusinessLogic;
+using DataAccess.EF;
+using DataAccess.EF.Models;
 using DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,25 +18,42 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly AppDbContext _context;
 
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LogInDTO userData)
         {
-            var usuario = await _userManager.FindByNameAsync(userData.Email);
-            if (usuario != null && await _userManager.CheckPasswordAsync(usuario, userData.Password))
+            // Cambia FindByNameAsync a FindByEmailAsync para buscar por correo electrónico
+            var usuario = await _userManager.FindByEmailAsync(userData.Email);
+            if (usuario == null)
             {
-                var token = await GenerateJwtToken(usuario);
-                return Ok(new { token });
+                return BadRequest("Usuario no encontrado."); // Error específico si el usuario no existe
             }
-            return Unauthorized();
+
+            // Verifica si la contraseña es correcta sin aplicar hashing manual 
+            //var passwordHashed = Encrypt.GetSHA256(userData.Password);
+            var passwordValid = await _userManager.CheckPasswordAsync(usuario, userData.Password);
+            if (!passwordValid)
+            {
+                return Unauthorized("Contraseña incorrecta."); // Error específico si la contraseña no coincide
+            }
+
+            // Genera el token JWT si la autenticación es exitosa
+            var token = await GenerateJwtToken(usuario);
+            return Ok(new { token });
         }
+
+
 
         private async Task<string> GenerateJwtToken(IdentityUser usuario)
         {
@@ -65,24 +85,55 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] LogUpDTO newUser)
+        public async Task<IActionResult> Register([FromBody] LogUpDTO newUser, string roleName = "Usuario")
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = new AppUser
+            // Crear el usuario en AspNetUsers usando Email como identificador único
+            var usuarioIdentity = new AppUser
             {
-                UserName = newUser.Cedula,
-                Email = newUser.Email
+                Email = newUser.Email,
+                UserName = newUser.Email  // Usar Email como UserName para compatibilidad con Identity
             };
 
-            var createdUserResult = await _userManager.CreateAsync(usuario, newUser.Password);
+            // Crear el usuario en AspNetUsers
+            var passwordHashed = Encrypt.GetSHA256(newUser.Password);
+            var createdUserResult = await _userManager.CreateAsync(usuarioIdentity, passwordHashed);
 
             if (createdUserResult.Succeeded)
             {
-                await _userManager.AddToRoleAsync(usuario, "User");
+                var userId = usuarioIdentity.Id;
+
+                // Crear el registro en la tabla Usuarios
+                var usuarioDatos = new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    UserId = userId,  // Relación con AspNetUsers
+                    Cedula = newUser.Cedula,
+                    Nombre = newUser.Nombre,
+                    Apellido1 = newUser.Apellido1,
+                    Apellido2 = newUser.Apellido2,
+                    Email = newUser.Email,
+                    FechaNacimiento = DateOnly.ParseExact(newUser.FechaNacimiento, "dd-MM-yyyy"),
+                    Telefono = newUser.Telefono,
+                    FotoPerfil = newUser.FotoPerfil,
+                    Estado = true
+                };
+
+                _context.Usuarios.Add(usuarioDatos);
+                await _context.SaveChangesAsync();
+
+                // Asigna el rol en Identity al usuario
+                if (!await _roleManager.RoleExistsAsync(roleName))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                await _userManager.AddToRoleAsync(usuarioIdentity, roleName);
+
                 return Created("Usuario creado exitosamente", null);
             }
 
@@ -93,6 +144,9 @@ namespace API.Controllers
 
             return BadRequest(ModelState);
         }
+
+
+
 
         [HttpGet]
         public async Task<bool> RoleTesting(string userName)

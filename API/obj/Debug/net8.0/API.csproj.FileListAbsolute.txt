@@ -1,11 +1,3 @@
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.csproj.AssemblyReference.cache
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.GeneratedMSBuildEditorConfig.editorconfig
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.AssemblyInfo.cs
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
-C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.sourcelink.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\appsettings.Development.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\appsettings.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\API.exe
@@ -261,6 +253,14 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\BusinessLogic.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\DTO.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\DataAccess.pdb
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.csproj.AssemblyReference.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.GeneratedMSBuildEditorConfig.editorconfig
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.AssemblyInfo.cs
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.sourcelink.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\staticwebassets.build.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\staticwebassets.development.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props

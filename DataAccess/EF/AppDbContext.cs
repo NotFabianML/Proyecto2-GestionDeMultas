@@ -29,6 +29,13 @@ namespace DataAccess.EF
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configuración de relación Usuario - IdentityUser
+            modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.IdentityUser)
+                .WithOne()
+                .HasForeignKey<Usuario>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // Configuración de relación Usuario - UsuarioXRol - Rol
             modelBuilder.Entity<UsuarioXRol>()
                 .HasKey(ur => new { ur.UsuarioId, ur.RolId });
