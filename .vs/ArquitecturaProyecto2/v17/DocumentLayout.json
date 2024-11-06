@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\multascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,12 +19,16 @@
       "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\ef\\models\\multa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|solutionrelative:api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBE45383-FE0F-4EE2-A82B-B75AAF0C7E75}|DataAccess\\DataAccess.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dataaccess\\ef\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\dto\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3C244283-036A-4E9F-A217-BBE7413AD35A}|DTO\\DTO.csproj|solutionrelative:dto\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{468C6E4D-52DE-476A-9E2C-5315FD426231}|API\\API.csproj|c:\\programacionpersonal\\unvst\\ejemploproyecto2\\arquitecturaproyecto2\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,37 +70,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "20241105224320_AppDbContext-updated.cs",
-              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs",
-              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs",
-              "RelativeToolTip": "DataAccess\\Migrations\\20241105224320_AppDbContext-updated.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "MultasController.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\MultasController.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\MultasController.cs",
+              "RelativeToolTip": "API\\Controllers\\MultasController.cs",
+              "ViewState": "AgIAAJcBAAAAAAAAAAAowMwBAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-05T22:43:20.391Z",
+              "WhenOpened": "2024-11-06T00:40:50.527Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "Multa.cs",
+              "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Multa.cs",
+              "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Multa.cs",
+              "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Multa.cs",
+              "RelativeToolTip": "DataAccess\\EF\\Models\\Multa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-06T00:40:45.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "RolesController.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\RolesController.cs",
               "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\RolesController.cs",
               "RelativeToolTip": "API\\Controllers\\RolesController.cs",
-              "ViewState": "AgIAAFABAAAAAAAAAAAqwBkAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAIwBAAAAAAAAAAAswJMBAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T20:49:06.661Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "RolDTO.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\RolDTO.cs",
               "RelativeDocumentMoniker": "DTO\\RolDTO.cs",
@@ -109,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Rol.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Rol.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Rol.cs",
@@ -122,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\Usuario.cs",
@@ -135,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "UsuarioDTO.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\UsuarioDTO.cs",
               "RelativeDocumentMoniker": "DTO\\UsuarioDTO.cs",
@@ -148,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\AppDbContext.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\AppDbContext.cs",
@@ -161,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "UsuariosController.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\UsuariosController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\UsuariosController.cs",
@@ -174,20 +191,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\DbInitializer.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\DbInitializer.cs",
               "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\DbInitializer.cs",
               "RelativeToolTip": "DataAccess\\EF\\DbInitializer.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAUwBIAAABUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T14:19:21.643Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AppUser.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DataAccess\\EF\\Models\\AppUser.cs",
               "RelativeDocumentMoniker": "DataAccess\\EF\\Models\\AppUser.cs",
@@ -200,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "LogInDTO.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\DTO\\LogInDTO.cs",
               "RelativeDocumentMoniker": "DTO\\LogInDTO.cs",
@@ -213,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\appsettings.json",
               "RelativeDocumentMoniker": "API\\appsettings.json",
@@ -226,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Program.cs",
               "RelativeDocumentMoniker": "API\\Program.cs",
@@ -239,13 +256,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\ProgramacionPersonal\\UNVST\\EjemploProyecto2\\ArquitecturaProyecto2\\API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "API\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAuwEMAAABiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T12:23:15.93Z",
               "EditorCaption": ""

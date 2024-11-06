@@ -357,25 +357,25 @@ namespace API.Controllers
         public async Task<ActionResult> InicializarRolesParaUsuarios()
         {
             var usuariosRoles = new List<(string emailUsuario, string nombreRol)>
-    {
-        // Asignación de rol para 'Administrador'
-        ("admin@nextek.com", "Administrador"),
+            {
+                // Asignación de rol para 'Administrador'
+                ("admin@nextek.com", "Administrador"),
 
-        // Asignación de roles para 'Usuarios Normales'
-        ("carlosg@gmail.com", "Usuario Final"),
-        ("mariap@gmail.com", "Usuario Final"),
-        ("juanr@gmail.com", "Usuario Final"),
+                // Asignación de roles para 'Usuarios Normales'
+                ("carlosg@gmail.com", "Usuario Final"),
+                ("mariap@gmail.com", "Usuario Final"),
+                ("juanr@gmail.com", "Usuario Final"),
 
-        // Asignación de roles para 'Oficiales de Tránsito'
-        ("luiss@nextek.com", "Oficial de Tránsito"),
-        ("sofiac@nextek.com", "Oficial de Tránsito"),
-        ("andresv@nextek.com", "Oficial de Tránsito"),
+                // Asignación de roles para 'Oficiales de Tránsito'
+                ("luiss@nextek.com", "Oficial de Tránsito"),
+                ("sofiac@nextek.com", "Oficial de Tránsito"),
+                ("andresv@nextek.com", "Oficial de Tránsito"),
 
-        // Asignación de roles para 'Jueces de Tránsito'
-        ("lauras@nextek.com", "Juez de Tránsito"),
-        ("diegom@nextek.com", "Juez de Tránsito"),
-        ("anah@nextek.com", "Juez de Tránsito")
-    };
+                // Asignación de roles para 'Jueces de Tránsito'
+                ("lauras@nextek.com", "Juez de Tránsito"),
+                ("diegom@nextek.com", "Juez de Tránsito"),
+                ("anah@nextek.com", "Juez de Tránsito")
+            };
 
             foreach (var (emailUsuario, nombreRol) in usuariosRoles)
             {
@@ -387,10 +387,19 @@ namespace API.Controllers
                     continue;
                 }
 
-                // Verificar si el rol existe en Identity
-                if (!await _roleManager.RoleExistsAsync(nombreRol))
+                // Obtener el usuario en la tabla Usuarios
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == emailUsuario);
+                if (usuario == null)
                 {
-                    ModelState.AddModelError(string.Empty, $"Rol '{nombreRol}' no encontrado en AspNetRoles.");
+                    ModelState.AddModelError(string.Empty, $"Usuario con email '{emailUsuario}' no encontrado en la tabla Usuarios.");
+                    continue;
+                }
+
+                // Obtener el rol en la tabla Roles
+                var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == nombreRol);
+                if (rol == null)
+                {
+                    ModelState.AddModelError(string.Empty, $"Rol '{nombreRol}' no encontrado en la tabla Roles.");
                     continue;
                 }
 
@@ -404,6 +413,17 @@ namespace API.Controllers
                     }
                     continue;
                 }
+
+                // Ejecutar el procedimiento almacenado para asignar el rol en las tablas personalizadas
+                var assignRoleResult = await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC sp_AsignarRol @Usuario_idUsuario = {0}, @Rol_idRol = {1}",
+                    usuario.IdUsuario,
+                    rol.IdRol);
+
+                if (assignRoleResult == 0)
+                {
+                    ModelState.AddModelError(string.Empty, $"Error al asignar rol '{nombreRol}' al usuario '{emailUsuario}' en las tablas personalizadas.");
+                }
             }
 
             if (!ModelState.IsValid)
@@ -411,8 +431,9 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok("Roles asignados a los usuarios exitosamente en Identity.");
+            return Ok("Roles asignados a los usuarios exitosamente en Identity y en las tablas personalizadas.");
         }
+
 
 
 

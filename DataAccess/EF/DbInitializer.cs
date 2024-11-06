@@ -26,34 +26,34 @@ namespace DataAccess.EF
             }
 
             // Crear un usuario de ejemplo y asignar rol
-            var adminUser = new IdentityUser { 
-                UserName = "sa",
-                Email = "admin@nextek.com"
-            };
-            string adminPassword = "Password123!";
-            var user = await userManager.FindByEmailAsync(adminUser.Email);
-            if (user == null)
-            {
-                var createAdmin = await userManager.CreateAsync(adminUser, adminPassword);
-                if (createAdmin.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(adminUser, "Administrador");
+            //var adminUser = new IdentityUser { 
+            //    UserName = "sa",
+            //    Email = "admin@nextek.com"
+            //};
+            //string adminPassword = "Password123!";
+            //var user = await userManager.FindByEmailAsync(adminUser.Email);
+            //if (user == null)
+            //{
+            //    var createAdmin = await userManager.CreateAsync(adminUser, adminPassword);
+            //    if (createAdmin.Succeeded)
+            //    {
+            //        await userManager.AddToRoleAsync(adminUser, "Administrador");
 
-                    // Crear en la tabla Usuarios con el UserId de AspNetUsers
-                    var adminDatos = new Usuario
-                    {
-                        UserId = adminUser.Id,  // Relación con AspNetUsers
-                        Nombre = "Administrador",
-                        Apellido1 = "Principal",
-                        Email = adminUser.Email,
-                        Cedula = "12345678",
-                        FechaNacimiento = DateOnly.Parse("01-01-1970"),
-                        Estado = true
-                    };
-                    context.Usuarios.Add(adminDatos);
-                    await context.SaveChangesAsync();
-                }
-            }
+            //        // Crear en la tabla Usuarios con el UserId de AspNetUsers
+            //        var adminDatos = new Usuario
+            //        {
+            //            UserId = adminUser.Id,  // Relación con AspNetUsers
+            //            Nombre = "Administrador",
+            //            Apellido1 = "Principal",
+            //            Email = adminUser.Email,
+            //            Cedula = "12345678",
+            //            FechaNacimiento = DateOnly.Parse("01-01-1970"),
+            //            Estado = true
+            //        };
+            //        context.Usuarios.Add(adminDatos);
+            //        await context.SaveChangesAsync();
+            //    }
+            //}
         }
     }
 }

@@ -94,29 +94,6 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Cedula = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    Apellido1 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    Apellido2 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    ContrasennaHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    FotoPerfil = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
-                    DobleFactorActivo = table.Column<bool>(type: "bit", nullable: false),
-                    DobleFactorSecret = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -223,6 +200,36 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Cedula = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    Apellido1 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    Apellido2 = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    ContrasennaHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FotoPerfil = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    DobleFactorActivo = table.Column<bool>(type: "bit", nullable: false),
+                    DobleFactorSecret = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RolPermisos",
                 columns: table => new
                 {
@@ -300,8 +307,8 @@ namespace DataAccess.Migrations
                     VehiculoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioIdOficial = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Latitud = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
-                    Longitud = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
+                    Latitud = table.Column<decimal>(type: "decimal(9,4)", nullable: false),
+                    Longitud = table.Column<decimal>(type: "decimal(9,5)", nullable: false),
                     Comentario = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     FotoPlaca = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false)
@@ -463,6 +470,13 @@ namespace DataAccess.Migrations
                 column: "RolId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_UserId",
+                table: "Usuarios",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehiculos_UsuarioId",
                 table: "Vehiculos",
                 column: "UsuarioId");
@@ -502,9 +516,6 @@ namespace DataAccess.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Infracciones");
 
             migrationBuilder.DropTable(
@@ -521,6 +532,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

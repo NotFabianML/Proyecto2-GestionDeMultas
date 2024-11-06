@@ -274,13 +274,13 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdUsuario");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Usuarios");
                 });
@@ -618,8 +618,7 @@ namespace DataAccess.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithOne()
                         .HasForeignKey("DataAccess.EF.Models.Usuario", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("IdentityUser");
                 });
