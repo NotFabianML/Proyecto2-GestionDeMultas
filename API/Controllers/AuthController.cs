@@ -30,29 +30,56 @@ namespace API.Controllers
             _context = context;
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Login([FromBody] LogInDTO userData)
+        //{
+        //    // Cambia FindByNameAsync a FindByEmailAsync para buscar por correo electrónico
+        //    var usuario = await _userManager.FindByEmailAsync(userData.Email);
+        //    if (usuario == null)
+        //    {
+        //        return BadRequest("Usuario no encontrado."); // Error específico si el usuario no existe
+        //    }
+
+        //    // Verifica si la contraseña es correcta sin aplicar hashing manual 
+        //    //var passwordHashed = Encrypt.GetSHA256(userData.Password);
+        //    var passwordValid = await _userManager.CheckPasswordAsync(usuario, userData.Password);
+        //    if (!passwordValid)
+        //    {
+        //        return Unauthorized("Contraseña incorrecta."); // Error específico si la contraseña no coincide
+        //    }
+
+        //    // Genera el token JWT si la autenticación es exitosa
+        //    var token = await GenerateJwtToken(usuario);
+        //    return Ok(new { token });
+        //}
+
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LogInDTO userData)
         {
-            // Cambia FindByNameAsync a FindByEmailAsync para buscar por correo electrónico
+            // Buscar usuario por email
             var usuario = await _userManager.FindByEmailAsync(userData.Email);
             if (usuario == null)
             {
-                return BadRequest("Usuario no encontrado."); // Error específico si el usuario no existe
+                return BadRequest("Usuario no encontrado.");
             }
 
-            // Verifica si la contraseña es correcta sin aplicar hashing manual 
-            //var passwordHashed = Encrypt.GetSHA256(userData.Password);
+            // Verificar la contraseña
             var passwordValid = await _userManager.CheckPasswordAsync(usuario, userData.Password);
             if (!passwordValid)
             {
-                return Unauthorized("Contraseña incorrecta."); // Error específico si la contraseña no coincide
+                return Unauthorized("Contraseña incorrecta.");
             }
 
-            // Genera el token JWT si la autenticación es exitosa
-            var token = await GenerateJwtToken(usuario);
-            return Ok(new { token });
-        }
+            // Obtener el rol del usuario
+            var roles = await _userManager.GetRolesAsync(usuario);
+            var role = roles.FirstOrDefault(); // Suponiendo que el usuario tiene un solo rol
 
+            // Generar el token JWT
+            var token = await GenerateJwtToken(usuario);
+
+            // Retornar el token, userId y role
+            return Ok(new { token, userId = usuario.Id, role });
+        }
 
 
         private async Task<string> GenerateJwtToken(IdentityUser usuario)
