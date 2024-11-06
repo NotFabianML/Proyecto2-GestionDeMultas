@@ -57,18 +57,13 @@ namespace API.Controllers
 
         private async Task<string> GenerateJwtToken(IdentityUser usuario)
         {
-            var roles = await _userManager.GetRolesAsync(usuario);  // Retrieve the roles for the usuario
+            var roles = await _userManager.GetRolesAsync(usuario); // Obtener roles del usuario
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, usuario.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, usuario.Email), // Reemplazar por Email si no usas UserName
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("role", roles.FirstOrDefault() ?? "Usuario Final") // Incluir el primer rol en el token
             };
-
-            // Add role claims
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
