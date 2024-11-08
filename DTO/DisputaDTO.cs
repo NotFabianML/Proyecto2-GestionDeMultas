@@ -8,6 +8,7 @@ namespace DTO
         public Guid MultaId { get; set; }
         public Guid UsuarioId { get; set; }
         public Guid? JuezId { get; set; }
+        public string NumeroPlaca { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string MotivoReclamo { get; set; }
         public int Estado { get; set; } // Representación del enum EstadoDisputa como int
