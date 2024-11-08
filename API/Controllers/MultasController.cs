@@ -115,6 +115,26 @@ namespace API.Controllers
             return Ok(multasDTO);
         }
 
+        // Obtener multas asignadas por el oficial - GET: api/Multas/oficial/{oficialId}
+        [HttpGet("oficial/{oficialId}")]
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorIdOficial(Guid oficialId)
+        {
+            var multas = await _context.Multas
+                .Where(m => m.UsuarioIdOficial == oficialId)
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
+                .ToListAsync();
+
+            if (!multas.Any())
+            {
+                return NotFound("No se encontraron multas asignadas por el oficial proporcionado.");
+            }
+
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
+        }
+
+
         // Obtener multas por número de placa - CONSULTA PUBLICA
         [HttpGet("placa/{numeroPlaca}")]
         [AllowAnonymous]
