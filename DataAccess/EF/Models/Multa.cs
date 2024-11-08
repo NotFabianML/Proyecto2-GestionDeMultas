@@ -11,8 +11,13 @@ namespace DataAccess.EF.Models
         [Key]
         public Guid IdMulta { get; set; } = Guid.NewGuid();
 
-        public Guid VehiculoId { get; set; }
-        public Vehiculo Vehiculo { get; set; }
+        [Required]
+        [MaxLength(6)]
+        public string NumeroPlaca { get; set; } // Nueva propiedad para almacenar la placa directamente
+
+        [Required]
+        [MaxLength(9)]
+        public string CedulaInfractor { get; set; } // Nueva propiedad para almacenar la cédula del infractor
 
         public Guid UsuarioIdOficial { get; set; }
         public Usuario Oficial { get; set; }
@@ -24,7 +29,7 @@ namespace DataAccess.EF.Models
         public decimal Latitud { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(9, 5)")]
+        [Column(TypeName = "decimal(9, 4)")]
         public decimal Longitud { get; set; }
 
         [MaxLength(255)]

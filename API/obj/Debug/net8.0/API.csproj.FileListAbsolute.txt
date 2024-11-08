@@ -5,6 +5,8 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\API.runtimeconfig.json
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\API.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\API.pdb
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Azure.AI.DocumentIntelligence.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Azure.AI.FormRecognizer.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Azure.Core.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Azure.Identity.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Humanizer.dll
@@ -76,6 +78,7 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\System.ClientModel.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\System.CodeDom.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\System.Composition.AttributedModel.dll
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\System.Composition.Convention.dll

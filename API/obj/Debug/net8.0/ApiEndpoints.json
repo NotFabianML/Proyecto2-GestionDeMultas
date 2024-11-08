@@ -235,6 +235,58 @@
     ]
   },
   {
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "InicializarDisputas",
+    "RelativePath": "api/Disputas/Inicializar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.DisputasController",
+    "Method": "GetMultasAsignadasAJuez",
+    "RelativePath": "api/Disputas/juez/{juezId}/multas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "juezId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.DisputaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.ImageRecognitionController",
+    "Method": "AnalyzeIdDocument",
+    "RelativePath": "api/ImageRecognition/AnalyzeIdDocument",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.InfraccionesController",
     "Method": "GetInfracciones",
     "RelativePath": "api/Infracciones",
@@ -545,33 +597,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.MultaDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "API.Controllers.MultasController",
-    "Method": "GetMultasPorTituloInfraccion",
-    "RelativePath": "api/Multas/infraccion/{tituloInfraccion}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tituloInfraccion",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.MultaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -607,7 +633,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.MultaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -633,7 +659,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.MultaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -659,7 +685,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[ConsultaPublicaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.MultaDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -869,6 +895,32 @@
   },
   {
     "ContainingType": "API.Controllers.PermisosController",
+    "Method": "GetPermisosPorRolNombre",
+    "RelativePath": "api/Permisos/{rolNombre}/permisos-por-rol-nombre",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rolNombre",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.PermisoDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.PermisosController",
     "Method": "InicializarPermisos",
     "RelativePath": "api/Permisos/Inicializar",
     "HttpMethod": "POST",
@@ -916,22 +968,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "rolDTO",
+        "Name": "nuevoRol",
         "Type": "DTO.RolDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.RolDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.RolesController",
@@ -1066,22 +1108,6 @@
   },
   {
     "ContainingType": "API.Controllers.RolesController",
-    "Method": "CrearRol",
-    "RelativePath": "api/Roles/CrearRol",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "nuevoRol",
-        "Type": "DTO.RolDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "API.Controllers.RolesController",
     "Method": "InicializarRoles",
     "RelativePath": "api/Roles/Inicializar",
     "HttpMethod": "POST",
@@ -1195,6 +1221,22 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "DeleteUsuario",
+    "RelativePath": "api/Usuarios/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
     "Method": "ActivarDobleFactor",
     "RelativePath": "api/Usuarios/{id}/activar-2fa",
     "HttpMethod": "PUT",
@@ -1248,6 +1290,27 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "UploadProfilePhoto",
+    "RelativePath": "api/Usuarios/{id}/subir-fotoPerfil",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "photo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
     "Method": "GetUsuarioPorCedula",
     "RelativePath": "api/Usuarios/cedula/{cedula}",
     "HttpMethod": "GET",
@@ -1284,14 +1347,40 @@
   },
   {
     "ContainingType": "API.Controllers.UsuariosController",
-    "Method": "GetUsuariosPorRol",
-    "RelativePath": "api/Usuarios/usuarios-por-rol/{rolid}",
+    "Method": "GetUsuariosPorNombreRol",
+    "RelativePath": "api/Usuarios/usuarios-por-rol-nombre/{rolNombre}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "rolid",
+        "Name": "rolNombre",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.UsuarioDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "GetUsuariosPorRol",
+    "RelativePath": "api/Usuarios/usuarios-por-rol/{rolId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rolId",
         "Type": "System.Guid",
         "IsRequired": true
       }

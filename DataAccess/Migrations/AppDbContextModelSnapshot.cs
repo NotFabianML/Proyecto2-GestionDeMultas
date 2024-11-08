@@ -107,6 +107,11 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CedulaInfractor")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
                     b.Property<string>("Comentario")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -125,19 +130,19 @@ namespace DataAccess.Migrations
                         .HasColumnType("decimal(9, 4)");
 
                     b.Property<decimal>("Longitud")
-                        .HasColumnType("decimal(9, 5)");
+                        .HasColumnType("decimal(9, 4)");
+
+                    b.Property<string>("NumeroPlaca")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<Guid>("UsuarioIdOficial")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("VehiculoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("IdMulta");
 
                     b.HasIndex("UsuarioIdOficial");
-
-                    b.HasIndex("VehiculoId");
 
                     b.ToTable("Multas");
                 });
@@ -564,15 +569,7 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.EF.Models.Vehiculo", "Vehiculo")
-                        .WithMany()
-                        .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Oficial");
-
-                    b.Navigation("Vehiculo");
                 });
 
             modelBuilder.Entity("DataAccess.EF.Models.MultaXInfraccion", b =>

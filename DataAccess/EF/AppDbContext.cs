@@ -79,11 +79,11 @@ namespace DataAccess.EF
                 .HasForeignKey(mi => mi.InfraccionId);
 
             // Configuración para la relación Multa y Vehiculo con DeleteBehavior.NoAction
-            modelBuilder.Entity<Multa>()
-                .HasOne(m => m.Vehiculo)
-                .WithMany()
-                .HasForeignKey(m => m.VehiculoId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Multa>()
+            //    .HasOne(m => m.Vehiculo)
+            //    .WithMany()
+            //    .HasForeignKey(m => m.VehiculoId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             // Configuración para la relación Multa y Usuario (Oficial) con DeleteBehavior.NoAction
             modelBuilder.Entity<Multa>()

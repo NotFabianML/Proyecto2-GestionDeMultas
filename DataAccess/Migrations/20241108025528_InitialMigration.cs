@@ -254,6 +254,31 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Multas",
+                columns: table => new
+                {
+                    IdMulta = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NumeroPlaca = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    CedulaInfractor = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    UsuarioIdOficial = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Latitud = table.Column<decimal>(type: "decimal(9,4)", nullable: false),
+                    Longitud = table.Column<decimal>(type: "decimal(9,4)", nullable: false),
+                    Comentario = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    FotoPlaca = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Estado = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Multas", x => x.IdMulta);
+                    table.ForeignKey(
+                        name: "FK_Multas_Usuarios_UsuarioIdOficial",
+                        column: x => x.UsuarioIdOficial,
+                        principalTable: "Usuarios",
+                        principalColumn: "IdUsuario");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UsuarioRoles",
                 columns: table => new
                 {
@@ -297,35 +322,6 @@ namespace DataAccess.Migrations
                         principalTable: "Usuarios",
                         principalColumn: "IdUsuario",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Multas",
-                columns: table => new
-                {
-                    IdMulta = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VehiculoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioIdOficial = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Latitud = table.Column<decimal>(type: "decimal(9,4)", nullable: false),
-                    Longitud = table.Column<decimal>(type: "decimal(9,5)", nullable: false),
-                    Comentario = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    FotoPlaca = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Estado = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Multas", x => x.IdMulta);
-                    table.ForeignKey(
-                        name: "FK_Multas_Usuarios_UsuarioIdOficial",
-                        column: x => x.UsuarioIdOficial,
-                        principalTable: "Usuarios",
-                        principalColumn: "IdUsuario");
-                    table.ForeignKey(
-                        name: "FK_Multas_Vehiculos_VehiculoId",
-                        column: x => x.VehiculoId,
-                        principalTable: "Vehiculos",
-                        principalColumn: "IdVehiculo");
                 });
 
             migrationBuilder.CreateTable(
@@ -455,11 +451,6 @@ namespace DataAccess.Migrations
                 column: "UsuarioIdOficial");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Multas_VehiculoId",
-                table: "Multas",
-                column: "VehiculoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RolPermisos_PermisoId",
                 table: "RolPermisos",
                 column: "PermisoId");
@@ -513,6 +504,9 @@ namespace DataAccess.Migrations
                 name: "UsuarioRoles");
 
             migrationBuilder.DropTable(
+                name: "Vehiculos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -526,9 +520,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Vehiculos");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
