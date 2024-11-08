@@ -28,22 +28,12 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultas()
         {
             var multas = await _context.Multas
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    VehiculoId = m.VehiculoId,
-                    UsuarioIdOficial = m.UsuarioIdOficial,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud,
-                    Longitud = m.Longitud,
-                    Comentario = m.Comentario,
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado,
-                    MontoTotal = m.MultaInfracciones.Sum(mi => mi.Infraccion.Monto)
-                })
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
                 .ToListAsync();
 
-            return Ok(multas);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
         // GET: api/Multas/5
@@ -51,182 +41,120 @@ namespace API.Controllers
         public async Task<ActionResult<MultaDTO>> GetMulta(Guid id)
         {
             var multa = await _context.Multas
-                .Where(m => m.IdMulta == id)
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    VehiculoId = m.VehiculoId,
-                    UsuarioIdOficial = m.UsuarioIdOficial,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud,
-                    Longitud = m.Longitud,
-                    Comentario = m.Comentario,
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado
-                })
-                .FirstOrDefaultAsync();
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
+                .FirstOrDefaultAsync(m => m.IdMulta == id);
 
             if (multa == null)
             {
                 return NotFound("Multa no encontrada.");
             }
 
-            return Ok(multa);
+            var multasDTO = await MapearMultasConInfracciones(new List<Multa> { multa });
+            return Ok(multasDTO.FirstOrDefault());
         }
 
         // Obtener multa por estado - GET: api/Multas/estado/1
         [HttpGet("estado/{estado}")]
-        //[Authorize]
-        public async Task<ActionResult<MultaDTO>> GetMultaPorEstado(int estado)
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultaPorEstado(int estado)
         {
-            var multa = await _context.Multas
+            var multas = await _context.Multas
                 .Where(m => (int)m.Estado == estado)
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    VehiculoId = m.VehiculoId,
-                    UsuarioIdOficial = m.UsuarioIdOficial,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud,
-                    Longitud = m.Longitud,
-                    Comentario = m.Comentario,
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado
-                })
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
                 .ToListAsync();
 
-            if (multa == null)
+            if (!multas.Any())
             {
                 return NotFound();
             }
 
-            return Ok(multa);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
         // Obtener todas las multas por cédula del usuario final - CONSULTA PUBLICA
         [HttpGet("usuario/cedula/{cedula}")]
-        [AllowAnonymous] // Permite acceso público
-        public async Task<ActionResult<IEnumerable<ConsultaPublicaDTO>>> GetMultasPorCedulaUsuarioFinal(string cedula)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorCedulaUsuarioFinal(string cedula)
         {
-            // Verificar si el usuario con la cédula existe
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Cedula == cedula);
             if (usuario == null)
             {
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Obtener los vehículos del usuario
-            var vehiculosIds = await _context.Vehiculos
-                .Where(v => v.UsuarioId == usuario.IdUsuario)
-                .Select(v => v.IdVehiculo)
-                .ToListAsync();
-
-            // Obtener las multas relacionadas con esos vehículos
             var multas = await _context.Multas
-                .Where(m => vehiculosIds.Contains(m.VehiculoId))
+                .Where(m => m.CedulaInfractor == cedula)
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
                 .ToListAsync();
 
-            // Mapeo de multas a ConsultaPublicaDTO
-            var consultasPublicas = await MapearMultasAConsultaPublica(multas);
-
-            return Ok(consultasPublicas);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
         // Obtener todas las multas por ID del usuario final - CONSULTA PUBLICA
         [HttpGet("usuario/id/{usuarioId}")]
-        [AllowAnonymous] // Permite acceso público
-        public async Task<ActionResult<IEnumerable<ConsultaPublicaDTO>>> GetMultasPorIdUsuarioFinal(Guid usuarioId)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorIdUsuarioFinal(Guid usuarioId)
         {
-            // Verificar si el usuario con el ID existe
             var usuario = await _context.Usuarios.FindAsync(usuarioId);
             if (usuario == null)
             {
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Obtener los vehículos del usuario
-            var vehiculosIds = await _context.Vehiculos
-                .Where(v => v.UsuarioId == usuario.IdUsuario)
-                .Select(v => v.IdVehiculo)
-                .ToListAsync();
-
-            // Obtener las multas relacionadas con esos vehículos
             var multas = await _context.Multas
-                .Where(m => vehiculosIds.Contains(m.VehiculoId))
+                .Where(m => m.UsuarioIdOficial == usuarioId)
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
                 .ToListAsync();
 
-            // Mapeo de multas a ConsultaPublicaDTO
-            var consultasPublicas = await MapearMultasAConsultaPublica(multas);
-
-            return Ok(consultasPublicas);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
         // Obtener multas por número de placa - CONSULTA PUBLICA
         [HttpGet("placa/{numeroPlaca}")]
-        [AllowAnonymous] // Permite acceso público
-        public async Task<ActionResult<IEnumerable<ConsultaPublicaDTO>>> GetMultasPorPlaca(string numeroPlaca)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorPlaca(string numeroPlaca)
         {
-            // Verifica si el vehículo existe en la base de datos
-            if (!VehiculoExists(numeroPlaca))
+            var multas = await _context.Multas
+                .Where(m => m.NumeroPlaca == numeroPlaca)
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
+                .ToListAsync();
+
+            if (!multas.Any())
             {
                 return NotFound("Vehículo no encontrado.");
             }
 
-            // Ejecuta el procedimiento almacenado para obtener las multas del vehículo
-            var multas = await _context.Multas
-                .FromSqlRaw("EXEC sp_GetMultasPorPlaca @NumeroPlaca = {0}", numeroPlaca)
-                .ToListAsync();
-
-            // Mapea las multas a ConsultaPublicaDTO usando la función auxiliar
-            var consultasPublicas = await MapearMultasAConsultaPublica(multas);
-
-            return Ok(consultasPublicas);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
-        // Obtener multas por título de infracción - CONSULTA PUBLICA
-        [HttpGet("infraccion/{tituloInfraccion}")]
-        public async Task<ActionResult<IEnumerable<ConsultaPublicaDTO>>> GetMultasPorTituloInfraccion(string tituloInfraccion)
-        {
-            // Ejecuta el procedimiento almacenado para obtener las multas relacionadas con el título de infracción
-            var multas = await _context.Multas
-                .FromSqlRaw("EXEC sp_GetMultasPorTituloInfraccion @TituloInfraccion = {0}", tituloInfraccion)
-                .ToListAsync();
-
-            // Mapea las multas a ConsultaPublicaDTO usando la función auxiliar
-            var consultasPublicas = await MapearMultasAConsultaPublica(multas);
-
-            return Ok(consultasPublicas);
-        }
-
-
-
-        // Obtener multas por infraccion
+        // Obtener multas por infracción
         [HttpGet("{infraccionid}/multas-por-infraccion")]
         public async Task<ActionResult<IEnumerable<MultaDTO>>> GetMultasPorInfraccion(Guid infraccionid)
         {
             var multas = await _context.Multas
-                .FromSqlRaw("EXEC sp_GetMultasPorInfraccion @idInfraccion = {0}", infraccionid)
-                .Select(m => new MultaDTO
-                {
-                    IdMulta = m.IdMulta,
-                    FechaHora = m.FechaHora,
-                    Latitud = m.Latitud,
-                    Longitud = m.Longitud,
-                    Comentario = m.Comentario,
-                    FotoPlaca = m.FotoPlaca,
-                    Estado = (int)m.Estado,
-                    VehiculoId = m.VehiculoId
-                })
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
+                .Where(m => m.MultaInfracciones.Any(mi => mi.InfraccionId == infraccionid))
                 .ToListAsync();
 
-            if (multas == null || !multas.Any())
+            if (!multas.Any())
             {
-                return NotFound("No se encontraron multas para la infraccion proporcionado.");
+                return NotFound("No se encontraron multas para la infracción proporcionada.");
             }
 
-            return Ok(multas);
+            var multasDTO = await MapearMultasConInfracciones(multas);
+            return Ok(multasDTO);
         }
 
+        // PUT: api/Multas/5
         // PUT: api/Multas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMulta(Guid id, MultaDTO multaDTO)
@@ -242,7 +170,9 @@ namespace API.Controllers
                 return NotFound("Multa no encontrada para actualización.");
             }
 
-            multa.VehiculoId = multaDTO.VehiculoId;
+            // Actualiza los campos de acuerdo al DTO y nuevo modelo
+            multa.NumeroPlaca = multaDTO.NumeroPlaca;  // Usa NumeroPlaca en lugar de VehiculoId
+            multa.CedulaInfractor = multaDTO.CedulaInfractor;  // Agrega CedulaInfractor
             multa.UsuarioIdOficial = multaDTO.UsuarioIdOficial;
             multa.FechaHora = multaDTO.FechaHora;
             multa.Latitud = multaDTO.Latitud;
@@ -272,19 +202,16 @@ namespace API.Controllers
             return NoContent();
         }
 
+
         // POST: api/Multas
         [HttpPost]
         public async Task<ActionResult<MultaDTO>> PostMulta(MultaDTO multaDTO)
         {
-            if (!await VehiculoAndOficialExist(multaDTO.VehiculoId, multaDTO.UsuarioIdOficial))
-            {
-                return BadRequest("Vehículo o Oficial no válidos.");
-            }
-
             var multa = new Multa
             {
                 IdMulta = Guid.NewGuid(),
-                VehiculoId = multaDTO.VehiculoId,
+                NumeroPlaca = multaDTO.NumeroPlaca,
+                CedulaInfractor = multaDTO.CedulaInfractor,
                 UsuarioIdOficial = multaDTO.UsuarioIdOficial,
                 FechaHora = multaDTO.FechaHora,
                 Latitud = multaDTO.Latitud,
@@ -300,6 +227,7 @@ namespace API.Controllers
             multaDTO.IdMulta = multa.IdMulta;
             return CreatedAtAction(nameof(GetMulta), new { id = multa.IdMulta }, multaDTO);
         }
+
 
         // Cambiar estado a "En Disputa"
         [HttpPost("{id}/cambiar-estado/{estado}")]
@@ -359,14 +287,17 @@ namespace API.Controllers
         {
             var multasIniciales = new List<MultaDTO>
             {
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("123456"), UsuarioIdOficial = await ObtenerIdUsuario("luiss@nextek.com"), FechaHora = DateTime.Now.AddDays(-10), Latitud = (decimal)9.9281, Longitud = (decimal)-84.0907, Comentario = "Exceso de velocidad", Estado = 1 },
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("234567"), UsuarioIdOficial = await ObtenerIdUsuario("sofiac@nextek.com"), FechaHora = DateTime.Now.AddDays(-8), Latitud = (decimal)9.9347, Longitud = (decimal)-84.0875, Comentario = "Uso indebido del carril", Estado = 1 },
+                // Multas para vehículos de Carlos Gomez
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "123456", CedulaInfractor = "218860349", UsuarioIdOficial = await ObtenerIdUsuario("luiss@nextek.com"), FechaHora = DateTime.Now.AddDays(-10), Latitud = (decimal)9.9281, Longitud = (decimal)-84.0907, Comentario = "Exceso de velocidad", Estado = 1 },
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "234567", CedulaInfractor = "218860349", UsuarioIdOficial = await ObtenerIdUsuario("sofiac@nextek.com"), FechaHora = DateTime.Now.AddDays(-8), Latitud = (decimal)9.9347, Longitud = (decimal)-84.0875, Comentario = "Uso indebido del carril", Estado = 1 },
 
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("345678"), UsuarioIdOficial = await ObtenerIdUsuario("andresv@nextek.com"), FechaHora = DateTime.Now.AddDays(-15), Latitud = (decimal)9.9352, Longitud = (decimal)-84.0833, Comentario = "Conducir sin luces", Estado = 1 },
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("456789"), UsuarioIdOficial = await ObtenerIdUsuario("luiss@nextek.com"), FechaHora = DateTime.Now.AddDays(-5), Latitud = (decimal)9.9273, Longitud = (decimal)-84.0928, Comentario = "Exceso de velocidad", Estado = 1 },
+                // Multas para vehículos de Maria Perez
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "345678", CedulaInfractor = "318860349", UsuarioIdOficial = await ObtenerIdUsuario("andresv@nextek.com"), FechaHora = DateTime.Now.AddDays(-15), Latitud = (decimal)9.9352, Longitud = (decimal)-84.0833, Comentario = "Conducir sin luces", Estado = 1 },
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "456789", CedulaInfractor = "318860349", UsuarioIdOficial = await ObtenerIdUsuario("luiss@nextek.com"), FechaHora = DateTime.Now.AddDays(-5), Latitud = (decimal)9.9273, Longitud = (decimal)-84.0928, Comentario = "Exceso de velocidad", Estado = 1 },
 
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("567890"), UsuarioIdOficial = await ObtenerIdUsuario("sofiac@nextek.com"), FechaHora = DateTime.Now.AddDays(-7), Latitud = (decimal)9.9258, Longitud = (decimal)-84.0923, Comentario = "Estacionamiento indebido", Estado = 1 },
-                new MultaDTO { IdMulta = Guid.NewGuid(), VehiculoId = await ObtenerIdVehiculo("678901"), UsuarioIdOficial = await ObtenerIdUsuario("andresv@nextek.com"), FechaHora = DateTime.Now.AddDays(-3), Latitud = (decimal)9.9299, Longitud = (decimal)-84.0890, Comentario = "No respetar señales", Estado = 1 }
+                // Multas para vehículos de Juan Rojas
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "567890", CedulaInfractor = "418860349", UsuarioIdOficial = await ObtenerIdUsuario("sofiac@nextek.com"), FechaHora = DateTime.Now.AddDays(-7), Latitud = (decimal)9.9258, Longitud = (decimal)-84.0923, Comentario = "Estacionamiento indebido", Estado = 1 },
+                new MultaDTO { IdMulta = Guid.NewGuid(), NumeroPlaca = "678901", CedulaInfractor = "418860349", UsuarioIdOficial = await ObtenerIdUsuario("andresv@nextek.com"), FechaHora = DateTime.Now.AddDays(-3), Latitud = (decimal)9.9299, Longitud = (decimal)-84.0890, Comentario = "No respetar señales", Estado = 1 }
             };
 
             foreach (var multaDTO in multasIniciales)
@@ -374,12 +305,14 @@ namespace API.Controllers
                 var multa = new Multa
                 {
                     IdMulta = multaDTO.IdMulta,
-                    VehiculoId = multaDTO.VehiculoId,
+                    NumeroPlaca = multaDTO.NumeroPlaca,
+                    CedulaInfractor = multaDTO.CedulaInfractor,
                     UsuarioIdOficial = multaDTO.UsuarioIdOficial,
                     FechaHora = multaDTO.FechaHora,
                     Latitud = multaDTO.Latitud,
                     Longitud = multaDTO.Longitud,
                     Comentario = multaDTO.Comentario,
+                    FotoPlaca = multaDTO.FotoPlaca,
                     Estado = (EstadoMulta)multaDTO.Estado
                 };
 
@@ -390,6 +323,7 @@ namespace API.Controllers
 
             return Ok("Multas iniciales agregadas exitosamente.");
         }
+
 
         // Método auxiliar para obtener el Id de vehículo por número de placa
         private async Task<Guid> ObtenerIdVehiculo(string numeroPlaca)
@@ -419,61 +353,38 @@ namespace API.Controllers
             return usuario?.Cedula ?? string.Empty;
         }
 
-        private async Task<List<ConsultaPublicaDTO>> MapearMultasAConsultaPublica(List<Multa> multas)
+        private async Task<List<MultaDTO>> MapearMultasConInfracciones(List<Multa> multas)
         {
-            // Obtener previamente todas las placas y cédulas relacionadas para evitar concurrencia en DbContext
-            var vehiculoIds = multas.Select(m => m.VehiculoId).Distinct();
-            var usuarioIds = multas.Select(m => m.UsuarioIdOficial).Distinct();
-
-            var vehiculos = await _context.Vehiculos
-                .Where(v => vehiculoIds.Contains(v.IdVehiculo))
-                .ToDictionaryAsync(v => v.IdVehiculo, v => v.NumeroPlaca);
-
             var usuarios = await _context.Usuarios
-                .Where(u => usuarioIds.Contains(u.IdUsuario))
+                .Where(u => multas.Select(m => m.UsuarioIdOficial).Contains(u.IdUsuario))
                 .ToDictionaryAsync(u => u.IdUsuario, u => u.Cedula);
 
-            // Crear la lista de ConsultaPublicaDTO usando los datos obtenidos previamente
-            var consultasPublicas = multas.Select(m => new ConsultaPublicaDTO
+            var multasDTO = multas.Select(m => new MultaDTO
             {
                 IdMulta = m.IdMulta,
-                NumeroPlaca = vehiculos[m.VehiculoId], // Usa el diccionario para obtener la placa
-                CedulaOficial = usuarios[m.UsuarioIdOficial], // Usa el diccionario para obtener la cédula
+                NumeroPlaca = m.NumeroPlaca,
+                CedulaInfractor = m.CedulaInfractor,
+                UsuarioIdOficial = m.UsuarioIdOficial,
                 FechaHora = m.FechaHora,
                 Latitud = m.Latitud,
                 Longitud = m.Longitud,
                 Comentario = m.Comentario,
                 FotoPlaca = m.FotoPlaca,
                 Estado = (int)m.Estado,
-
-                // Calcula el monto total sumando los montos de las infracciones relacionadas
-                MontoTotal = _context.Infracciones
-                    .Where(i => _context.MultaInfracciones
-                        .Where(mi => mi.MultaId == m.IdMulta)
-                        .Select(mi => mi.InfraccionId)
-                        .Contains(i.IdInfraccion))
-                    .Sum(i => i.Monto),
-
-                // Incluye las infracciones relacionadas con esta multa
-                Infracciones = _context.Infracciones
-                    .Where(i => _context.MultaInfracciones
-                        .Where(mi => mi.MultaId == m.IdMulta)
-                        .Select(mi => mi.InfraccionId)
-                        .Contains(i.IdInfraccion))
-                    .Select(i => new InfraccionDTO
-                    {
-                        IdInfraccion = i.IdInfraccion,
-                        Descripcion = i.Descripcion,
-                        Monto = i.Monto,
-                        Titulo = i.Titulo,
-                        Articulo = i.Articulo,
-                        Estado = i.Estado
-                    }).ToList()
+                MontoTotal = m.MultaInfracciones.Sum(mi => mi.Infraccion.Monto),
+                Infracciones = m.MultaInfracciones.Select(mi => new InfraccionDTO
+                {
+                    IdInfraccion = mi.Infraccion.IdInfraccion,
+                    Descripcion = mi.Infraccion.Descripcion,
+                    Monto = mi.Infraccion.Monto,
+                    Titulo = mi.Infraccion.Titulo,
+                    Articulo = mi.Infraccion.Articulo,
+                    Estado = mi.Infraccion.Estado
+                }).ToList()
             }).ToList();
 
-            return consultasPublicas;
+            return multasDTO;
         }
-
 
     }
 }

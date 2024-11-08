@@ -134,22 +134,52 @@ namespace API.Controllers
         }
 
         // Asignar infracción a una multa
+        //[HttpPost("{multaId}/asignar-infracciones/{id}")]
+        //public async Task<IActionResult> AsignarInfraccionAMulta(Guid multaId, Guid id)
+        //{
+        //    if (!MultaExists(multaId) || !_context.Infracciones.Any(i => i.IdInfraccion == id))
+        //    {
+        //        return NotFound("Multa o infracción no encontrada.");
+        //    }
+
+        //    var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_AsignarInfraccion @Multa_idMulta = {0}, @Permiso_idPermiso = {1}", multaId, id);
+        //    if (result == 0)
+        //    {
+        //        return BadRequest("Error al asignar la infraccion a la multa.");
+        //    }
+
+        //    return NoContent();
+        //}
+
+        // Asignar infracción a una multa
         [HttpPost("{multaId}/asignar-infracciones/{id}")]
         public async Task<IActionResult> AsignarInfraccionAMulta(Guid multaId, Guid id)
         {
-            if (!MultaExists(multaId) || !_context.Infracciones.Any(i => i.IdInfraccion == id))
+            if (!MultaExists(multaId) || !InfraccionExists(id))
             {
                 return NotFound("Multa o infracción no encontrada.");
             }
 
-            var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_AsignarInfraccion @Multa_idMulta = {0}, @Permiso_idPermiso = {1}", multaId, id);
-            if (result == 0)
+            // Verificar si la relación ya existe
+            var existeRelacion = await _context.MultaInfracciones
+                .AnyAsync(mi => mi.MultaId == multaId && mi.InfraccionId == id);
+
+            if (!existeRelacion)
             {
-                return BadRequest("Error al asignar la infraccion a la multa.");
+                // Crear la relación entre la multa y la infracción
+                var multaInfraccion = new MultaXInfraccion
+                {
+                    MultaId = multaId,
+                    InfraccionId = id
+                };
+
+                _context.MultaInfracciones.Add(multaInfraccion);
+                await _context.SaveChangesAsync();
             }
 
             return NoContent();
         }
+
 
         // Cambiar estado
         [HttpPost("{id}/cambiar-estado/{estado}")]
@@ -223,13 +253,43 @@ namespace API.Controllers
         }
 
         // POST: api/Multas/InicializarInfracciones
+        //[HttpPost("InicializarInfracciones")]
+        //public async Task<ActionResult> InicializarInfraccionesParaMultas()
+        //{
+        //    // Lista de IDs de infracciones (en lugar de InfraccionDTOs) para asignar a las multas
+        //    var infraccionesIds = await _context.Infracciones.Select(i => i.IdInfraccion).ToListAsync();
+
+        //    // Obtener todas las multas creadas
+        //    var multas = await _context.Multas.ToListAsync();
+
+        //    foreach (var multa in multas)
+        //    {
+        //        // Seleccionar aleatoriamente tres infracciones para cada multa
+        //        var infraccionesSeleccionadas = infraccionesIds.OrderBy(_ => Guid.NewGuid()).Take(3).ToList();
+
+        //        foreach (var idInfraccion in infraccionesSeleccionadas)
+        //        {
+        //            // Asignar cada infracción a la multa usando el stored procedure
+        //            var result = await _context.Database.ExecuteSqlRawAsync(
+        //                "EXEC sp_AsignarInfraccion @Multa_idMulta = {0}, @Infraccion_idInfraccion = {1}", multa.IdMulta, idInfraccion);
+
+        //            // Verificar si hubo un error en la asignación
+        //            if (result == 0)
+        //            {
+        //                return BadRequest($"Error al asignar la infracción con ID '{idInfraccion}' a la multa con ID '{multa.IdMulta}'.");
+        //            }
+        //        }
+        //    }
+
+        //    return Ok("Infracciones asignadas a las multas exitosamente.");
+        //}
+
+        // POST: api/Multas/InicializarInfracciones
         [HttpPost("InicializarInfracciones")]
         public async Task<ActionResult> InicializarInfraccionesParaMultas()
         {
-            // Lista de IDs de infracciones (en lugar de InfraccionDTOs) para asignar a las multas
+            // Obtener todas las infracciones y multas
             var infraccionesIds = await _context.Infracciones.Select(i => i.IdInfraccion).ToListAsync();
-
-            // Obtener todas las multas creadas
             var multas = await _context.Multas.ToListAsync();
 
             foreach (var multa in multas)
@@ -239,20 +299,29 @@ namespace API.Controllers
 
                 foreach (var idInfraccion in infraccionesSeleccionadas)
                 {
-                    // Asignar cada infracción a la multa usando el stored procedure
-                    var result = await _context.Database.ExecuteSqlRawAsync(
-                        "EXEC sp_AsignarInfraccion @Multa_idMulta = {0}, @Infraccion_idInfraccion = {1}", multa.IdMulta, idInfraccion);
+                    // Verificar si la relación ya existe
+                    var existeRelacion = await _context.MultaInfracciones
+                        .AnyAsync(mi => mi.MultaId == multa.IdMulta && mi.InfraccionId == idInfraccion);
 
-                    // Verificar si hubo un error en la asignación
-                    if (result == 0)
+                    if (!existeRelacion)
                     {
-                        return BadRequest($"Error al asignar la infracción con ID '{idInfraccion}' a la multa con ID '{multa.IdMulta}'.");
+                        // Crear la relación entre la multa y la infracción
+                        var multaInfraccion = new MultaXInfraccion
+                        {
+                            MultaId = multa.IdMulta,
+                            InfraccionId = idInfraccion
+                        };
+
+                        _context.MultaInfracciones.Add(multaInfraccion);
                     }
                 }
             }
 
+            await _context.SaveChangesAsync();
+
             return Ok("Infracciones asignadas a las multas exitosamente.");
         }
+
 
 
     }

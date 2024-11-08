@@ -115,37 +115,69 @@ namespace API.Controllers
             return usuario;
         }
 
-        // Obtener usuarios con x rol asignado
-        [HttpGet("usuarios-por-rol/{rolid}")]
-        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuariosPorRol(Guid rolid)
+        // Obtener usuarios por rol - reemplazo de sp_GetUsuariosPorRol
+        [HttpGet("usuarios-por-rol/{rolId}")]
+        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuariosPorRol(Guid rolId)
         {
-            if (!RolExists(rolid))
+            var usuarios = await _context.Usuarios
+                .Where(u => u.UsuarioRoles.Any(ur => ur.RolId == rolId))
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    Apellido2 = u.Apellido2,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Estado = u.Estado,
+                    FotoPerfil = u.FotoPerfil
+                })
+                .ToListAsync();
+
+            if (!usuarios.Any())
+            {
+                return NotFound("No se encontraron usuarios con el rol especificado.");
+            }
+
+            return usuarios;
+        }
+
+        // Obtener usuarios por nombre de rol
+        [HttpGet("usuarios-por-rol-nombre/{rolNombre}")]
+        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuariosPorNombreRol(string rolNombre)
+        {
+            // Buscar el rol por su nombre para obtener su ID
+            var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol.ToLower() == rolNombre.ToLower());
+            if (rol == null)
             {
                 return NotFound("Rol no encontrado.");
             }
 
             var usuarios = await _context.Usuarios
-                .FromSqlRaw("EXEC sp_GetUsuariosPorRol @Rol_idRol = {0}", rolid)
+                .Where(u => u.UsuarioRoles.Any(ur => ur.RolId == rol.IdRol))
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombre = u.Nombre,
+                    Apellido1 = u.Apellido1,
+                    Apellido2 = u.Apellido2,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Estado = u.Estado,
+                    FotoPerfil = u.FotoPerfil
+                })
                 .ToListAsync();
 
-            // Mapea manualmente Usuario a UsuarioDTO
-            var usuariosDTO = usuarios.Select(u => new UsuarioDTO
+            if (!usuarios.Any())
             {
-                IdUsuario = u.IdUsuario,
-                Cedula = u.Cedula,
-                Nombre = u.Nombre,
-                Apellido1 = u.Apellido1,
-                Apellido2 = u.Apellido2,
-                Email = u.Email,
-                Telefono = u.Telefono,
-                Estado = u.Estado,
-                ContrasennaHash = u.ContrasennaHash,
-                FechaNacimiento = u.FechaNacimiento.ToString("yyyy-MM-dd"),
-                FotoPerfil = u.FotoPerfil
-            }).ToList();
+                return NotFound("No se encontraron usuarios con el rol especificado.");
+            }
 
-            return usuariosDTO;
+            return usuarios;
         }
+
 
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
@@ -159,9 +191,10 @@ namespace API.Controllers
             var existingUsuario = await _context.Usuarios.FindAsync(id);
             if (existingUsuario == null)
             {
-                return NotFound();
+                return NotFound("Usuario no encontrado.");
             }
 
+            // Actualizar datos en la tabla personalizada y en Identity
             existingUsuario.Nombre = usuarioDTO.Nombre;
             existingUsuario.Apellido1 = usuarioDTO.Apellido1;
             existingUsuario.Apellido2 = usuarioDTO.Apellido2;
@@ -171,6 +204,14 @@ namespace API.Controllers
             existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
 
             _context.Entry(existingUsuario).State = EntityState.Modified;
+
+            var identityUser = await _userManager.FindByIdAsync(existingUsuario.UserId);
+            if (identityUser != null)
+            {
+                identityUser.Email = usuarioDTO.Email;
+                identityUser.UserName = usuarioDTO.Email;
+                await _userManager.UpdateAsync(identityUser);
+            }
 
             try
             {
@@ -200,9 +241,20 @@ namespace API.Controllers
                 return Conflict("El email ya está registrado.");
             }
 
+            // Crear el usuario en Identity
+            var identityUser = new IdentityUser { Email = usuarioDTO.Email, UserName = usuarioDTO.Email };
+            var createResult = await _userManager.CreateAsync(identityUser, usuarioDTO.ContrasennaHash);
+
+            if (!createResult.Succeeded)
+            {
+                return BadRequest("Error al crear el usuario en Identity.");
+            }
+
+            // Crear el usuario en la tabla personalizada
             var usuario = new Usuario
             {
                 IdUsuario = Guid.NewGuid(),
+                UserId = identityUser.Id, // Relacionar con AspNetUsers
                 Cedula = usuarioDTO.Cedula,
                 Nombre = usuarioDTO.Nombre,
                 Apellido1 = usuarioDTO.Apellido1,
@@ -221,6 +273,63 @@ namespace API.Controllers
             usuarioDTO.IdUsuario = usuario.IdUsuario;
 
             return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDTO);
+        }
+
+        // Endpoint para subir la foto de perfil
+        [HttpPost("{id}/subir-fotoPerfil")]
+        public async Task<IActionResult> UploadProfilePhoto(Guid id, IFormFile photo)
+        {
+            // Validación: verificar si el archivo fue recibido
+            if (photo == null || photo.Length == 0)
+            {
+                return BadRequest("Archivo de imagen no válido.");
+            }
+
+            // Buscar el usuario en la base de datos
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            // Generar el nombre del archivo y la ruta
+            var fileName = $"{id}_profile_{Path.GetFileName(photo.FileName)}";
+            var filePath = Path.Combine("wwwroot/uploads/profile_photos", fileName);
+
+            // Guardar la imagen en el sistema de archivos
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await photo.CopyToAsync(stream);
+            }
+
+            // Actualizar la URL de la foto de perfil en la base de datos
+            usuario.FotoPerfil = $"/uploads/profile_photos/{fileName}";
+            _context.Entry(usuario).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Foto de perfil subida exitosamente.", url = usuario.FotoPerfil });
+        }
+
+        // Eliminar Usuario (sincronizado con Identity)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUsuario(Guid id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            var identityUser = await _userManager.FindByIdAsync(usuario.UserId);
+            if (identityUser != null)
+            {
+                await _userManager.DeleteAsync(identityUser);
+            }
+
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // Método para cambiar el estado de un usuario (1.Activo - 0.Inactivo)

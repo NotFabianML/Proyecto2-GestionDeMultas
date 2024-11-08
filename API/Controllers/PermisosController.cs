@@ -62,7 +62,7 @@ namespace API.Controllers
             return permiso;
         }
 
-        // Obtener permisos asignados a un rol
+        // Obtener permisos asignados a un rol (reemplazo de sp_GetPermisosPorRol)
         [HttpGet("{rolid}/permisos-por-rol")]
         public async Task<ActionResult<IEnumerable<PermisoDTO>>> GetPermisosPorRol(Guid rolid)
         {
@@ -72,19 +72,44 @@ namespace API.Controllers
             }
 
             var permisos = await _context.Permisos
-                .FromSqlRaw("EXEC sp_GetPermisosPorRol @Rol_idRol = {0}", rolid)
+                .Where(p => p.RolPermisos.Any(rp => rp.RolId == rolid))
+                .Select(p => new PermisoDTO
+                {
+                    IdPermiso = p.IdPermiso,
+                    NombrePermiso = p.NombrePermiso,
+                    Descripcion = p.Descripcion,
+                    Estado = p.Estado
+                })
                 .ToListAsync();
 
-            // mapea manualmente rol a rolDTO
-            var permisosDTO = permisos.Select(p => new PermisoDTO
-            {
-                IdPermiso = p.IdPermiso,
-                NombrePermiso = p.NombrePermiso,
-                Descripcion = p.Descripcion,
-                Estado = p.Estado
-            }).ToList();
+            return permisos;
+        }
 
-            return permisosDTO;
+        // Obtener permisos asignados a un rol (reemplazo de sp_GetPermisosPorRol)
+        [HttpGet("{rolNombre}/permisos-por-rol-nombre")]
+        public async Task<ActionResult<IEnumerable<PermisoDTO>>> GetPermisosPorRolNombre(string rolNombre)
+        {
+
+            // Buscar el rol por su nombre para obtener su ID
+            var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol.ToLower() == rolNombre.ToLower());
+            if (rol == null)
+            {
+                return NotFound("Rol no encontrado.");
+            }
+
+
+            var permisos = await _context.Permisos
+                .Where(p => p.RolPermisos.Any(rp => rp.RolId == rol.IdRol))
+                .Select(p => new PermisoDTO
+                {
+                    IdPermiso = p.IdPermiso,
+                    NombrePermiso = p.NombrePermiso,
+                    Descripcion = p.Descripcion,
+                    Estado = p.Estado
+                })
+                .ToListAsync();
+
+            return permisos;
         }
 
         // PUT: api/Permisos/5
@@ -152,7 +177,29 @@ namespace API.Controllers
             return CreatedAtAction("GetPermiso", new { id = permiso.IdPermiso }, permisoDTO);
         }
 
-        // Asignar permiso a un rol
+        // Asignar permiso a un rol (reemplazo de sp_AsignarPermiso)
+        //[HttpPost("{rolId}/asignar-permiso/{id}")]
+        //public async Task<IActionResult> AsignarPermiso(Guid rolId, Guid id)
+        //{
+        //    if (!PermisoExists(id) || !_context.Roles.Any(r => r.IdRol == rolId))
+        //    {
+        //        return NotFound("Permiso o rol no encontrado.");
+        //    }
+
+        //    // Crear la relación entre Rol y Permiso
+        //    var rolPermiso = new RolXPermiso
+        //    {
+        //        RolId = rolId,
+        //        PermisoId = id
+        //    };
+
+        //    _context.RolPermisos.Add(rolPermiso);
+        //    await _context.SaveChangesAsync();
+
+        //    return NoContent();
+        //}
+
+        // Asignar permiso a un rol (reemplazo de sp_AsignarPermiso)
         [HttpPost("{rolId}/asignar-permiso/{id}")]
         public async Task<IActionResult> AsignarPermiso(Guid rolId, Guid id)
         {
@@ -161,16 +208,29 @@ namespace API.Controllers
                 return NotFound("Permiso o rol no encontrado.");
             }
 
-            var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_AsignarPermiso @Rol_idRol = {0}, @Permiso_idPermiso = {1}", rolId, id);
-            if (result == 0)
+            var existeRolPermiso = await _context.RolPermisos
+                .AnyAsync(rp => rp.RolId == rolId && rp.PermisoId == id);
+
+            if (existeRolPermiso)
             {
-                return BadRequest("Error al asignar el permiso al usuario.");
+                return Conflict("El permiso ya está asignado a este rol.");
             }
+
+            var rolPermiso = new RolXPermiso
+            {
+                RolId = rolId,
+                PermisoId = id
+            };
+
+            _context.RolPermisos.Add(rolPermiso);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // DELETE: api/Permisos/5 (Eliminación lógica)
+
+
+        // DELETE: api/Permisos/5 (Eliminación total)
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePermiso(Guid id)
         {
@@ -186,7 +246,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // Eliminar permiso de un rol
+        // Eliminar permiso de un rol (reemplazo de sp_DeletePermisoDeRol)
         [HttpDelete("{rolid}/eliminar-permiso/{permisoId}")]
         public async Task<IActionResult> DeletePermisoDeRol(Guid rolid, Guid permisoId)
         {
@@ -195,11 +255,16 @@ namespace API.Controllers
                 return NotFound("Rol o permiso no encontrado.");
             }
 
-            var result = await _context.Database.ExecuteSqlRawAsync("EXEC sp_DeletePermisoDeRol @Rol_idRol = {0}, @Permiso_idPermiso = {1}", rolid, permisoId);
-            if (result == 0)
+            var rolPermiso = await _context.RolPermisos
+                .FirstOrDefaultAsync(rp => rp.RolId == rolid && rp.PermisoId == permisoId);
+
+            if (rolPermiso == null)
             {
-                return BadRequest("Error al eliminar el permiso del rol.");
+                return NotFound("La relación entre el rol y el permiso no existe.");
             }
+
+            _context.RolPermisos.Remove(rolPermiso);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -276,57 +341,107 @@ namespace API.Controllers
         }
 
         // POST: api/Roles/InicializarPermisos
+        //[HttpPost("InicializarPermisos")]
+        //public async Task<IActionResult> InicializarPermisosParaRoles()
+        //{
+        //    var rolesPermisos = new List<(string nombreRol, string nombrePermiso)>
+        //    {
+        //        // Permisos para el rol 'Administrador'
+        //        ("Administrador", "Gestionar Usuarios"),
+        //        ("Administrador", "Gestionar Roles"),
+        //        ("Administrador", "Gestionar Permisos"),
+        //        ("Administrador", "Gestionar Infracciones"),
+        //        ("Administrador", "Gestionar Multas"),
+        //        ("Administrador", "Generar Informes"),
+
+        //        // Permisos para el rol 'Usuario Final'
+        //        ("Usuario Final", "Consultar Multas"),
+        //        ("Usuario Final", "Gestionar Reclamos"),
+        //        ("Usuario Final", "Realizar Pagos"),
+
+        //        // Permisos para el rol 'Juez de Tránsito'
+        //        ("Juez de Tránsito", "Gestionar Reclamos"),
+
+        //        // Permisos para el rol 'Oficial de Tránsito'
+        //        ("Oficial de Tránsito", "Crear Multas"),
+        //        ("Oficial de Tránsito", "Modificar Multas")
+        //    };
+
+        //    foreach (var (nombreRol, nombrePermiso) in rolesPermisos)
+        //    {
+        //        // Obtener IDs de Rol y Permiso
+        //        var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == nombreRol);
+        //        var permiso = await _context.Permisos.FirstOrDefaultAsync(p => p.NombrePermiso == nombrePermiso);
+
+        //        // Verificar si el rol y el permiso existen
+        //        if (rol == null || permiso == null)
+        //        {
+        //            continue; // Si no existen, saltar esta asignación
+        //        }
+
+        //        // Ejecutar el stored procedure para asignar el permiso al rol
+        //        var result = await _context.Database.ExecuteSqlRawAsync(
+        //            "EXEC sp_AsignarPermiso @Rol_idRol = {0}, @Permiso_idPermiso = {1}", rol.IdRol, permiso.IdPermiso);
+
+        //        // Verificar si hubo un error en la asignación
+        //        if (result == 0)
+        //        {
+        //            return BadRequest($"Error al asignar el permiso '{nombrePermiso}' al rol '{nombreRol}'.");
+        //        }
+        //    }
+
+        //    return Ok("Permisos asignados a los roles exitosamente.");
+        //}
+
+        // POST: api/Roles/InicializarPermisos
         [HttpPost("InicializarPermisos")]
         public async Task<IActionResult> InicializarPermisosParaRoles()
         {
             var rolesPermisos = new List<(string nombreRol, string nombrePermiso)>
             {
-                // Permisos para el rol 'Administrador'
                 ("Administrador", "Gestionar Usuarios"),
                 ("Administrador", "Gestionar Roles"),
                 ("Administrador", "Gestionar Permisos"),
                 ("Administrador", "Gestionar Infracciones"),
                 ("Administrador", "Gestionar Multas"),
                 ("Administrador", "Generar Informes"),
-        
-                // Permisos para el rol 'Usuario Final'
                 ("Usuario Final", "Consultar Multas"),
                 ("Usuario Final", "Gestionar Reclamos"),
                 ("Usuario Final", "Realizar Pagos"),
-        
-                // Permisos para el rol 'Juez de Tránsito'
                 ("Juez de Tránsito", "Gestionar Reclamos"),
-        
-                // Permisos para el rol 'Oficial de Tránsito'
                 ("Oficial de Tránsito", "Crear Multas"),
                 ("Oficial de Tránsito", "Modificar Multas")
             };
 
             foreach (var (nombreRol, nombrePermiso) in rolesPermisos)
             {
-                // Obtener IDs de Rol y Permiso
                 var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == nombreRol);
                 var permiso = await _context.Permisos.FirstOrDefaultAsync(p => p.NombrePermiso == nombrePermiso);
 
-                // Verificar si el rol y el permiso existen
                 if (rol == null || permiso == null)
                 {
-                    continue; // Si no existen, saltar esta asignación
+                    continue;
                 }
 
-                // Ejecutar el stored procedure para asignar el permiso al rol
-                var result = await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC sp_AsignarPermiso @Rol_idRol = {0}, @Permiso_idPermiso = {1}", rol.IdRol, permiso.IdPermiso);
+                var existeRolPermiso = await _context.RolPermisos
+                    .AnyAsync(rp => rp.RolId == rol.IdRol && rp.PermisoId == permiso.IdPermiso);
 
-                // Verificar si hubo un error en la asignación
-                if (result == 0)
+                if (!existeRolPermiso)
                 {
-                    return BadRequest($"Error al asignar el permiso '{nombrePermiso}' al rol '{nombreRol}'.");
+                    var rolPermiso = new RolXPermiso
+                    {
+                        RolId = rol.IdRol,
+                        PermisoId = permiso.IdPermiso
+                    };
+
+                    _context.RolPermisos.Add(rolPermiso);
                 }
             }
 
+            await _context.SaveChangesAsync();
             return Ok("Permisos asignados a los roles exitosamente.");
         }
+
 
 
     }
