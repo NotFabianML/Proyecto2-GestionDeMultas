@@ -57,28 +57,39 @@ namespace API.Controllers
         public async Task<IActionResult> Login([FromBody] LogInDTO userData)
         {
             // Buscar usuario por email
-            var usuario = await _userManager.FindByEmailAsync(userData.Email);
-            if (usuario == null)
+            var identityUser = await _userManager.FindByEmailAsync(userData.Email);
+            if (identityUser == null)
             {
                 return BadRequest("Usuario no encontrado.");
             }
 
             // Verificar la contraseña
-            var passwordValid = await _userManager.CheckPasswordAsync(usuario, userData.Password);
+            var passwordValid = await _userManager.CheckPasswordAsync(identityUser, userData.Password);
             if (!passwordValid)
             {
                 return Unauthorized("Contraseña incorrecta.");
             }
 
             // Obtener el rol del usuario
-            var roles = await _userManager.GetRolesAsync(usuario);
+            var roles = await _userManager.GetRolesAsync(identityUser);
             var role = roles.FirstOrDefault(); // Suponiendo que el usuario tiene un solo rol
 
             // Generar el token JWT
-            var token = await GenerateJwtToken(usuario);
+            var token = await GenerateJwtToken(identityUser);
 
-            // Retornar el token, userId y role
-            return Ok(new { token, userId = usuario.Id, role });
+            // Buscar el usuario en la tabla Usuarios usando el mismo email
+            var usuario = await _context.Usuarios
+                .Where(u => u.Email == userData.Email)
+                .Select(u => new { u.IdUsuario })
+                .FirstOrDefaultAsync();
+
+            if (usuario == null)
+            {
+                return BadRequest("Usuario no encontrado en la tabla Usuarios.");
+            }
+
+            // Retornar el token, IdUsuario y role
+            return Ok(new { token, userId = usuario.IdUsuario, role });
         }
 
 
