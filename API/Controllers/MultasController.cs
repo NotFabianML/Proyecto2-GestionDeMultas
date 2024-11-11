@@ -248,6 +248,29 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetMulta), new { id = multa.IdMulta }, multaDTO);
         }
 
+        // DELETE: api/Multas/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMulta(Guid id)
+        {
+            var multa = await _context.Multas
+                .Include(m => m.MultaInfracciones) // Incluye las relaciones
+                .FirstOrDefaultAsync(m => m.IdMulta == id);
+
+            if (multa == null)
+            {
+                return NotFound("Multa no encontrada.");
+            }
+
+            // Eliminar las relaciones en MultaInfracciones
+            _context.MultaInfracciones.RemoveRange(multa.MultaInfracciones);
+
+            // Eliminar la multa en sí
+            _context.Multas.Remove(multa);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Multa eliminada exitosamente.");
+        }
 
         // Cambiar estado a "En Disputa"
         [HttpPost("{id}/cambiar-estado/{estado}")]
