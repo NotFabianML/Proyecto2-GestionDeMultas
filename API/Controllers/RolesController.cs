@@ -219,6 +219,56 @@ namespace API.Controllers
             return NoContent();
         }
 
+        // Asignar rol a usuario por nombre de rol
+        [HttpPost("{id}/asignar-rol-por-nombre/{rolNombre}")]
+        public async Task<IActionResult> AsignarRolPorNombre(Guid id, string rolNombre)
+        {
+            if (!UsuarioExists(id))
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            // Obtener el usuario y el rol para la relación
+            var usuario = await _context.Usuarios.FindAsync(id);
+            var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == rolNombre);
+
+            if (usuario == null || rol == null)
+            {
+                return NotFound("Usuario o rol no encontrado.");
+            }
+
+            // Asignar el rol en la tabla personalizada
+            var usuarioRol = new UsuarioXRol
+            {
+                UsuarioId = usuario.IdUsuario,
+                RolId = rol.IdRol
+            };
+
+            _context.UsuarioRoles.Add(usuarioRol);
+            await _context.SaveChangesAsync();
+
+            // Asignar el rol en Identity
+            var usuarioIdentity = await _userManager.FindByIdAsync(usuario.UserId);
+            if (usuarioIdentity == null)
+            {
+                return NotFound("Usuario en Identity no encontrado.");
+            }
+
+            var result = await _userManager.AddToRoleAsync(usuarioIdentity, rolNombre);
+
+            if (!result.Succeeded)
+            {
+                // Revertir la asignación en la tabla personalizada si falla en Identity
+                _context.UsuarioRoles.Remove(usuarioRol);
+                await _context.SaveChangesAsync();
+
+                return BadRequest("Error al asignar el rol en Identity.");
+            }
+
+            return NoContent();
+        }
+
+
         // Eliminar rol de usuario
         [HttpDelete("{id}/eliminar-rol/{rolId}")]
         public async Task<IActionResult> DeleteRolDeUsuario(Guid id, Guid rolId)
