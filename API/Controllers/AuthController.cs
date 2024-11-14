@@ -118,7 +118,7 @@ namespace API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] LogUpDTO newUser, string roleName = "Usuario")
+        public async Task<IActionResult> Register([FromBody] LogUpDTO newUser, string roleName = "Usuario Final")
         {
             if (!ModelState.IsValid)
             {
@@ -132,9 +132,8 @@ namespace API.Controllers
                 UserName = newUser.Email  // Usar Email como UserName para compatibilidad con Identity
             };
 
-            // Crear el usuario en AspNetUsers
-            var passwordHashed = Encrypt.GetSHA256(newUser.Password);
-            var createdUserResult = await _userManager.CreateAsync(usuarioIdentity, passwordHashed);
+            // Crear el usuario en AspNetUsers sin hashear manualmente la contraseña
+            var createdUserResult = await _userManager.CreateAsync(usuarioIdentity, newUser.Password);
 
             if (createdUserResult.Succeeded)
             {
@@ -149,6 +148,7 @@ namespace API.Controllers
                     Nombre = newUser.Nombre,
                     Apellido1 = newUser.Apellido1,
                     Apellido2 = newUser.Apellido2,
+                    ContrasennaHash = Encrypt.GetSHA256(newUser.Password),
                     Email = newUser.Email,
                     FechaNacimiento = DateOnly.ParseExact(newUser.FechaNacimiento, "dd-MM-yyyy"),
                     Telefono = newUser.Telefono,
@@ -167,6 +167,23 @@ namespace API.Controllers
 
                 await _userManager.AddToRoleAsync(usuarioIdentity, roleName);
 
+                // Obtener el rol en la tabla personalizada de Roles
+                var rol = await _context.Roles.FirstOrDefaultAsync(r => r.NombreRol == roleName);
+                if (rol == null)
+                {
+                    return BadRequest($"Rol '{roleName}' no encontrado en la tabla de Roles.");
+                }
+
+                // Crear la relación en la tabla UsuarioXRol
+                var usuarioRol = new UsuarioXRol
+                {
+                    UsuarioId = usuarioDatos.IdUsuario,
+                    RolId = rol.IdRol
+                };
+                _context.UsuarioRoles.Add(usuarioRol);
+
+                await _context.SaveChangesAsync();
+
                 return Created("Usuario creado exitosamente", null);
             }
 
@@ -178,8 +195,65 @@ namespace API.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RegisterUsuarioAdmin([FromBody] LogUpDTO newUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            // Generar contraseña aleatoria si no está en el DTO
+            var generatedPassword = string.IsNullOrEmpty(newUser.Password) ? PasswordGenerator.GenerateRandomPassword() : newUser.Password;
 
+            // Crear usuario en Identity
+            var usuarioIdentity = new AppUser
+            {
+                Email = newUser.Email,
+                UserName = newUser.Email
+            };
+
+            var createdUserResult = await _userManager.CreateAsync(usuarioIdentity, generatedPassword);
+
+            if (createdUserResult.Succeeded)
+            {
+                var userId = usuarioIdentity.Id;
+
+                var usuarioDatos = new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    UserId = userId,
+                    Cedula = newUser.Cedula,
+                    Nombre = newUser.Nombre,
+                    Apellido1 = newUser.Apellido1,
+                    Apellido2 = newUser.Apellido2,
+                    ContrasennaHash = Encrypt.GetSHA256(generatedPassword),
+                    Email = newUser.Email,
+                    FechaNacimiento = DateOnly.ParseExact(newUser.FechaNacimiento, "dd-MM-yyyy"),
+                    Telefono = newUser.Telefono,
+                    FotoPerfil = newUser.FotoPerfil,
+                    Estado = true
+                };
+
+                _context.Usuarios.Add(usuarioDatos);
+                await _context.SaveChangesAsync();
+
+                // Retornar los detalles del usuario creado, incluyendo el ID para asignación de rol posterior
+                return Created("Usuario creado exitosamente", new
+                {
+                    Email = newUser.Email,
+                    Password = generatedPassword,
+                    IdUsuario = usuarioDatos.IdUsuario // Devuelve el ID del usuario para asignación de rol
+                });
+            }
+
+            foreach (var error in createdUserResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
 
         [HttpGet]
         public async Task<bool> RoleTesting(string userName)
