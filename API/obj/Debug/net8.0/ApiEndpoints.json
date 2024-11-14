@@ -54,6 +54,22 @@
   },
   {
     "ContainingType": "API.Controllers.AuthController",
+    "Method": "RegisterUsuarioAdmin",
+    "RelativePath": "api/Auth/RegisterUsuarioAdmin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newUser",
+        "Type": "DTO.LogUpDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
     "Method": "RoleTesting",
     "RelativePath": "api/Auth/RoleTesting",
     "HttpMethod": "GET",
@@ -1066,6 +1082,27 @@
   },
   {
     "ContainingType": "API.Controllers.RolesController",
+    "Method": "AsignarRolPorNombre",
+    "RelativePath": "api/Roles/{id}/asignar-rol-por-nombre/{rolNombre}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolNombre",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.RolesController",
     "Method": "AsignarRol",
     "RelativePath": "api/Roles/{id}/asignar-rol/{rolId}",
     "HttpMethod": "POST",
@@ -1414,6 +1451,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[DTO.UsuarioDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "API.Controllers.UsuariosController",
+    "Method": "VerificarCorreoUnico",
+    "RelativePath": "api/Usuarios/verificar-correo/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.UsuarioDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
