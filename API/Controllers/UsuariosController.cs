@@ -50,7 +50,10 @@ namespace API.Controllers
                     FechaNacimiento = u.FechaNacimiento.ToString(),
                     Telefono = u.Telefono,
                     FotoPerfil = u.FotoPerfil,
-                    Estado = u.Estado
+                    Estado = u.Estado,
+                    Roles = u.UsuarioRoles
+                        .Select(ur => ur.Rol.NombreRol) // Asume que la relación UsuarioRoles contiene el rol y que este tiene un campo NombreRol
+                        .ToList()
                 })
                 .ToListAsync();
 
@@ -113,6 +116,18 @@ namespace API.Controllers
             }
 
             return usuario;
+        }
+
+        // Obtener usuario por cédula - GET: api/Usuarios/cedula/{cedula}
+        [HttpGet("verificar-correo/{email}")]
+        public async Task<ActionResult<UsuarioDTO>> VerificarCorreoUnico(string email)
+        {
+            var existeCorreo = await _context.Usuarios.AnyAsync(u => u.Email == email);
+            if (existeCorreo)
+            {
+                return Conflict("El correo ya existe.");
+            }
+            return Ok();
         }
 
         // Obtener usuarios por rol - reemplazo de sp_GetUsuariosPorRol
@@ -179,6 +194,59 @@ namespace API.Controllers
         }
 
 
+        //// PUT: api/Usuarios/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutUsuario(Guid id, UsuarioDTO usuarioDTO)
+        //{
+        //    if (id != usuarioDTO.IdUsuario)
+        //    {
+        //        return BadRequest("El ID proporcionado no coincide con el usuario.");
+        //    }
+
+        //    var existingUsuario = await _context.Usuarios.FindAsync(id);
+        //    if (existingUsuario == null)
+        //    {
+        //        return NotFound("Usuario no encontrado.");
+        //    }
+
+        //    // Actualizar datos en la tabla personalizada y en Identity
+        //    existingUsuario.Nombre = usuarioDTO.Nombre;
+        //    existingUsuario.Apellido1 = usuarioDTO.Apellido1;
+        //    existingUsuario.Apellido2 = usuarioDTO.Apellido2;
+        //    existingUsuario.Email = usuarioDTO.Email;
+        //    existingUsuario.FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy");
+        //    existingUsuario.Telefono = usuarioDTO.Telefono;
+        //    existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
+
+        //    _context.Entry(existingUsuario).State = EntityState.Modified;
+
+        //    var identityUser = await _userManager.FindByIdAsync(existingUsuario.UserId);
+        //    if (identityUser != null)
+        //    {
+        //        identityUser.Email = usuarioDTO.Email;
+        //        identityUser.UserName = usuarioDTO.Email;
+        //        await _userManager.UpdateAsync(identityUser);
+        //    }
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!UsuarioExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(Guid id, UsuarioDTO usuarioDTO)
@@ -194,7 +262,7 @@ namespace API.Controllers
                 return NotFound("Usuario no encontrado.");
             }
 
-            // Actualizar datos en la tabla personalizada y en Identity
+            // Actualizar los datos en la tabla personalizada y en Identity
             existingUsuario.Nombre = usuarioDTO.Nombre;
             existingUsuario.Apellido1 = usuarioDTO.Apellido1;
             existingUsuario.Apellido2 = usuarioDTO.Apellido2;
@@ -202,6 +270,12 @@ namespace API.Controllers
             existingUsuario.FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy");
             existingUsuario.Telefono = usuarioDTO.Telefono;
             existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
+
+            // Solo actualizar ContrasennaHash si se proporciona
+            if (!string.IsNullOrEmpty(usuarioDTO.ContrasennaHash))
+            {
+                existingUsuario.ContrasennaHash = usuarioDTO.ContrasennaHash;
+            }
 
             _context.Entry(existingUsuario).State = EntityState.Modified;
 
@@ -232,6 +306,7 @@ namespace API.Controllers
             return NoContent();
         }
 
+
         // POST: api/Usuarios
         [HttpPost]
         public async Task<ActionResult<UsuarioDTO>> PostUsuario(UsuarioDTO usuarioDTO)
@@ -247,7 +322,8 @@ namespace API.Controllers
 
             if (!createResult.Succeeded)
             {
-                return BadRequest("Error al crear el usuario en Identity.");
+                var errors = string.Join(", ", createResult.Errors.Select(e => e.Description));
+                return BadRequest($"Error al crear el usuario en Identity: {errors}");
             }
 
             // Crear el usuario en la tabla personalizada
@@ -326,10 +402,20 @@ namespace API.Controllers
                 await _userManager.DeleteAsync(identityUser);
             }
 
-            _context.Usuarios.Remove(usuario);
-            await _context.SaveChangesAsync();
+            //_context.Usuarios.Remove(usuario);
+            //await _context.SaveChangesAsync();
 
-            return NoContent();
+            // Retornar los datos del usuario eliminado
+            var usuarioEliminado = new
+            {
+                usuario.IdUsuario,
+                usuario.Nombre,
+                usuario.Apellido1,
+                usuario.Apellido2,
+                usuario.Email
+            };
+
+            return Ok(usuarioEliminado);
         }
 
         // Método para cambiar el estado de un usuario (1.Activo - 0.Inactivo)
