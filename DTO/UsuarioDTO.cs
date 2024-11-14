@@ -10,10 +10,12 @@ namespace DTO
         public string Apellido1 { get; set; }
         public string? Apellido2 { get; set; }
         public string Email { get; set; }
-        public string ContrasennaHash { get; set; }
+        public string? ContrasennaHash { get; set; }
         public string FechaNacimiento { get; set; }
         public string Telefono { get; set; }
         public string? FotoPerfil { get; set; }
         public bool Estado { get; set; }
+
+        public List<string>? Roles { get; set; } // Nueva propiedad para almacenar roles
     }
 }
