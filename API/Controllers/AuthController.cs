@@ -21,13 +21,15 @@ namespace API.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context)
+        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context, IEmailService emailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
+            _emailService = emailService; // Asigna el servicio
         }
 
         //[HttpPost]
@@ -333,5 +335,46 @@ namespace API.Controllers
             // Si hubo alg�n error al agregar el rol
             return BadRequest("No se pudo agregar el rol de Admin al usuario");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // No revelar que el usuario no existe por razones de seguridad
+                return Ok("Si el correo está registrado, se enviará un enlace para restablecer la contraseña.");
+            }
+
+            // Generar el token para el restablecimiento de contraseña
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Crear la URL para restablecer la contraseña
+            var resetUrl = $"{model.ResetUrl}?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
+            // Enviar el correo
+            await _emailService.SendResetPasswordEmail(user.Email, resetUrl);
+
+            return Ok("Si el correo está registrado, se enviará un enlace para restablecer la contraseña.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return BadRequest("Correo inválido.");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok("La contraseña se ha restablecido correctamente.");
+            }
+
+            return BadRequest("No se pudo restablecer la contraseña.");
+        }
+
     }
 }
