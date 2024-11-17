@@ -95,6 +95,22 @@
     ]
   },
   {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "ValidateToken",
+    "RelativePath": "api/Auth/ValidateToken",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.DisputasController",
     "Method": "GetDisputas",
     "RelativePath": "api/Disputas",

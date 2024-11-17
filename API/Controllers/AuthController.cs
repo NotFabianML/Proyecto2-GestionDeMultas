@@ -116,6 +116,48 @@ namespace API.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        [HttpGet]
+        public IActionResult ValidateToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("El token no puede ser nulo o vacío.");
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+
+            try
+            {
+                // Validar el token y extraer las claims
+                var claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = _configuration["Jwt:Issuer"],
+                    ValidAudience = _configuration["Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero // Opcional, elimina el tiempo de tolerancia
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var userId = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "sub")?.Value; // "sub" es el email
+                var role = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "role")?.Value;
+
+                return Ok(new
+                {
+                    userId,
+                    role
+                });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized($"Token inválido: {ex.Message}");
+            }
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] LogUpDTO newUser, string roleName = "Usuario Final")
