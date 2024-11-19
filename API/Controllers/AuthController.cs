@@ -4,6 +4,7 @@ using DataAccess.EF.Models;
 using DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -33,29 +34,6 @@ namespace API.Controllers
             _emailService = emailService; // Asigna el servicio
             _notificationService = notificationService;
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Login([FromBody] LogInDTO userData)
-        //{
-        //    // Cambia FindByNameAsync a FindByEmailAsync para buscar por correo electrónico
-        //    var usuario = await _userManager.FindByEmailAsync(userData.Email);
-        //    if (usuario == null)
-        //    {
-        //        return BadRequest("Usuario no encontrado."); // Error específico si el usuario no existe
-        //    }
-
-        //    // Verifica si la contraseña es correcta sin aplicar hashing manual 
-        //    //var passwordHashed = Encrypt.GetSHA256(userData.Password);
-        //    var passwordValid = await _userManager.CheckPasswordAsync(usuario, userData.Password);
-        //    if (!passwordValid)
-        //    {
-        //        return Unauthorized("Contraseña incorrecta."); // Error específico si la contraseña no coincide
-        //    }
-
-        //    // Genera el token JWT si la autenticación es exitosa
-        //    var token = await GenerateJwtToken(usuario);
-        //    return Ok(new { token });
-        //}
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LogInDTO userData)
@@ -369,13 +347,35 @@ namespace API.Controllers
                 return BadRequest("Correo inválido.");
             }
 
+            // Restablecer la contraseña en AspNetUsers
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok("La contraseña se ha restablecido correctamente.");
+                return BadRequest("No se pudo restablecer la contraseña en Identity.");
             }
 
-            return BadRequest("No se pudo restablecer la contraseña.");
+            // También actualizar la contraseña en la tabla Usuarios
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (usuario == null)
+            {
+                return NotFound("Usuario no encontrado en la tabla personalizada.");
+            }
+
+            // Generar hash para la contraseña y actualizar el campo en Usuarios
+            usuario.ContrasennaHash = Encrypt.GetSHA256(model.Password);
+
+            _context.Entry(usuario).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"Error al actualizar la tabla Usuarios: {ex.Message}");
+            }
+
+            return Ok("La contraseña se ha restablecido correctamente en ambas tablas.");
         }
 
         [HttpPost]
