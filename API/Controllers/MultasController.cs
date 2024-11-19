@@ -106,7 +106,7 @@ namespace API.Controllers
             }
 
             var multas = await _context.Multas
-                .Where(m => m.UsuarioIdOficial == usuarioId)
+                .Where(m => m.CedulaInfractor == usuario.Cedula)
                 .Include(m => m.MultaInfracciones)
                 .ThenInclude(mi => mi.Infraccion)
                 .ToListAsync();
