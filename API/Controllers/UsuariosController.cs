@@ -118,17 +118,31 @@ namespace API.Controllers
             return usuario;
         }
 
-        // Obtener usuario por cédula - GET: api/Usuarios/cedula/{cedula}
+        // Obtener usuario por correo - GET: api/Usuarios/verificar-correo/{email}
         [HttpGet("verificar-correo/{email}")]
-        public async Task<ActionResult<UsuarioDTO>> VerificarCorreoUnico(string email)
+        public async Task<ActionResult> VerificarCorreoUnico(string email)
         {
-            var existeCorreo = await _context.Usuarios.AnyAsync(u => u.Email == email);
-            if (existeCorreo)
+            var usuario = await _context.Usuarios
+                .Where(u => u.Email == email)
+                .Select(u => new { u.IdUsuario })
+                .FirstOrDefaultAsync();
+
+            if (usuario != null)
             {
-                return Conflict("El correo ya existe.");
+                return Ok(new
+                {
+                    Existe = true,
+                    IdUsuario = usuario.IdUsuario
+                });
             }
-            return Ok();
+
+            return Ok(new
+            {
+                Existe = false,
+                IdUsuario = (Guid?)null
+            });
         }
+
 
         // Obtener usuarios por rol - reemplazo de sp_GetUsuariosPorRol
         [HttpGet("usuarios-por-rol/{rolId}")]
