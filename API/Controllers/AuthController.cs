@@ -22,14 +22,16 @@ namespace API.Controllers
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _context;
         private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
 
-        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context, IEmailService emailService)
+        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context, IEmailService emailService, INotificationService notificationService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
             _emailService = emailService; // Asigna el servicio
+            _notificationService = notificationService;
         }
 
         //[HttpPost]
@@ -376,5 +378,19 @@ namespace API.Controllers
             return BadRequest("No se pudo restablecer la contraseña.");
         }
 
+        [HttpPost]
+
+        public async Task<IActionResult> SendEmail([FromBody] SendEmailDTO model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return Ok("Error al encontrar correo");
+            }
+
+            //Envio del correo
+            await _notificationService.SendEmail(model.Email, model.Message);
+            return Ok("El mensaje ha sido enviado correctamente.");
+        }
     }
 }
