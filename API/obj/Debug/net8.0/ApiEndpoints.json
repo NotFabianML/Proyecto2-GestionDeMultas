@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "API.Controllers.AuthController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/Auth/ForgotPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.ForgotPasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/Login",
     "HttpMethod": "POST",
@@ -70,6 +86,22 @@
   },
   {
     "ContainingType": "API.Controllers.AuthController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Auth/ResetPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.ResetPasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
     "Method": "RoleTesting",
     "RelativePath": "api/Auth/RoleTesting",
     "HttpMethod": "GET",
@@ -93,6 +125,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "API.Controllers.AuthController",
+    "Method": "SendEmail",
+    "RelativePath": "api/Auth/SendEmail",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.SendEmailDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.AuthController",
@@ -1490,17 +1538,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.UsuarioDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "API.Controllers.VehiculosController",

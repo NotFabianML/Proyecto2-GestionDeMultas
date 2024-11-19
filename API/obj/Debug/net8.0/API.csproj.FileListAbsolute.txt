@@ -278,3 +278,6 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Deb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\obj\Debug\net8.0\ref\API.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\SendGrid.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\SendGrid.Extensions.DependencyInjection.dll
+C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\API\bin\Debug\net8.0\StarkbankEcdsa.dll

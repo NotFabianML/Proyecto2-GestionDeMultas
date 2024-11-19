@@ -181,6 +181,14 @@
             "Azure.AI.FormRecognizer": {
               "target": "Package",
               "version": "[4.0.0, )"
+            },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.29.3, )"
+            },
+            "SendGrid.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[1.0.1, )"
             }
           },
           "imports": [
