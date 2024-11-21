@@ -314,7 +314,7 @@ namespace API.Controllers
 
             // Ordenar los jueces por la cantidad de disputas asignadas, de menor a mayor
             var juezConMenosDisputas = jueces
-                .OrderBy(j => _context.Disputas.Count(d => d.UsuarioIdJuez == j.IdUsuario))
+                .OrderBy(j => _context.Disputas.Count(d => d.UsuarioIdJuez == j.IdUsuario && d.Estado == EstadoDisputa.EnDisputa))
                 .ToList();
 
             // Obtener la cantidad de disputas del juez con menos disputas asignadas

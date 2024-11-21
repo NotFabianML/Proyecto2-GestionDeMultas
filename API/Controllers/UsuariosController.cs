@@ -284,6 +284,7 @@ namespace API.Controllers
             existingUsuario.FechaNacimiento = DateOnly.ParseExact(usuarioDTO.FechaNacimiento, "dd-MM-yyyy");
             existingUsuario.Telefono = usuarioDTO.Telefono;
             existingUsuario.FotoPerfil = usuarioDTO.FotoPerfil;
+            existingUsuario.Estado = usuarioDTO.Estado;
 
             // Solo actualizar ContrasennaHash si se proporciona
             if (!string.IsNullOrEmpty(usuarioDTO.ContrasennaHash))
@@ -515,7 +516,7 @@ namespace API.Controllers
                 if (usuarioIdentity == null)
                 {
                     // Crear el usuario en AspNetUsers
-                    usuarioIdentity = new IdentityUser { Email = usuarioDTO.Email, UserName = usuarioDTO.Email };
+                    usuarioIdentity = new IdentityUser { Email = usuarioDTO.Email, UserName = usuarioDTO.Cedula };
                     var createResult = await _userManager.CreateAsync(usuarioIdentity, usuarioDTO.ContrasennaHash);
 
                     // Manejar errores específicos de creación en AspNetUsers

@@ -153,7 +153,7 @@ namespace API.Controllers
             var usuarioIdentity = new AppUser
             {
                 Email = newUser.Email,
-                UserName = newUser.Email  // Usar Email como UserName para compatibilidad con Identity
+                UserName = newUser.Cedula  // Usar Email como UserName para compatibilidad con Identity
             };
 
             // Crear el usuario en AspNetUsers sin hashear manualmente la contraseña
