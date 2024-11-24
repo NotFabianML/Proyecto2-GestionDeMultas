@@ -1,4 +1,3 @@
-
 using BusinessLogic;
 using DataAccess.EF;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,29 +24,26 @@ namespace API
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Register EmailService
+            // Register services
             builder.Services.AddScoped<IEmailService, EmailService>();
-
             builder.Services.AddScoped<INotificationService, NotificationService>();
 
+            // Add controllers
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
+            // Add CORS policy
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "CorsPolicy", policy =>
-                    {
-                        //policy.WithOrigins("http://localhost:3000/", "https://localhost:7185/");
-                        policy.AllowAnyOrigin();
-                        policy.AllowAnyHeader(); //application/json application/xml
-                        policy.AllowAnyMethod(); //GET, POST, PUT,Delete
-                        //policy.AllowCredentials();
-
-                    });
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.WithOrigins("https://nextek.vercel.app") // URL del frontend en Vercel
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); // Necesario si usas cookies
+                });
             });
 
+            // Configure JWT Authentication
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,8 +63,14 @@ namespace API
                 };
             });
 
-            builder.Services.AddAuthorization();
+            // Configure cookie policy for SameSite
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None; // Permite solicitudes de origen cruzado
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Requiere HTTPS
+            });
 
+            // Add Swagger/OpenAPI
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
@@ -76,7 +78,7 @@ namespace API
                 // Add JWT authentication to Swagger
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme.",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
@@ -99,9 +101,9 @@ namespace API
                 });
             });
 
+            // Configure Identity options
             builder.Services.Configure<IdentityOptions>(options =>
             {
-                // Default Password settings.
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = true;
@@ -130,12 +132,15 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+
+            // Enable CORS
             app.UseCors("CorsPolicy");
-            app.UseAuthentication(); // Activar autenticación en JWT
-            app.UseAuthorization(); // Activar autorización
+
+            // Enable Authentication and Authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
-
 
             app.Run();
         }
