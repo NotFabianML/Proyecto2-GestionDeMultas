@@ -36,10 +36,11 @@ namespace API
             {
                 options.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.WithOrigins("https://nextek.vercel.app") // URL del frontend en Vercel
-                          .AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowCredentials(); // Necesario si usas cookies
+                    //policy.WithOrigins("https://nextek.vercel.app", "http://localhost:3000/") // URL del frontend en Vercel
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                          //.AllowCredentials(); // Necesario si usas cookies
                 });
             });
 
