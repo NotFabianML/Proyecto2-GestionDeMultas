@@ -34,13 +34,14 @@ namespace API
             // Add CORS policy
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", policy =>
+                options.AddPolicy(name: "CorsPolicy", policy =>
                 {
-                    policy.WithOrigins("https://nextek.vercel.app", "http://localhost:3000/") // URL del frontend en Vercel
-                    //policy.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                          .AllowCredentials(); // Necesario si usas cookies
+                    //policy.WithOrigins("http://localhost:3000/", "https://localhost:7185/");
+                    policy.AllowAnyOrigin();
+                    policy.AllowAnyHeader(); //application/json application/xml
+                    policy.AllowAnyMethod(); //GET, POST, PUT,Delete
+                                             //policy.AllowCredentials();
+
                 });
             });
 
@@ -64,12 +65,7 @@ namespace API
                 };
             });
 
-            // Configure cookie policy for SameSite
-            builder.Services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.SameSite = SameSiteMode.None; // Permite solicitudes de origen cruzado
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Requiere HTTPS
-            });
+            builder.Services.AddAuthorization();
 
             // Add Swagger/OpenAPI
             builder.Services.AddSwaggerGen(c =>
@@ -79,7 +75,7 @@ namespace API
                 // Add JWT authentication to Swagger
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
+                    Description = "JWT Authorization header using the Bearer scheme.",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
