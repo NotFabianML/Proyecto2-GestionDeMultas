@@ -1,5 +1,53 @@
 [
   {
+    "ContainingType": "API.Controllers.Autenticacion2FController",
+    "Method": "DisableTwoFactor",
+    "RelativePath": "api/Autenticacion2F/disable",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.HabilitarAutenticacion2F",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.Autenticacion2FController",
+    "Method": "EnableTwoFactor",
+    "RelativePath": "api/Autenticacion2F/enable",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.HabilitarAutenticacion2F",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.Autenticacion2FController",
+    "Method": "ValidateTwoFactor",
+    "RelativePath": "api/Autenticacion2F/validate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.ValidarAutenticacion2F",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.AuthController",
     "Method": "ForgotPassword",
     "RelativePath": "api/Auth/ForgotPassword",

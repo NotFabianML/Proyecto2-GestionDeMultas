@@ -29,3 +29,34 @@ C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\ob
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.pdb
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\FrontEnd.genruntimeconfig.cache
 C:\ProgramacionPersonal\UNVST\EjemploProyecto2\ArquitecturaProyecto2\FrontEnd\obj\Debug\net8.0\ref\FrontEnd.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\appsettings.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.staticwebassets.runtime.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.exe
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.deps.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.runtimeconfig.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\bin\Debug\net8.0\FrontEnd.pdb
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.AssemblyInfoInputs.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.AssemblyInfo.cs
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.csproj.CoreCompileInputs.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.RazorAssemblyInfo.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.RazorAssemblyInfo.cs
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.sourcelink.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets\msbuild.FrontEnd.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets\msbuild.build.FrontEnd.props
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.FrontEnd.props
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.FrontEnd.props
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\scopedcss\bundle\FrontEnd.styles.css
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\scopedcss\projectbundle\FrontEnd.bundle.scp.css
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\refint\FrontEnd.dll
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.pdb
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\FrontEnd.genruntimeconfig.cache
+C:\Users\jimyb\Desktop\CENFOTEC\PROYECTO 2\REPO BACKEND\FrontEnd\obj\Debug\net8.0\ref\FrontEnd.dll

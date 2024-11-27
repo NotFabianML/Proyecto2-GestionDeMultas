@@ -29,6 +29,7 @@ namespace API
             builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<IAutenticacion2FService, Autenticacion2FService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

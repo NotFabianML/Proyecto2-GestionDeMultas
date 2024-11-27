@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -24,8 +25,9 @@ namespace API.Controllers
         private readonly AppDbContext _context;
         private readonly IEmailService _emailService;
         private readonly INotificationService _notificationService;
+        private readonly IAutenticacion2FService _autenticacion2FService;
 
-        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context, IEmailService emailService, INotificationService notificationService)
+        public AuthController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AppDbContext context, IEmailService emailService, INotificationService notificationService, IAutenticacion2FService autenticacion2FService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -33,6 +35,7 @@ namespace API.Controllers
             _context = context;
             _emailService = emailService; // Asigna el servicio
             _notificationService = notificationService;
+            _autenticacion2FService = autenticacion2FService;
         }
 
         [HttpPost]
@@ -45,13 +48,26 @@ namespace API.Controllers
                 return BadRequest("Usuario no encontrado.");
             }
 
-            // Verificar la contraseña
-            var passwordValid = await _userManager.CheckPasswordAsync(identityUser, userData.Password);
-            if (!passwordValid)
-            {
-                return Unauthorized("Contraseña incorrecta.");
-            }
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == userData.Email);
 
+
+            if (user != null && user.DobleFactorActivo && userData.Password.Length == 6)
+            {
+                var otpValid = _autenticacion2FService.ValidateTwoFactorCode(userData.Email, userData.Password);
+                if (!otpValid)
+                {
+                    return Unauthorized("Código de autenticación de dos factores incorrecto.");
+                }
+            }
+            else {
+                // Verificar la contraseña
+                var passwordValid = await _userManager.CheckPasswordAsync(identityUser, userData.Password);
+                if (!passwordValid)
+                {
+                    return Unauthorized("Contraseña incorrecta.");
+                }
+            }
+         
             // Obtener el rol del usuario
             var roles = await _userManager.GetRolesAsync(identityUser);
             var role = roles.FirstOrDefault(); // Suponiendo que el usuario tiene un solo rol
