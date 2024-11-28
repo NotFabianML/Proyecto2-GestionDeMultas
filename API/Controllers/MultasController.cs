@@ -303,6 +303,30 @@ namespace API.Controllers
             return Ok("Estado de la multa cambiado.");
         }
 
+        // GET: api/Multas/heatmap?categoria={categoria}
+        [HttpGet("heatmap")]
+        public async Task<ActionResult<IEnumerable<HeatmapDataDTO>>> GetHeatmapData(string? categoria = null)
+        {
+            // Construir la consulta base
+            var query = _context.Multas.AsQueryable();
+
+            // Filtrar por categoría (tipo de infracción) si se proporciona
+            if (!string.IsNullOrEmpty(categoria))
+            {
+                query = query.Where(m => m.MultaInfracciones
+                    .Any(mi => mi.Infraccion.Titulo == categoria));
+            }
+
+            // Proyectar los datos necesarios para el mapa de calor
+            var heatmapData = await query.Select(m => new HeatmapDataDTO
+            {
+                Latitud = m.Latitud,
+                Longitud = m.Longitud
+            }).ToListAsync();
+
+            return Ok(heatmapData);
+        }
+
         private bool MultaExists(Guid id)
         {
             return _context.Multas.Any(e => e.IdMulta == id);
