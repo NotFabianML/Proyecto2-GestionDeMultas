@@ -48,26 +48,13 @@ namespace API.Controllers
                 return BadRequest("Usuario no encontrado.");
             }
 
-            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == userData.Email);
-
-
-            if (user != null && user.DobleFactorActivo && userData.Password.Length == 6)
+            // Verificar la contraseña
+            var passwordValid = await _userManager.CheckPasswordAsync(identityUser, userData.Password);
+            if (!passwordValid)
             {
-                var otpValid = _autenticacion2FService.ValidateTwoFactorCode(userData.Email, userData.Password);
-                if (!otpValid)
-                {
-                    return Unauthorized("Código de autenticación de dos factores incorrecto.");
-                }
+                return Unauthorized("Contraseña incorrecta.");
             }
-            else {
-                // Verificar la contraseña
-                var passwordValid = await _userManager.CheckPasswordAsync(identityUser, userData.Password);
-                if (!passwordValid)
-                {
-                    return Unauthorized("Contraseña incorrecta.");
-                }
-            }
-         
+            
             // Obtener el rol del usuario
             var roles = await _userManager.GetRolesAsync(identityUser);
             var role = roles.FirstOrDefault(); // Suponiendo que el usuario tiene un solo rol

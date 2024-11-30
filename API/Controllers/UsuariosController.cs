@@ -51,6 +51,7 @@ namespace API.Controllers
                     Telefono = u.Telefono,
                     FotoPerfil = u.FotoPerfil,
                     Estado = u.Estado,
+                    DobleFactorActivo = u.DobleFactorActivo,
                     Roles = u.UsuarioRoles
                         .Select(ur => ur.Rol.NombreRol) // Asume que la relación UsuarioRoles contiene el rol y que este tiene un campo NombreRol
                         .ToList()
@@ -77,7 +78,8 @@ namespace API.Controllers
                     Email = u.Email,
                     Telefono = u.Telefono,
                     FotoPerfil = u.FotoPerfil,
-                    Estado = u.Estado
+                    Estado = u.Estado,
+                    DobleFactorActivo = u.DobleFactorActivo
                 })
                 .FirstOrDefaultAsync();
 

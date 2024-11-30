@@ -16,6 +16,8 @@ namespace DTO
         public string? FotoPerfil { get; set; }
         public bool Estado { get; set; }
 
+        public bool DobleFactorActivo { get; set; }
+
         public List<string>? Roles { get; set; } // Nueva propiedad para almacenar roles
     }
 }
