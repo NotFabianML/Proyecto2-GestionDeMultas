@@ -175,7 +175,52 @@ namespace API.Controllers
         }
 
         // PUT: api/Multas/5
-        // PUT: api/Multas/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutMulta(Guid id, MultaDTO multaDTO)
+        //{
+        //    if (id != multaDTO.IdMulta)
+        //    {
+        //        return BadRequest("El ID de la multa no coincide.");
+        //    }
+
+        //    var multa = await _context.Multas.FindAsync(id);
+        //    if (multa == null)
+        //    {
+        //        return NotFound("Multa no encontrada para actualización.");
+        //    }
+
+        //    // Actualiza los campos de acuerdo al DTO y nuevo modelo
+        //    multa.NumeroPlaca = multaDTO.NumeroPlaca;  // Usa NumeroPlaca en lugar de VehiculoId
+        //    multa.CedulaInfractor = multaDTO.CedulaInfractor;  // Agrega CedulaInfractor
+        //    multa.UsuarioIdOficial = multaDTO.UsuarioIdOficial;
+        //    multa.FechaHora = multaDTO.FechaHora;
+        //    multa.Latitud = multaDTO.Latitud;
+        //    multa.Longitud = multaDTO.Longitud;
+        //    multa.Comentario = multaDTO.Comentario;
+        //    multa.FotoPlaca = multaDTO.FotoPlaca;
+        //    multa.Estado = (EstadoMulta)multaDTO.Estado;
+
+        //    _context.Entry(multa).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MultaExists(id))
+        //        {
+        //            return NotFound("Multa no encontrada para actualización.");
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMulta(Guid id, MultaDTO multaDTO)
         {
@@ -184,15 +229,20 @@ namespace API.Controllers
                 return BadRequest("El ID de la multa no coincide.");
             }
 
-            var multa = await _context.Multas.FindAsync(id);
+            // Cargar la multa existente con las relaciones actuales
+            var multa = await _context.Multas
+                .Include(m => m.MultaInfracciones)
+                .ThenInclude(mi => mi.Infraccion)
+                .FirstOrDefaultAsync(m => m.IdMulta == id);
+
             if (multa == null)
             {
                 return NotFound("Multa no encontrada para actualización.");
             }
 
-            // Actualiza los campos de acuerdo al DTO y nuevo modelo
-            multa.NumeroPlaca = multaDTO.NumeroPlaca;  // Usa NumeroPlaca en lugar de VehiculoId
-            multa.CedulaInfractor = multaDTO.CedulaInfractor;  // Agrega CedulaInfractor
+            // Actualizar los campos de la multa
+            multa.NumeroPlaca = multaDTO.NumeroPlaca;
+            multa.CedulaInfractor = multaDTO.CedulaInfractor;
             multa.UsuarioIdOficial = multaDTO.UsuarioIdOficial;
             multa.FechaHora = multaDTO.FechaHora;
             multa.Latitud = multaDTO.Latitud;
@@ -201,6 +251,25 @@ namespace API.Controllers
             multa.FotoPlaca = multaDTO.FotoPlaca;
             multa.Estado = (EstadoMulta)multaDTO.Estado;
 
+            // Actualizar la relación con las infracciones
+            // Eliminar las relaciones existentes
+            _context.MultaInfracciones.RemoveRange(multa.MultaInfracciones);
+
+            // Agregar las nuevas relaciones
+            foreach (var infraccionDTO in multaDTO.Infracciones)
+            {
+                var infraccion = await _context.Infracciones.FindAsync(infraccionDTO.IdInfraccion);
+                if (infraccion != null)
+                {
+                    _context.MultaInfracciones.Add(new MultaXInfraccion
+                    {
+                        MultaId = multa.IdMulta,
+                        InfraccionId = infraccion.IdInfraccion
+                    });
+                }
+            }
+
+            // Guardar los cambios
             _context.Entry(multa).State = EntityState.Modified;
 
             try
@@ -221,6 +290,7 @@ namespace API.Controllers
 
             return NoContent();
         }
+
 
 
         // POST: api/Multas
