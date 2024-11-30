@@ -65,10 +65,10 @@ namespace API.Controllers
             // Buscar el usuario en la tabla Usuarios usando el mismo email
             var usuario = await _context.Usuarios
                 .Where(u => u.Email == userData.Email)
-                .Select(u => new { u.IdUsuario })
+                .Select(u => new { u.IdUsuario, u.Estado })
                 .FirstOrDefaultAsync();
 
-            if (usuario == null)
+            if (usuario == null || usuario.Estado == false)
             {
                 return BadRequest("Usuario no encontrado en la tabla Usuarios.");
             }
