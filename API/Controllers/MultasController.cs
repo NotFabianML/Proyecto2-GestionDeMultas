@@ -354,13 +354,13 @@ namespace API.Controllers
 
             switch (estado)
             {
-                case 0:
-                    multa.Estado = EstadoMulta.Pagada;
-                    break;
                 case 1:
-                    multa.Estado = EstadoMulta.EnDisputa;
+                    multa.Estado = EstadoMulta.Pendiente;
                     break;
                 case 2:
+                    multa.Estado = EstadoMulta.EnDisputa;
+                    break;
+                case 3:
                     multa.Estado = EstadoMulta.Pagada;
                     break;
                 default:
